@@ -18,38 +18,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class SuicideChicken
-{
+public class SuicideChicken {
     private DetailedMPlayer mp;
     private Player p;
     private Location l;
     private Material hand;
     private Action action;
 
-    public SuicideChicken(PlayerInteractEvent e)
-    {
-        if(e.isCancelled())return;
+    public SuicideChicken(PlayerInteractEvent e) {
+        if (e.isCancelled()) return;
         this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
         this.p = e.getPlayer();
         this.hand = p.getItemInHand().getType();
         this.action = e.getAction();
-        if(!isRightClick())return;
-        if(!setL())return;
+        if (!isRightClick()) return;
+        if (!setL()) return;
         run();
     }
 
-    private boolean isRightClick()
-    {
+    private boolean isRightClick() {
         return action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK);
     }
 
-    private void run()
-    {
-        if(isBlazeRod())
-        {
-            if(!isLevel())return;
-            if(!cooledDown())
-            {
+    private void run() {
+        if (isBlazeRod()) {
+            if (!isLevel()) return;
+            if (!cooledDown()) {
                 new SendMessage(p, Lists.newArrayList("You have to wait another " + (20 - CoolDown.getRemainingTime(p.getUniqueId(), TempData.chickenMap)) + " seconds."));
                 return;
             }
@@ -58,8 +52,7 @@ public class SuicideChicken
 
     }
 
-    private boolean setL()
-    {
+    private boolean setL() {
         try {
             this.l = p.getTargetBlock(null, 30).getLocation();
         } catch (Exception ignored) {
@@ -67,24 +60,20 @@ public class SuicideChicken
         return l != null;
     }
 
-    private boolean isBlazeRod()
-    {
+    private boolean isBlazeRod() {
         return hand.equals(Material.BLAZE_ROD);
     }
 
-    private boolean isLevel()
-    {
+    private boolean isLevel() {
         return mp.getWoodcuttingLevel() > 71;
     }
 
-    private boolean cooledDown()
-    {
+    private boolean cooledDown() {
         return CoolDown.cooledDown(p.getUniqueId(), TempData.chickenMap, 20);
     }
 
-    private void spawnChicken()
-    {
-        Entity ent = p.getWorld().spawnEntity(l.add(0,1,0), EntityType.CHICKEN);
+    private void spawnChicken() {
+        Entity ent = p.getWorld().spawnEntity(l.add(0, 1, 0), EntityType.CHICKEN);
         final Chicken c = (Chicken) ent;
         CoolDown.newCooldown(p.getUniqueId(), TempData.chickenMap);
         c.setCustomNameVisible(true);
@@ -93,20 +82,15 @@ public class SuicideChicken
 
     }
 
-    private void boomTask(final Chicken chicken)
-    {
-        for(int i = 0; i < 20 * 4 + 1; i++)
-        {
+    private void boomTask(final Chicken chicken) {
+        for (int i = 0; i < 20 * 4 + 1; i++) {
             final int k = i;
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable()
-            {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                 @Override
-                public void run()
-                {
-                    if(chicken.isDead())return;
-                    if(k % 20 == 0)chicken.setCustomName(ChatColor.DARK_RED + Integer.toString(4 - k/20));
-                    if(k == 4 * 20)
-                    {
+                public void run() {
+                    if (chicken.isDead()) return;
+                    if (k % 20 == 0) chicken.setCustomName(ChatColor.DARK_RED + Integer.toString(4 - k / 20));
+                    if (k == 4 * 20) {
                         p.getWorld().createExplosion(chicken.getLocation().getX(), chicken.getLocation().getY(), chicken.getLocation().getZ(), 4, false, false);
                         chicken.remove();
                     }

@@ -1,20 +1,19 @@
 package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.struct.ISkill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Farming implements Skill
-{
+public class Farming implements ISkill {
     private DetailedMPlayer mp;
 
-    public Farming(){}
-
-    public Farming(DetailedMPlayer mp)
-    {
-        this.mp = mp;
+    public Farming() {
     }
 
+    public Farming(DetailedMPlayer mp) {
+        this.mp = mp;
+    }
 
 
     @Override
@@ -33,14 +32,13 @@ public class Farming implements Skill
     }
 
     @Override
-    public void insertMPlayer(DetailedMPlayer mp)
-    {
+    public void insertMPlayer(DetailedMPlayer mp) {
         this.mp = mp;
     }
 
     @Override
     public String getSpecialBoost() {
-        return "Chance for extra harvest: " + ChatColor.GREEN + mp.getFarmingLevel() * 2 +"%"+ChatColor.LIGHT_PURPLE + ".";
+        return "Chance for extra harvest: " + ChatColor.GREEN + mp.getFarmingLevel() * 2 + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override

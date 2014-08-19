@@ -21,6 +21,8 @@ import com.minegusta.mgskills.skills.woodcutting.WoodCuttingExp;
 import com.minegusta.mgskills.treasuremaps.TreasureListener;
 import com.minegusta.mgskills.util.WorldCheck;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,102 +33,99 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.player.*;
 
-public class SkillListener implements Listener
-{
+public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(PlayerJoinEvent e)
-    {
+    public void onEvent(PlayerJoinEvent e) {
         //Always do this, no matter the world.
 
         new LoadToMap(e);
-
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(PlayerQuitEvent e)
-    {
+    public void onEvent(PlayerQuitEvent e) {
         //Always do this, no matter the world.
 
         new RemoveFromMap(e);
-
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(PlayerFishEvent e)
-    {
-        if(!worldCheck(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerFishEvent e) {
+        if (!worldCheck(e.getPlayer().getWorld())) return;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(BlockBreakEvent e)
-    {
-        if(!worldCheck(e.getPlayer().getWorld()))return;
+    public void onEvent(BlockBreakEvent e) {
+        if (!worldCheck(e.getPlayer().getWorld())) return;
 
-        new MiningExp(e);
-        new RandomOreBoost(e);
-        new WoodCuttingExp(e);
-        new WoodCuttingBoost(e);
-        new DiggingBoost(e);
-        new DiggingExperience(e);
-        new FarmingBreakBlockExperience(e);
+        Player p = e.getPlayer();
+        Block b = e.getBlock();
+
+        if (!e.isCancelled()) {
+            new MiningExp().build(p, b).apply();
+            new RandomOreBoost().build(p, b).apply();
+            new WoodCuttingExp().build(p, b).apply();
+            new WoodCuttingBoost().build(p, b).apply();
+            new DiggingBoost().build(p, b).apply();
+            new DiggingExperience().build(p, b).apply();
+            new FarmingBreakBlockExperience().build(p, b).apply();
+            new InfiniteTorchBoost(().build(p, b).apply();
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEvent(BlockPlaceEvent e) {
+        if (!worldCheck(e.getPlayer().getWorld())) return;
+
         new InfiniteTorchBoost(e);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(BlockPlaceEvent e)
-    {
-        if(!worldCheck(e.getPlayer().getWorld()))return;
-
-        new InfiniteTorchBoost(e);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(PlayerInteractEvent e)
-    {
-        if(!worldCheck(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerInteractEvent e) {
+        if (!worldCheck(e.getPlayer().getWorld())) return;
         new TreasureListener(e);
-        new FarmingInteractBlockExperience(e);
         new SuicideChicken(e);
         new CakeEatBoost(e);
+
+        if (!e.isCancelled() && e.hasBlock()) {
+            new FarmingInteractBlockExperience().build(e.getPlayer(), e.getClickedBlock()).apply();
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(FurnaceSmeltEvent e)
-    {
-        if(!worldCheck(e.getBlock().getWorld()))return;
-        new CookingSmeltExperience(e);
+    public void onEvent(FurnaceSmeltEvent e) {
+        if (!worldCheck(e.getBlock().getWorld())) return;
+
+        if (!e.isCancelled()) {
+            new CookingSmeltExperience().build(null, e.getBlock()).apply();
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(CraftItemEvent e)
-    {
-        if(!worldCheck(e.getWhoClicked().getWorld()))return;
+    public void onEvent(CraftItemEvent e) {
+        if (!worldCheck(e.getWhoClicked().getWorld())) return;
         new CookingCraftExperience(e);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(PlayerItemConsumeEvent e)
-    {
-        if(!worldCheck(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerItemConsumeEvent e) {
+        if (!worldCheck(e.getPlayer().getWorld())) return;
         new FoodBoost(e);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(EntityDeathEvent e)
-    {
-        if(!worldCheck(e.getEntity().getWorld()))return;
+    public void onEvent(EntityDeathEvent e) {
+        if (!worldCheck(e.getEntity().getWorld())) return;
         new HuntingExperience(e);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(PlayerInteractEntityEvent e)
-    {
-        if(!worldCheck(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerInteractEntityEvent e) {
+        if (!worldCheck(e.getPlayer().getWorld())) return;
         new FarmingInteractEntityExperience(e);
     }
 
     //World Check
-    private boolean worldCheck(World world)
-    {
+    private boolean worldCheck(World world) {
         WorldCheck check = new WorldCheck(world);
         return check.check();
     }

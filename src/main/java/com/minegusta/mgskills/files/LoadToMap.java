@@ -9,14 +9,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.UUID;
 
-public class LoadToMap
-{
+public class LoadToMap {
     private UUID uuid;
     private FileConfiguration conf;
     private DetailedMPlayer mPlayer;
 
-    public LoadToMap(PlayerJoinEvent e)
-    {
+    public LoadToMap(PlayerJoinEvent e) {
         this.uuid = e.getPlayer().getUniqueId();
         this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
         create();
@@ -24,23 +22,20 @@ public class LoadToMap
         new UpdateHighscores(e);
     }
 
-    public LoadToMap(Player p)
-    {
+    public LoadToMap(Player p) {
         this.uuid = p.getUniqueId();
         this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
         create();
 
     }
 
-    private void create()
-    {
+    private void create() {
         //Create the MPlayer object
         this.mPlayer = new DetailedMPlayer(conf, uuid);
         loadToMap();
     }
 
-    private void loadToMap()
-    {
+    private void loadToMap() {
         //Load to the TempDataMap
         TempData.pMap.put(uuid, mPlayer);
     }

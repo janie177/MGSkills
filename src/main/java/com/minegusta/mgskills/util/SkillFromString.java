@@ -1,9 +1,9 @@
 package com.minegusta.mgskills.util;
 
 import com.minegusta.mgskills.skills.*;
+import com.minegusta.mgskills.struct.ISkill;
 
-public enum SkillFromString
-{
+public enum SkillFromString {
     fishing(new Fishing()),
     mining(new Mining()),
     cooking(new Cooking()),
@@ -17,15 +17,13 @@ public enum SkillFromString
     exploration(new Exploration());
 
 
-    private Skill skill;
+    private ISkill skill;
 
-    private SkillFromString(Skill skill)
-    {
+    private SkillFromString(ISkill skill) {
         this.skill = skill;
     }
 
-    public Skill getSkill()
-    {
+    public ISkill getSkill() {
         return skill;
     }
 

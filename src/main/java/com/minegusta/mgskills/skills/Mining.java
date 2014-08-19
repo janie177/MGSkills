@@ -1,17 +1,17 @@
 package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.struct.ISkill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Mining implements Skill
-{
+public class Mining implements ISkill {
     private DetailedMPlayer mp;
 
-    public Mining(){}
+    public Mining() {
+    }
 
-    public Mining(DetailedMPlayer mp)
-    {
+    public Mining(DetailedMPlayer mp) {
         this.mp = mp;
     }
 
@@ -31,16 +31,14 @@ public class Mining implements Skill
     }
 
     @Override
-    public void insertMPlayer(DetailedMPlayer mp)
-    {
+    public void insertMPlayer(DetailedMPlayer mp) {
         this.mp = mp;
     }
 
     @Override
-    public String getSpecialBoost()
-    {
+    public String getSpecialBoost() {
         double chance = 0.5 + (mp.getMiningLevel() * 0.05);
-        return "Chance to randomly find ores: " + ChatColor.GREEN + chance +"%"+ChatColor.LIGHT_PURPLE + ".";
+        return "Chance to randomly find ores: " + ChatColor.GREEN + chance + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override

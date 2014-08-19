@@ -10,12 +10,10 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class LevelUpSong
-{
+public class LevelUpSong {
     private final Player p;
 
-    public LevelUpSong(Player p)
-    {
+    public LevelUpSong(Player p) {
         this.p = p;
         playSong();
     }
@@ -110,23 +108,20 @@ public class LevelUpSong
             Note.sharp(0, Note.Tone.C)
     );
 
-    private void playSong()
-    {
-        for (int i = 0; i < 20 * 22 + 1; i++)
-        {
+    private void playSong() {
+        for (int i = 0; i < 20 * 22 + 1; i++) {
             final int k = i;
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable()
-            {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                 @Override
-                public void run()
-                {
-                    if(k % 10 == 0)
-                    {
-                        int count = k/10;
+                public void run() {
+                    if (k % 10 == 0) {
+                        int count = k / 10;
                         //Beat
-                        if(!(count >= beat.size() || beat.get(count) == null)) p.playSound(p.getLocation(), beat.get(count), 1, 1);
+                        if (!(count >= beat.size() || beat.get(count) == null))
+                            p.playSound(p.getLocation(), beat.get(count), 1, 1);
                         //melody
-                        if(!(count >= song.size() || song.get(count) == null)) p.playNote(p.getLocation(), Instrument.PIANO, song.get(count));
+                        if (!(count >= song.size() || song.get(count) == null))
+                            p.playNote(p.getLocation(), Instrument.PIANO, song.get(count));
                     }
                 }
             }, i);

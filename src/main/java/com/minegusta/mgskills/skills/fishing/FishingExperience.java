@@ -5,8 +5,7 @@ import com.minegusta.mgskills.util.TempData;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerFishEvent;
 
-public class FishingExperience
-{
+public class FishingExperience {
     private DetailedMPlayer mp;
     private int level;
     private int newExp;
@@ -14,39 +13,34 @@ public class FishingExperience
     private Entity fish;
     private PlayerFishEvent.State state;
 
-    public FishingExperience(PlayerFishEvent e)
-    {
+    public FishingExperience(PlayerFishEvent e) {
         this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
         this.fish = e.getCaught();
         this.state = e.getState();
         this.level = mp.getFishingLevel();
-        if(e.isCancelled())return;
+        if (e.isCancelled()) return;
 
-        if(!isCaught())return;
+        if (!isCaught()) return;
 
         expGiven = getExpGiven();
         giveExp();
     }
-    
-    
-    
+
+
     //Setters
-    
-    private void giveExp()
-    {
+
+    private void giveExp() {
         mp.addFishing(expGiven);
         newExp = mp.getFishing();
     }
-    
+
     //Checks
 
-    private boolean isCaught()
-    {
+    private boolean isCaught() {
         return state.equals(PlayerFishEvent.State.CAUGHT_FISH);
     }
 
-    private int getExpGiven()
-    {
+    private int getExpGiven() {
         return 0;
     }
 }

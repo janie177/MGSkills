@@ -16,8 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class HuntingExperience
-{
+public class HuntingExperience {
     private DetailedMPlayer mp;
     private Player killer;
     private Entity killed;
@@ -27,14 +26,13 @@ public class HuntingExperience
     private ItemStack hand;
     private boolean animal = false;
 
-    public HuntingExperience(EntityDeathEvent e)
-    {
+    public HuntingExperience(EntityDeathEvent e) {
         this.entityType = e.getEntity().getType();
         this.killer = e.getEntity().getKiller();
         this.drops = e.getDrops();
         this.killed = e.getEntity();
 
-        if(!isKilledByWolf() && !isKilledByPlayer())return;
+        if (!isKilledByWolf() && !isKilledByPlayer()) return;
 
         this.mp = TempData.pMap.get(killer.getUniqueId());
         this.level = mp.getHuntingLevel();
@@ -49,25 +47,18 @@ public class HuntingExperience
 
     //Checks
 
-    private boolean isLootingSword()
-    {
+    private boolean isLootingSword() {
         return !hand.getType().equals(Material.AIR) && hand.containsEnchantment(Enchantment.SILK_TOUCH);
     }
 
-    private boolean isKilledByWolf()
-    {
-        if(killed.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK))
-        {
-            if(killed.getLastDamageCause() instanceof EntityDamageByEntityEvent)
-            {
-                if(((EntityDamageByEntityEvent) killed.getLastDamageCause()).getDamager() instanceof Wolf)
-                {
+    private boolean isKilledByWolf() {
+        if (killed.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+            if (killed.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
+                if (((EntityDamageByEntityEvent) killed.getLastDamageCause()).getDamager() instanceof Wolf) {
                     Wolf wolf = (Wolf) ((EntityDamageByEntityEvent) killed.getLastDamageCause()).getDamager();
-                    if (wolf.isTamed())
-                    {
+                    if (wolf.isTamed()) {
                         Player owner = (Player) wolf.getOwner();
-                        if (owner.isOnline())
-                        {
+                        if (owner.isOnline()) {
                             killer = owner;
                             return TempData.pMap.get(killer.getUniqueId()).getHuntingLevel() > 21;
                         }
@@ -78,17 +69,14 @@ public class HuntingExperience
         return false;
     }
 
-    private boolean isKilledByPlayer()
-    {
+    private boolean isKilledByPlayer() {
         return killer != null;
     }
 
-    private int getExperience()
-    {
+    private int getExperience() {
         int exp;
 
-        switch (entityType)
-        {
+        switch (entityType) {
             case ENDERMAN:
                 exp = 16;
                 break;
@@ -183,7 +171,8 @@ public class HuntingExperience
             case SLIME:
                 exp = 5;
                 break;
-            default: exp = 0;
+            default:
+                exp = 0;
                 break;
         }
 
@@ -192,30 +181,24 @@ public class HuntingExperience
 
     //Apply
 
-    private void giveExperience()
-    {
+    private void giveExperience() {
         mp.addHunting(getExperience());
     }
 
-    private void applyBoost()
-    {
-        if(animal && level > 37)
-        {
+    private void applyBoost() {
+        if (animal && level > 37) {
             int amount = RandomNumber.get(2) - 1;
-            if(amount > 1)
-            {
+            if (amount > 1) {
                 drops.add(new ItemStack(Material.RAW_BEEF, amount));
             }
 
-            if(entityType.equals(EntityType.SHEEP))drops.add(new ItemStack(Material.WOOL, 1));
+            if (entityType.equals(EntityType.SHEEP)) drops.add(new ItemStack(Material.WOOL, 1));
         }
-        if(level >= 50)dropDrops();
-        if(level == 100 && !isLootingSword())dropDrops();
+        if (level >= 50) dropDrops();
+        if (level == 100 && !isLootingSword()) dropDrops();
 
-        if(animal)
-        {
-            if(RandomNumber.get(10000) <= 25 * level)
-            {
+        if (animal) {
+            if (RandomNumber.get(10000) <= 25 * level) {
                 Entity ent = killed.getWorld().spawnEntity(killed.getLocation(), entityType);
                 LivingEntity le = (LivingEntity) ent;
                 le.setCustomName(ChatColor.GREEN + "Reincarnated soul");
@@ -224,16 +207,14 @@ public class HuntingExperience
         }
     }
 
-    private void dropDrops()
-    {
-        for (ItemStack s : drops)
-        {
+    private void dropDrops() {
+        for (ItemStack s : drops) {
             killed.getWorld().dropItemNaturally(killed.getLocation(), s);
         }
     }
 
-    private void healALittle()
-    {
-        if( level > 63 && killer.getHealth() <= (killer.getMaxHealth() - 1.0)) killer.setHealth(killer.getHealth() + 1.0);
+    private void healALittle() {
+        if (level > 63 && killer.getHealth() <= (killer.getMaxHealth() - 1.0))
+            killer.setHealth(killer.getHealth() + 1.0);
     }
 }

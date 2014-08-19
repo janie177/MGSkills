@@ -15,8 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class DiggingBoost
-{
+public class DiggingBoost {
     private Material m;
     private int level;
     private Block b;
@@ -24,37 +23,30 @@ public class DiggingBoost
     private ItemStack is;
     private Player p;
 
-    public DiggingBoost(BlockBreakEvent e)
-    {
-        if(e.isCancelled())return;
+    public DiggingBoost(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
         this.m = e.getBlock().getType();
-        if(!isDig())return;
+        if (!isDig()) return;
         DetailedMPlayer mp = TempData.pMap.get(e.getPlayer().getUniqueId());
         this.level = mp.getDiggingLevel();
         this.b = e.getBlock();
         this.is = e.getPlayer().getItemInHand();
         this.p = e.getPlayer();
 
-        if(isShovel())
-        {
-            if(isGravelBoost())
-            {
+        if (isShovel()) {
+            if (isGravelBoost()) {
                 giveFlint();
             }
-            if(isToolBoost())
-            {
+            if (isToolBoost()) {
                 giveTool();
             }
-            if(isGrassBoost())
-            {
+            if (isGrassBoost()) {
                 giveGrass();
             }
-            if(isUnBreakingBoost())
-            {
+            if (isUnBreakingBoost()) {
                 repairShovel();
             }
-            if(isMap())
-            {
+            if (isMap()) {
                 giveMap();
             }
         }
@@ -62,92 +54,86 @@ public class DiggingBoost
 
     //Global check
 
-    private boolean isDig()
-    {
+    private boolean isDig() {
         List<Material> mList = Lists.newArrayList(Material.DIRT, Material.GRAVEL, Material.SOUL_SAND, Material.SAND, Material.GRASS, Material.SOIL);
         return mList.contains(m);
     }
 
-    private boolean isShovel()
-    {
-        if(is.getType().equals(Material.AIR))return false;
+    private boolean isShovel() {
+        if (is.getType().equals(Material.AIR)) return false;
         Material[] shovels = {Material.IRON_SPADE, Material.GOLD_SPADE, Material.DIAMOND_SPADE, Material.WOOD_SPADE, Material.STONE_SPADE};
-        for(Material mat : shovels)
-        {
-            if(mat.equals(is.getType()))return true;
+        for (Material mat : shovels) {
+            if (mat.equals(is.getType())) return true;
         }
         return false;
     }
 
 
     //Gravel boost --------------------------------------------------------------------------------
-    private boolean isGravelBoost()
-    {
+    private boolean isGravelBoost() {
         return level > 14 && m.equals(Material.GRAVEL) && RandomNumber.get(100) <= 20;
     }
 
-    private void giveFlint()
-    {
+    private void giveFlint() {
         b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.FLINT, 1));
     }
 
 
     //Tool boost ----------------------------------------------------------------------------------
-    private boolean isToolBoost()
-    {
+    private boolean isToolBoost() {
         int chance = RandomNumber.get(600);
-        if(level > 29 && chance < 7)
-        {
+        if (level > 29 && chance < 7) {
             this.chance = chance;
             return true;
         }
         return false;
     }
 
-    private void giveTool()
-    {
+    private void giveTool() {
         Material material;
-        switch(chance)
-        {
-            case 1: material = Material.IRON_AXE;
+        switch (chance) {
+            case 1:
+                material = Material.IRON_AXE;
                 break;
-            case 2: material = Material.IRON_SPADE;
+            case 2:
+                material = Material.IRON_SPADE;
                 break;
-            case 3: material = Material.IRON_SWORD;
+            case 3:
+                material = Material.IRON_SWORD;
                 break;
-            case 4: material = Material.IRON_HOE;
+            case 4:
+                material = Material.IRON_HOE;
                 break;
-            case 5: material = Material.IRON_PICKAXE;
+            case 5:
+                material = Material.IRON_PICKAXE;
                 break;
-            case 6: material = Material.SHEARS;
+            case 6:
+                material = Material.SHEARS;
                 break;
-            default: material = Material.IRON_SPADE;
+            default:
+                material = Material.IRON_SPADE;
         }
         b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(material, 1));
     }
 
     //Grass boost ------------------------------------------------------------------------------------
 
-    private boolean isGrassBoost()
-    {
+    private boolean isGrassBoost() {
         return m.equals(Material.GRASS) && level > 69;
     }
 
-    private void giveGrass()
-    {
+    private void giveGrass() {
         b.setType(Material.AIR);
         b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.GRASS, 1));
     }
 
     //Treasuremap boost ------------------------------------------------------------------------------
 
-    private boolean isMap()
-    {
+    private boolean isMap() {
         return level > 59 && RandomNumber.get(100000) <= level;
     }
 
-    private void giveMap()
-    {
+    private void giveMap() {
         b.getWorld().dropItemNaturally(b.getLocation(), TreasureMapItem.getNewTreasureMap(b.getWorld()));
         b.getWorld().playSound(b.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
         p.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
@@ -155,13 +141,11 @@ public class DiggingBoost
 
     //Unbreaking shovel boost ------------------------------------------------------------------------
 
-    private boolean isUnBreakingBoost()
-    {
+    private boolean isUnBreakingBoost() {
         return level > 99;
     }
 
-    private void repairShovel()
-    {
+    private void repairShovel() {
         is.setDurability(new ItemStack(is.getType(), 1).getDurability());
     }
 

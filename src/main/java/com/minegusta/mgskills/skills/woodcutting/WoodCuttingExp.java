@@ -2,39 +2,47 @@ package com.minegusta.mgskills.skills.woodcutting;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Woodcutting;
+import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
-import com.minegusta.mgskills.util.ProgressBar;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
-public class WoodCuttingExp
-{
-    private DetailedMPlayer mp;
+public class WoodCuttingExp implements IExp {
     private Material m;
+    private DetailedMPlayer mp;
 
-    public WoodCuttingExp(BlockBreakEvent e)
-    {
-        if(e.isCancelled())return;
-        this.m = e.getBlock().getType();
-        if(!isLog())return;
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
-
-
-        giveExp();
-        LevelUpListener.isLevelUp(new Woodcutting(mp));
+    @Override
+    public WoodCuttingExp build(Player p, Block b) {
+        this.m = b.getType();
+        this.mp = TempData.getMPlayer(p);
+        return this;
     }
 
     //Checks
 
-    private boolean isLog()
-    {
+    private boolean isLog() {
         return m.equals(Material.LOG) || m.equals(Material.LOG_2);
     }
 
+    @Override
+    public boolean check() {
+        return isLog();
+    }
+
     //Apply
-    private void giveExp()
-    {
+    private void giveExp() {
         mp.addWoodcutting(25);
+    }
+
+    @Override
+    public boolean apply() {
+        if (check()) {
+            giveExp();
+            LevelUpListener.isLevelUp(new Woodcutting(mp));
+            return true;
+        }
+        return false;
     }
 }

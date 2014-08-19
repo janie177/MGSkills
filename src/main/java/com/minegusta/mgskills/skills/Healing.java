@@ -1,20 +1,19 @@
 package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.struct.ISkill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Healing implements Skill
-{
+public class Healing implements ISkill {
     private DetailedMPlayer mp;
 
-    public Healing(){}
-
-    public Healing(DetailedMPlayer mp)
-    {
-        this.mp = mp;
+    public Healing() {
     }
 
+    public Healing(DetailedMPlayer mp) {
+        this.mp = mp;
+    }
 
 
     @Override
@@ -33,15 +32,15 @@ public class Healing implements Skill
     }
 
     @Override
-    public void insertMPlayer(DetailedMPlayer mp)
-    {
+    public void insertMPlayer(DetailedMPlayer mp) {
         this.mp = mp;
     }
 
     @Override
     public String getSpecialBoost() {
-        return "le le le: " + ChatColor.GREEN + mp.getHealingLevel() * 5 +"%"+ChatColor.LIGHT_PURPLE + ".";
+        return "le le le: " + ChatColor.GREEN + mp.getHealingLevel() * 5 + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
+
     @Override
     public void levelUp() {
         mp.addHealinglevel();

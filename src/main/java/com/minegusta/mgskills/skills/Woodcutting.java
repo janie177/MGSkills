@@ -1,20 +1,19 @@
 package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.struct.ISkill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Woodcutting implements Skill
-{
+public class Woodcutting implements ISkill {
     private DetailedMPlayer mp;
 
-    public Woodcutting(){}
-
-    public Woodcutting(DetailedMPlayer mp)
-    {
-        this.mp = mp;
+    public Woodcutting() {
     }
 
+    public Woodcutting(DetailedMPlayer mp) {
+        this.mp = mp;
+    }
 
 
     @Override
@@ -33,8 +32,7 @@ public class Woodcutting implements Skill
     }
 
     @Override
-    public void insertMPlayer(DetailedMPlayer mp)
-    {
+    public void insertMPlayer(DetailedMPlayer mp) {
         this.mp = mp;
     }
 

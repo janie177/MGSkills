@@ -1,6 +1,5 @@
 package com.minegusta.mgskills;
 
-import com.google.common.collect.Lists;
 import com.minegusta.mgskills.commands.HighScoreCommand;
 import com.minegusta.mgskills.commands.ScoreBoardCommand;
 import com.minegusta.mgskills.commands.SkillCommand;
@@ -15,16 +14,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
-
-public class Main extends JavaPlugin
-{
+public class Main extends JavaPlugin {
     public static Plugin PLUGIN;
     private static int SAVETASK;
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         //plugin
         PLUGIN = this;
 
@@ -37,9 +32,8 @@ public class Main extends JavaPlugin
         getCommand("wolf").setExecutor(new WolfBoost());
         getCommand("hsb").setExecutor(new ScoreBoardCommand());
 
-        List<String> skillCommands = Lists.newArrayList("brewing", "cooking", "digging", "exploration", "farming", "fishing","healing", "hunting", "mining", "summoning", "woodcutting");
-        for(String s : skillCommands)
-        {
+        String[] skillCommands = {"brewing", "cooking", "digging", "exploration", "farming", "fishing", "healing", "hunting", "mining", "summoning", "woodcutting"};
+        for (String s : skillCommands) {
             getCommand(s).setExecutor(new SkillInfoCommand());
         }
 
@@ -57,14 +51,11 @@ public class Main extends JavaPlugin
     }
 
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         //Save one last time
         SaveTask.save();
 
         //Unregister Tasks
         Bukkit.getScheduler().cancelTask(SAVETASK);
-
-
     }
 }

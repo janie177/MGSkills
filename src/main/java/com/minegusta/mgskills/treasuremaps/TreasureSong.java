@@ -8,12 +8,10 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class TreasureSong
-{
+public class TreasureSong {
     private final Player p;
 
-    public TreasureSong(Player p)
-    {
+    public TreasureSong(Player p) {
         this.p = p;
         playSong();
     }
@@ -62,20 +60,15 @@ public class TreasureSong
             Sound.NOTE_PLING
     );
 
-    private void playSong()
-    {
-        for (int i = 0; i < 20 * 20 + 1; i++)
-        {
+    private void playSong() {
+        for (int i = 0; i < 20 * 20 + 1; i++) {
             final int k = i;
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable()
-            {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                 @Override
-                public void run()
-                {
-                    if(k % 5 == 0) p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
-                    if(k % 10 == 0)
-                    {
-                        int count = k/10;
+                public void run() {
+                    if (k % 5 == 0) p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+                    if (k % 10 == 0) {
+                        int count = k / 10;
                         p.playSound(p.getLocation(), song.get(count), 1, 1);
                     }
                 }

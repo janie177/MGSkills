@@ -19,27 +19,22 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class WolfBoost implements CommandExecutor
-{
+public class WolfBoost implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender s, Command cmd, String label, String[] args)
-    {
-        if(!(s instanceof Player))return true;
+    public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
+        if (!(s instanceof Player)) return true;
 
         Player p = (Player) s;
         DetailedMPlayer mp = TempData.pMap.get(p.getUniqueId());
 
-        if(!(new WorldCheck(p.getWorld()).check()))
-        {
+        if (!(new WorldCheck(p.getWorld()).check())) {
             new SendMessage(p, Lists.newArrayList("You cannot use that in this world!"));
             return true;
         }
 
-        if(mp.getHuntingLevel() >= 72)
-        {
-            if(!CoolDown.cooledDown(p.getUniqueId(), TempData.wolfMap, 60 * 15))
-            {
+        if (mp.getHuntingLevel() >= 72) {
+            if (!CoolDown.cooledDown(p.getUniqueId(), TempData.wolfMap, 60 * 15)) {
                 new SendMessage(p, Lists.newArrayList("You have to wait another " + (60 * 15 - CoolDown.getRemainingTime(p.getUniqueId(), TempData.wolfMap)) + " seconds."));
                 return true;
             }

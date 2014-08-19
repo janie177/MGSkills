@@ -29,20 +29,17 @@ public class HighScoreManager {
         return getConf().getString("player" + Integer.toString(index), "xXObamaSwaggXx");
     }
 
-    public List<Double> getLoc(int index)
-    {
+    public List<Double> getLoc(int index) {
         return getConf().getDoubleList("loc" + Integer.toString(index));
     }
 
-    public void setLoc(int index, Player p)
-    {
+    public void setLoc(int index, Player p) {
         Location loc = p.getTargetBlock(null, 8).getLocation();
         getConf().set("loc" + Integer.toString(index), Lists.newArrayList(loc.getX(), loc.getY(), loc.getZ()));
         getConf().set("world", p.getWorld().getName());
     }
 
-    public String getWorld()
-    {
+    public String getWorld() {
         return getConf().getString("world", "world");
     }
 }

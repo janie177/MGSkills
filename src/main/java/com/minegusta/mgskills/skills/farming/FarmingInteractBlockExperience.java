@@ -11,66 +11,64 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class FarmingInteractBlockExperience
-{
+public class FarmingInteractBlockExperience {
     private DetailedMPlayer mp;
     private Block block;
     private Action action;
 
-    public FarmingInteractBlockExperience(PlayerInteractEvent e)
-    {
+    public FarmingInteractBlockExperience(PlayerInteractEvent e) {
         this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
         this.action = e.getAction();
 
-        if(!getBlock())return;
+        if (!getBlock()) return;
         block = e.getClickedBlock();
 
-        if(!e.isCancelled() && hasLevel() && isSappling())
-        {
+        if (!e.isCancelled() && hasLevel() && isSappling()) {
             makeTree();
             mp.addFarming(48);
             LevelUpListener.isLevelUp(new Farming(mp));
         }
     }
 
-    private boolean getBlock()
-    {
+    private boolean getBlock() {
         return action.equals(Action.RIGHT_CLICK_BLOCK);
     }
 
-    private boolean isSappling()
-    {
+    private boolean isSappling() {
         return block.getType().equals(Material.SAPLING);
     }
 
-    private boolean hasLevel()
-    {
+    private boolean hasLevel() {
         return mp.getFarmingLevel() > 74;
     }
 
-    private void makeTree()
-    {
+    private void makeTree() {
         String treetype;
-        switch (block.getData())
-        {
-            case 0: treetype = "TREE";
+        switch (block.getData()) {
+            case 0:
+                treetype = "TREE";
                 break;
-            case 1: treetype = "TALL_REDWOOD";
+            case 1:
+                treetype = "TALL_REDWOOD";
                 break;
-            case 2: treetype = "BIRCH";
+            case 2:
+                treetype = "BIRCH";
                 break;
-            case 3: treetype = "SMALL_JUNGLE";
+            case 3:
+                treetype = "SMALL_JUNGLE";
                 break;
-            case 4: treetype = "ACACIA";
+            case 4:
+                treetype = "ACACIA";
                 break;
-            case 5: treetype = "DARK_OAK";
+            case 5:
+                treetype = "DARK_OAK";
                 break;
-            default: treetype = "TREE";
+            default:
+                treetype = "TREE";
                 break;
 
         }
-        if(block.getWorld().generateTree(block.getLocation(), TreeType.valueOf((treetype))))
-        {
+        if (block.getWorld().generateTree(block.getLocation(), TreeType.valueOf((treetype)))) {
             block.setType(block.getLocation().getBlock().getRelative(BlockFace.UP).getType());
         }
     }

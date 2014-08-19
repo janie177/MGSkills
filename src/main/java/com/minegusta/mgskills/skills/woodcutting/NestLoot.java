@@ -6,8 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public enum NestLoot
-{
+public enum NestLoot {
     L1(new ItemStack(Material.APPLE, 5)),
     L2(new ItemStack(Material.POTATO_ITEM, 5)),
     L3(new ItemStack(Material.CARROT_ITEM, 5)),
@@ -28,13 +27,11 @@ public enum NestLoot
 
     private ItemStack loot;
 
-    private NestLoot(ItemStack loot)
-    {
+    private NestLoot(ItemStack loot) {
         this.loot = loot;
     }
 
-    public ItemStack get()
-    {
+    public ItemStack get() {
         return loot;
     }
 }

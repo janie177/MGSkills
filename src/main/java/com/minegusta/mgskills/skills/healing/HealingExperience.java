@@ -9,8 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class HealingExperience
-{
+public class HealingExperience {
 
     private DetailedMPlayer mp;
     private Player healer;
@@ -19,39 +18,33 @@ public class HealingExperience
     private int healAmount;
     private ItemStack hand;
 
-    public HealingExperience(PlayerInteractEntityEvent e)
-    {
+    public HealingExperience(PlayerInteractEntityEvent e) {
         this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
         this.healer = e.getPlayer();
         this.healed = e.getRightClicked();
         this.hand = healer.getItemInHand();
-        if(e.isCancelled())return;
+        if (e.isCancelled()) return;
 
 
     }
 
-    private boolean isHealPlayer()
-    {
+    private boolean isHealPlayer() {
         return healed instanceof Player;
     }
 
-    private boolean isHealItem()
-    {
+    private boolean isHealItem() {
         return hand.getType().equals(Material.PAPER);
     }
 
-    private boolean isCooledDown()
-    {
+    private boolean isCooledDown() {
         return CoolDown.cooledDown(healer.getUniqueId(), TempData.healMap, coolDownTime);
     }
 
-    private void getHealAmount()
-    {
+    private void getHealAmount() {
 
     }
 
-    private void applyHeal()
-    {
+    private void applyHeal() {
 
     }
 }

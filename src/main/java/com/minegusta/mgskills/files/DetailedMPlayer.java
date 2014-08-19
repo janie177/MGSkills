@@ -9,15 +9,13 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 import java.util.UUID;
 
-public class DetailedMPlayer implements MPlayer
-{
+public class DetailedMPlayer implements MPlayer {
     //All skills available
     private UUID uuid;
-    private int fishing,mining,cooking,summoning,farming,hunting,woodcutting,digging,brewing,healing,exploration,all;
-    private int fishingLevel,miningLevel,cookingLevel,summoningLevel,farmingLevel,huntingLevel,woodcuttingLevel,diggingLevel,brewingLevel,healingLevel,explorationLevel;
+    private Integer fishing, mining, cooking, summoning, farming, hunting, woodcutting, digging, brewing, healing, exploration;
+    private Integer fishingLevel, miningLevel, cookingLevel, summoningLevel, farmingLevel, huntingLevel, woodcuttingLevel, diggingLevel, brewingLevel, healingLevel, explorationLevel;
 
-    public DetailedMPlayer(FileConfiguration conf, UUID uuid)
-    {
+    public DetailedMPlayer(FileConfiguration conf, UUID uuid) {
         this.uuid = uuid;
         fishing = conf.getInt("fishing", 0);
         mining = conf.getInt("mining", 0);
@@ -30,7 +28,7 @@ public class DetailedMPlayer implements MPlayer
         brewing = conf.getInt("brewing", 0);
         healing = conf.getInt("healing", 0);
         exploration = conf.getInt("exploration", 0);
-        
+
         fishingLevel = conf.getInt("fishingLevel", 1);
         miningLevel = conf.getInt("miningLevel", 1);
         cookingLevel = conf.getInt("cookingLevel", 1);
@@ -42,8 +40,6 @@ public class DetailedMPlayer implements MPlayer
         brewingLevel = conf.getInt("brewingLevel", 1);
         healingLevel = conf.getInt("healingLevel", 1);
         explorationLevel = conf.getInt("explorationLevel", 1);
-        
-        all = fishingLevel+miningLevel+cookingLevel+summoningLevel+farmingLevel+huntingLevel+woodcuttingLevel+diggingLevel+brewingLevel+healingLevel+explorationLevel;
     }
 
 
@@ -59,63 +55,62 @@ public class DetailedMPlayer implements MPlayer
 
     //Getters
     @Override
-    public int getFishing()
-    {
+    public int getFishing() {
         return fishing;
     }
+
     @Override
-    public int getMining()
-    {
+    public int getMining() {
         return mining;
     }
+
     @Override
-    public int getCooking()
-    {
+    public int getCooking() {
         return cooking;
     }
+
     @Override
-    public int getSummoning()
-    {
+    public int getSummoning() {
         return summoning;
     }
+
     @Override
-    public int getFarming()
-    {
+    public int getFarming() {
         return farming;
     }
+
     @Override
-    public int getHunting()
-    {
+    public int getHunting() {
         return hunting;
     }
+
     @Override
-    public int getWoodcutting()
-    {
+    public int getWoodcutting() {
         return woodcutting;
     }
+
     @Override
-    public int getDigging()
-    {
+    public int getDigging() {
         return digging;
     }
+
     @Override
-    public int getBrewing()
-    {
+    public int getBrewing() {
         return brewing;
     }
+
     @Override
-    public int getHealing()
-    {
+    public int getHealing() {
         return healing;
     }
+
     @Override
-    public int getAll()
-    {
-        return all;
+    public int getAll() {
+        return fishingLevel + miningLevel + cookingLevel + summoningLevel + farmingLevel + huntingLevel + woodcuttingLevel + diggingLevel + brewingLevel + healingLevel + explorationLevel;
     }
+
     @Override
-    public int getExploration()
-    {
+    public int getExploration() {
         return exploration;
     }
 
@@ -177,72 +172,66 @@ public class DetailedMPlayer implements MPlayer
 
     //Setters
     @Override
-    public void addFishing(int expAdded)
-    {
+    public void addFishing(int expAdded) {
         fishing = fishing + expAdded;
     }
 
     @Override
-    public void setAll() {
-        all = fishingLevel+miningLevel+cookingLevel+summoningLevel+farmingLevel+huntingLevel+woodcuttingLevel+diggingLevel+brewingLevel+healingLevel+explorationLevel;
-    }
-    @Override
-    public void addMining(int expAdded)
-    {
+    public void addMining(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Mining");
         mining = mining + expAdded;
     }
+
     @Override
-    public void addCooking(int expAdded)
-    {
+    public void addCooking(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Cooking");
         cooking = cooking + expAdded;
     }
+
     @Override
-    public void addSummoning(int expAdded)
-    {
+    public void addSummoning(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Summoning");
         summoning = summoning + expAdded;
     }
+
     @Override
-    public void addFarming(int expAdded)
-    {
+    public void addFarming(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Farming");
         farming = farming + expAdded;
     }
+
     @Override
-    public void addHunting(int expAdded)
-    {
+    public void addHunting(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Hunting");
         hunting = hunting + expAdded;
     }
+
     @Override
-    public void addWoodcutting(int expAdded)
-    {
+    public void addWoodcutting(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Woodcutting");
         woodcutting = woodcutting + expAdded;
     }
+
     @Override
-    public void addDigging(int expAdded)
-    {
+    public void addDigging(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Digging");
         digging = digging + expAdded;
     }
+
     @Override
-    public void addBrewing(int expAdded)
-    {
+    public void addBrewing(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Brewing");
         brewing = brewing + expAdded;
     }
+
     @Override
-    public void addHealing(int expAdded)
-    {
+    public void addHealing(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Healing");
         healing = healing + expAdded;
     }
+
     @Override
-    public void addExploration(int expAdded)
-    {
+    public void addExploration(int expAdded) {
         new ProgressBar(expAdded, getPlayer(), "Exploration");
         exploration = exploration + expAdded;
     }
@@ -328,7 +317,6 @@ public class DetailedMPlayer implements MPlayer
         map.put("brewingLevel", brewingLevel);
         map.put("healingLevel", healingLevel);
         map.put("explorationLevel", explorationLevel);
-        map.put("all", all);
         return map;
     }
 }

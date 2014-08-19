@@ -1,7 +1,6 @@
 package com.minegusta.mgskills.util;
 
-public enum ExpTable
-{
+public enum ExpTable {
     L1(0),
     L2(1650),
     L3(3850),
@@ -108,13 +107,11 @@ public enum ExpTable
 
     private int exp;
 
-    private ExpTable(int exp)
-    {
+    private ExpTable(int exp) {
         this.exp = exp;
     }
 
-    public int getExp()
-    {
+    public int getExp() {
         return exp;
     }
 }

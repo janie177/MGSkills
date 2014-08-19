@@ -1,20 +1,19 @@
 package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.struct.ISkill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Digging implements Skill
-{
+public class Digging implements ISkill {
     private DetailedMPlayer mp;
 
-    public Digging(){}
-
-    public Digging(DetailedMPlayer mp)
-    {
-        this.mp = mp;
+    public Digging() {
     }
 
+    public Digging(DetailedMPlayer mp) {
+        this.mp = mp;
+    }
 
 
     @Override
@@ -33,8 +32,7 @@ public class Digging implements Skill
     }
 
     @Override
-    public void insertMPlayer(DetailedMPlayer mp)
-    {
+    public void insertMPlayer(DetailedMPlayer mp) {
         this.mp = mp;
     }
 
@@ -42,6 +40,7 @@ public class Digging implements Skill
     public String getSpecialBoost() {
         return "Bonus experience: " + ChatColor.GREEN + mp.getDiggingLevel() / 5 + ChatColor.LIGHT_PURPLE + ".";
     }
+
     @Override
     public void levelUp() {
         mp.addDigginglevel();
