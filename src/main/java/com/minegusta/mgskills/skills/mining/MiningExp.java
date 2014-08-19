@@ -17,9 +17,10 @@ public class MiningExp
     {
         if(e.isCancelled())return;
         this.m = e.getBlock().getType();
+        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
         int exp = getExp();
         if(exp == 0)return;
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
+
 
         mp.addMining(exp);
         LevelUpListener.isLevelUp(new Mining(mp));

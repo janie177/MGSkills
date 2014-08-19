@@ -17,7 +17,7 @@ public class WoodCuttingExp
     {
         if(e.isCancelled())return;
         this.m = e.getBlock().getType();
-        if(isLog())return;
+        if(!isLog())return;
         this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
 
 

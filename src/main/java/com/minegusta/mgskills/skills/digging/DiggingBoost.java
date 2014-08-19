@@ -28,7 +28,7 @@ public class DiggingBoost
     {
         if(e.isCancelled())return;
         this.m = e.getBlock().getType();
-        if(isDig())return;
+        if(!isDig())return;
         DetailedMPlayer mp = TempData.pMap.get(e.getPlayer().getUniqueId());
         this.level = mp.getDiggingLevel();
         this.b = e.getBlock();
