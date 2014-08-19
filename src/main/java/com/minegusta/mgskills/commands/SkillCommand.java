@@ -69,7 +69,7 @@ public class SkillCommand implements CommandExecutor {
         return true;
     }
 
-    private void sendList(List<String> list) {
+    private void sendList(String[] list) {
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-");
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=" + ChatColor.RED + "Skills Help" + ChatColor.YELLOW + "=-=-=-=-");
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-");
@@ -78,7 +78,7 @@ public class SkillCommand implements CommandExecutor {
         }
     }
 
-    private void sendInfoList(List<String> list, String skill) {
+    private void sendInfoList(String[] list, String skill) {
         try {
             if (SkillFromString.valueOf(skill.toLowerCase()).name() == null) {
                 sendList(SkillInfo.SKILLS.getInfo());

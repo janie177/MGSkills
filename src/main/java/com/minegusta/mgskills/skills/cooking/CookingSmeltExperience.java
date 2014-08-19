@@ -21,18 +21,17 @@ public class CookingSmeltExperience {
     private int experience;
 
     public CookingSmeltExperience(FurnaceSmeltEvent e) {
-        this.cooked = e.getResult().getType();
-        this.amount = e.getResult().getAmount();
         if (!hasPlayerNear(e.getBlock())) return;
-        if (e.isCancelled()) return;
+        this.cooked = e.getResult().getType();
         if (isFood()) {
+            this.amount = e.getResult().getAmount();
             applyBoost();
             applyExperience();
             e.getResult().setAmount(amount);
-        }
 
-        for (Player p : players) {
-            LevelUpListener.isLevelUp(new Cooking(TempData.pMap.get(p.getUniqueId())));
+            for (Player p : players) {
+                LevelUpListener.isLevelUp(new Cooking(TempData.pMap.get(p.getUniqueId())));
+            }
         }
     }
 

@@ -25,7 +25,7 @@ public enum SkillInfo {
             " - " + ChatColor.GRAY + "You gain " + ChatColor.RED + "1%" + ChatColor.GRAY +" chance for a double catch per level."
     }),*/
     MINING(new String[]{
-            ChatColor.GRAY + "Mining experience is gained when minig stone or ores that break.",
+            ChatColor.GRAY + "Mining experience is gained when mining stone or ores that break.",
             ChatColor.GRAY + "Ores like iron and gold do not give extra experience.",
             ChatColor.GRAY + "You will only get 1 exp for mining ores with silk touch.",
             ChatColor.GRAY + "You start with a 0.5% chance to randomly find ore.",

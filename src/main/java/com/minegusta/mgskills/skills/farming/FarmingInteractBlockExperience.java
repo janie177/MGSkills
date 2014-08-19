@@ -2,40 +2,22 @@ package com.minegusta.mgskills.skills.farming;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Farming;
+import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.entity.Player;
 
-public class FarmingInteractBlockExperience {
+public class FarmingInteractBlockExperience implements IExp
+{
     private DetailedMPlayer mp;
-    private Block block;
-    private Action action;
-
-    public FarmingInteractBlockExperience(PlayerInteractEvent e) {
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
-        this.action = e.getAction();
-
-        if (!getBlock()) return;
-        block = e.getClickedBlock();
-
-        if (!e.isCancelled() && hasLevel() && isSappling()) {
-            makeTree();
-            mp.addFarming(48);
-            LevelUpListener.isLevelUp(new Farming(mp));
-        }
-    }
-
-    private boolean getBlock() {
-        return action.equals(Action.RIGHT_CLICK_BLOCK);
-    }
+    private Block b;
 
     private boolean isSappling() {
-        return block.getType().equals(Material.SAPLING);
+        return b.getType().equals(Material.SAPLING);
     }
 
     private boolean hasLevel() {
@@ -44,7 +26,7 @@ public class FarmingInteractBlockExperience {
 
     private void makeTree() {
         String treetype;
-        switch (block.getData()) {
+        switch (b.getData()) {
             case 0:
                 treetype = "TREE";
                 break;
@@ -68,8 +50,33 @@ public class FarmingInteractBlockExperience {
                 break;
 
         }
-        if (block.getWorld().generateTree(block.getLocation(), TreeType.valueOf((treetype)))) {
-            block.setType(block.getLocation().getBlock().getRelative(BlockFace.UP).getType());
+        if (b.getWorld().generateTree(b.getLocation(), TreeType.valueOf((treetype)))) {
+            b.setType(b.getLocation().getBlock().getRelative(BlockFace.UP).getType());
         }
+    }
+
+    @Override
+    public IExp build(Player p, Block b) {
+        this.mp = TempData.getMPlayer(p);
+        this.b = b;
+        return this;
+    }
+
+    @Override
+    public boolean check() {
+        return hasLevel() && isSappling();
+    }
+
+    @Override
+    public boolean apply()
+    {
+        if(check())
+        {
+            makeTree();
+            mp.addFarming(48);
+            LevelUpListener.isLevelUp(new Farming(mp));
+            return true;
+        }
+        return false;
     }
 }

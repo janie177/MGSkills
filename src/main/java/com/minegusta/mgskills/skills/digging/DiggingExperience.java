@@ -2,31 +2,23 @@ package com.minegusta.mgskills.skills.digging;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Digging;
+import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.TempData;
-import org.bukkit.Material;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
-public class DiggingExperience {
+public class DiggingExperience implements IExp{
 
-    private Material m;
 
-    public DiggingExperience(BlockBreakEvent e) {
-        if (e.isCancelled()) return;
-        this.m = e.getBlock().getType();
-        if (getExp() == 0) return;
-        DetailedMPlayer mp = TempData.pMap.get(e.getPlayer().getUniqueId());
-        int bonus = mp.getDiggingLevel() / 5;
-        int exp = getExp() + bonus;
-        mp.addDigging(exp);
-        LevelUpListener.isLevelUp(new Digging(mp));
-    }
+    private DetailedMPlayer mp;
+    private Block b;
 
     //Apply
 
     private int getExp() {
         int exp;
-        switch (m) {
+        switch (b.getType()) {
             case SAND:
                 exp = 12;
                 break;
@@ -52,4 +44,26 @@ public class DiggingExperience {
         return exp;
     }
 
+    @Override
+    public IExp build(Player p, Block b) {
+        this.mp = TempData.getMPlayer(p);
+        this.b = b;
+        return this;
+    }
+
+    @Override
+    public boolean check() {
+        return getExp() != 0;
+    }
+
+    @Override
+    public boolean apply() {
+        if(check())
+        {
+            mp.addDigging(getExp() + mp.getDiggingLevel() / 5);
+            LevelUpListener.isLevelUp(new Digging(mp));
+            return true;
+        }
+        return false;
+    }
 }

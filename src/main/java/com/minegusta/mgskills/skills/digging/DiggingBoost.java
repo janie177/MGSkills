@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills.digging;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.treasuremaps.TreasureMapItem;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.TempData;
@@ -10,30 +11,31 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class DiggingBoost {
-    private Material m;
-    private int level;
+public class DiggingBoost implements IExp {
     private Block b;
+    private DetailedMPlayer mp;
     private int chance;
-    private ItemStack is;
-    private Player p;
 
-    public DiggingBoost(BlockBreakEvent e) {
-        if (e.isCancelled()) return;
-        this.m = e.getBlock().getType();
-        if (!isDig()) return;
-        DetailedMPlayer mp = TempData.pMap.get(e.getPlayer().getUniqueId());
-        this.level = mp.getDiggingLevel();
-        this.b = e.getBlock();
-        this.is = e.getPlayer().getItemInHand();
-        this.p = e.getPlayer();
+    @Override
+    public IExp build(Player p, Block b) {
+        this.mp = TempData.getMPlayer(p);
+        this.b = b;
+        return this;
+    }
 
-        if (isShovel()) {
+    @Override
+    public boolean check() {
+        return isShovel();
+    }
+
+    @Override
+    public boolean apply() {
+        if(check())
+        {
             if (isGravelBoost()) {
                 giveFlint();
             }
@@ -49,21 +51,23 @@ public class DiggingBoost {
             if (isMap()) {
                 giveMap();
             }
+            return true;
         }
+        return false;
     }
 
     //Global check
 
     private boolean isDig() {
         List<Material> mList = Lists.newArrayList(Material.DIRT, Material.GRAVEL, Material.SOUL_SAND, Material.SAND, Material.GRASS, Material.SOIL);
-        return mList.contains(m);
+        return mList.contains(b.getType());
     }
 
     private boolean isShovel() {
-        if (is.getType().equals(Material.AIR)) return false;
+        if (mp.getPlayer().getItemInHand().getType().equals(Material.AIR)) return false;
         Material[] shovels = {Material.IRON_SPADE, Material.GOLD_SPADE, Material.DIAMOND_SPADE, Material.WOOD_SPADE, Material.STONE_SPADE};
         for (Material mat : shovels) {
-            if (mat.equals(is.getType())) return true;
+            if (mat.equals(mp.getPlayer().getItemInHand().getType())) return true;
         }
         return false;
     }
@@ -71,7 +75,7 @@ public class DiggingBoost {
 
     //Gravel boost --------------------------------------------------------------------------------
     private boolean isGravelBoost() {
-        return level > 14 && m.equals(Material.GRAVEL) && RandomNumber.get(100) <= 20;
+        return mp.getDiggingLevel() > 14 && b.getType().equals(Material.GRAVEL) && RandomNumber.get(100) <= 20;
     }
 
     private void giveFlint() {
@@ -82,7 +86,7 @@ public class DiggingBoost {
     //Tool boost ----------------------------------------------------------------------------------
     private boolean isToolBoost() {
         int chance = RandomNumber.get(600);
-        if (level > 29 && chance < 7) {
+        if (mp.getDiggingLevel() > 29 && chance < 7) {
             this.chance = chance;
             return true;
         }
@@ -119,7 +123,7 @@ public class DiggingBoost {
     //Grass boost ------------------------------------------------------------------------------------
 
     private boolean isGrassBoost() {
-        return m.equals(Material.GRASS) && level > 69;
+        return b.getType().equals(Material.GRASS) && mp.getDiggingLevel() > 69;
     }
 
     private void giveGrass() {
@@ -130,23 +134,23 @@ public class DiggingBoost {
     //Treasuremap boost ------------------------------------------------------------------------------
 
     private boolean isMap() {
-        return level > 59 && RandomNumber.get(100000) <= level;
+        return mp.getDiggingLevel() > 59 && RandomNumber.get(100000) <= mp.getDiggingLevel();
     }
 
     private void giveMap() {
         b.getWorld().dropItemNaturally(b.getLocation(), TreasureMapItem.getNewTreasureMap(b.getWorld()));
         b.getWorld().playSound(b.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
-        p.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
+        mp.getPlayer().sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
     }
 
     //Unbreaking shovel boost ------------------------------------------------------------------------
 
     private boolean isUnBreakingBoost() {
-        return level > 99;
+        return mp.getDiggingLevel() > 99;
     }
 
     private void repairShovel() {
-        is.setDurability(new ItemStack(is.getType(), 1).getDurability());
+        mp.getPlayer().getItemInHand().setDurability(new ItemStack(mp.getPlayer().getItemInHand().getType(), 1).getDurability());
     }
 
 }

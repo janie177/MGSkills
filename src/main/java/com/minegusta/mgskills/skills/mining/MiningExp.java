@@ -17,7 +17,7 @@ public class MiningExp implements IExp {
     @Override
     public IExp build(Player p, Block b) {
         this.m = b.getType();
-        this.mp = TempData.pMap.get(p.getUniqueId());
+        this.mp = TempData.getMPlayer(p);
         return this;
     }
 

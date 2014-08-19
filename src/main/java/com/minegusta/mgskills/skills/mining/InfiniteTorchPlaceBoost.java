@@ -9,9 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class InfiniteTorchBoost implements IExp
+public class InfiniteTorchPlaceBoost implements IExp
 {
-
     private Block b;
     private DetailedMPlayer mp;
     private Inventory i;
@@ -23,10 +22,6 @@ public class InfiniteTorchBoost implements IExp
 
     private boolean isTorch() {
         return b.getType().equals(Material.TORCH);
-    }
-
-    private void stopDrop() {
-        if (i.contains(Material.TORCH)) b.setType(Material.AIR);
     }
 
     private void infiniteTorches()
@@ -51,7 +46,6 @@ public class InfiniteTorchBoost implements IExp
     public boolean apply() {
         if(check())
         {
-            stopDrop();
             infiniteTorches();
             return true;
         }

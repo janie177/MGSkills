@@ -11,7 +11,6 @@ public class LevelUpListener {
             if (ExpTable.valueOf("L" + Integer.toString(skill.getLevel() + 1)).getExp() <= skill.getExp() && !(skill.getLevel() == 100)) {
                 new LevelUp(skill.getPlayer(), skill.getName(), skill.getLevel());
                 skill.levelUp();
-                TempData.pMap.get(skill.getPlayer().getUniqueId()).setAll();
             } else stop = true;
             if (stop) {
                 new UpdateHighscores(skill.getPlayer());

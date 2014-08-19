@@ -13,6 +13,7 @@ import com.minegusta.mgskills.skills.farming.FarmingInteractBlockExperience;
 import com.minegusta.mgskills.skills.farming.FarmingInteractEntityExperience;
 import com.minegusta.mgskills.skills.hunting.HuntingExperience;
 import com.minegusta.mgskills.skills.mining.InfiniteTorchBoost;
+import com.minegusta.mgskills.skills.mining.InfiniteTorchPlaceBoost;
 import com.minegusta.mgskills.skills.mining.MiningExp;
 import com.minegusta.mgskills.skills.mining.RandomOreBoost;
 import com.minegusta.mgskills.skills.woodcutting.SuicideChicken;
@@ -26,6 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -68,7 +70,7 @@ public class SkillListener implements Listener {
             new DiggingBoost().build(p, b).apply();
             new DiggingExperience().build(p, b).apply();
             new FarmingBreakBlockExperience().build(p, b).apply();
-            new InfiniteTorchBoost(().build(p, b).apply();
+            new InfiniteTorchBoost().build(p, b).apply();
         }
     }
 
@@ -76,7 +78,8 @@ public class SkillListener implements Listener {
     public void onEvent(BlockPlaceEvent e) {
         if (!worldCheck(e.getPlayer().getWorld())) return;
 
-        new InfiniteTorchBoost(e);
+        if(e.isCancelled())return;
+        new InfiniteTorchPlaceBoost().build(e.getPlayer(), e.getBlock());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -86,7 +89,7 @@ public class SkillListener implements Listener {
         new SuicideChicken(e);
         new CakeEatBoost(e);
 
-        if (!e.isCancelled() && e.hasBlock()) {
+        if (!e.isCancelled() && e.hasBlock() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             new FarmingInteractBlockExperience().build(e.getPlayer(), e.getClickedBlock()).apply();
         }
     }
@@ -96,7 +99,7 @@ public class SkillListener implements Listener {
         if (!worldCheck(e.getBlock().getWorld())) return;
 
         if (!e.isCancelled()) {
-            new CookingSmeltExperience().build(null, e.getBlock()).apply();
+            new CookingSmeltExperience(e);
         }
     }
 
