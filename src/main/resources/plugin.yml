@@ -1,0 +1,53 @@
+main: com.minegusta.mgskills.Main
+author: janie177
+version: ${project.version}
+name: MGSkills
+commands:
+  skills:
+    usage: /Skills
+    description: Show general skill help.
+    aliases: [sk, skill, levels, level]
+  highscore:
+    usage: /HighScore
+    aliases: [hs, hisghscores, score, hiscore]
+  brewing:
+    usage: /Brewing
+    description: Show specific information about this skill.
+  cooking:
+    usage: /Cooking
+    description: Show specific information about this skill.
+  digging:
+    usage: /Digging
+    description: Show specific information about this skill.
+  exploration:
+    usage: /Exploration
+    description: Show specific information about this skill.
+  farming:
+    usage: /Farming
+    description: Show specific information about this skill.
+  fishing:
+    usage: /Fishing
+    description: Show specific information about this skill.
+  healing:
+    usage: /Healing
+    description: Show specific information about this skill.
+  hunting:
+    usage: /Hunting
+    description: Show specific information about this skill.
+  mining:
+    usage: /Mining
+    description: Show specific information about this skill.
+  summoning:
+    usage: /Summoning
+    description: Show specific information about this skill.
+  woodcutting:
+    usage: /Woodcutting
+    description: Show specific information about this skill.
+  wolf:
+    usage: /Wolf
+    description: Summon a wolf companion.
+    aliases: [wolfcompanion, summonwolf]
+  hsb:
+    usage: /HSB <index 1-6>
+    description: Set the highscore board when you are an OP. That means not you Lucas.
+    aliases: [highscoreboard]
