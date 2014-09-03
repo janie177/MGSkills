@@ -1,6 +1,7 @@
 package com.minegusta.mgskills.skills.fishing;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -14,10 +15,10 @@ public class FishingExperience {
     private PlayerFishEvent.State state;
 
     public FishingExperience(PlayerFishEvent e) {
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
+        this.mp = TempData.getMPlayer(e.getPlayer());
         this.fish = e.getCaught();
         this.state = e.getState();
-        this.level = mp.getFishingLevel();
+        this.level = mp.getLevel(Skill.FISHING);
         if (e.isCancelled()) return;
 
         if (!isCaught()) return;
@@ -30,8 +31,8 @@ public class FishingExperience {
     //Setters
 
     private void giveExp() {
-        mp.addFishing(expGiven);
-        newExp = mp.getFishing();
+        mp.addExp(Skill.FISHING, expGiven);
+        newExp = mp.getExp(Skill.FISHING);
     }
 
     //Checks

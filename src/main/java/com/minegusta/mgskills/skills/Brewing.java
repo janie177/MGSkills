@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,12 +24,12 @@ public class Brewing implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getBrewingLevel();
+        return mp.getLevel(Skill.BREWING);
     }
 
     @Override
     public int getExp() {
-        return mp.getBrewing();
+        return mp.getExp(Skill.BREWING);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Brewing implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Moonshine: " + ChatColor.GREEN + mp.getBrewingLevel() * 6 + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Moonshine: " + ChatColor.GREEN + mp.getLevel(Skill.BREWING) * 6 + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addBrewinglevel();
+        mp.addLevel(Skill.BREWING);
     }
 
     @Override

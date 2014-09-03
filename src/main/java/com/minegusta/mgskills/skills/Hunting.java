@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,12 +24,12 @@ public class Hunting implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getHuntingLevel();
+        return mp.getLevel(Skill.HUNTING);
     }
 
     @Override
     public int getExp() {
-        return mp.getHunting();
+        return mp.getExp(Skill.HUNTING);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Hunting implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Chance to get double loot: " + ChatColor.GREEN + mp.getHuntingLevel() * 0.25 + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Chance to get double loot: " + ChatColor.GREEN + mp.getLevel(Skill.HUNTING) * 0.25 + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addHuntinglevel();
+        mp.addLevel(Skill.HUNTING);
     }
 
     @Override

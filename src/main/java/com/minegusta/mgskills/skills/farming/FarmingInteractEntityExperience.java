@@ -3,6 +3,7 @@ package com.minegusta.mgskills.skills.farming;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Farming;
 import com.minegusta.mgskills.util.LevelUpListener;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -21,7 +22,7 @@ public class FarmingInteractEntityExperience {
     private Player p;
 
     public FarmingInteractEntityExperience(PlayerInteractEntityEvent e) {
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
+        this.mp = TempData.getMPlayer(p);
         this.type = e.getRightClicked().getType();
         this.hand = e.getPlayer().getItemInHand().getType();
         this.entity = e.getRightClicked();
@@ -46,7 +47,7 @@ public class FarmingInteractEntityExperience {
     }
 
     private void addExperience() {
-        mp.addFarming(experience);
+        mp.addExp(Skill.FARMING, experience);
         LevelUpListener.isLevelUp(new Farming(mp));
     }
 

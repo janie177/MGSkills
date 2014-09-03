@@ -158,12 +158,12 @@ public class FarmingBreakBlockExperience implements IExp{
 
     private void appleBoost() {
         if (b.getType().equals(Material.LEAVES) || b.getType().equals(Material.LEAVES_2)) {
-            if (mp.getFarmingLevel() >= 44) {
+            if (mp.getLevel(Skill.FARMING) >= 44) {
                 if (RandomNumber.get(100) < 5)
                     b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.APPLE, 1));
             }
 
-            if (mp.getFarmingLevel() == 100) {
+            if (mp.getLevel(Skill.FARMING) == 100) {
                 if (RandomNumber.get(400) == 1)
                     b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
             }
@@ -172,15 +172,15 @@ public class FarmingBreakBlockExperience implements IExp{
 
     private void lootBoost() {
         if (!isGrownPlant) return;
-        if (RandomNumber.get(100) <= mp.getFarmingLevel() * 2) {
+        if (RandomNumber.get(100) <= mp.getLevel(Skill.FARMING) * 2) {
             experience = experience * 2;
             for (ItemStack is : b.getDrops()) {
                 b.getWorld().dropItemNaturally(b.getLocation(), is);
             }
         }
 
-        if (mp.getFarmingLevel() * 2 > 100) {
-            if (RandomNumber.get(100) <= (mp.getFarmingLevel() * 2) - 100) {
+        if (mp.getLevel(Skill.FARMING) * 2 > 100) {
+            if (RandomNumber.get(100) <= (mp.getLevel(Skill.FARMING) * 2) - 100) {
                 for (ItemStack is : b.getDrops()) {
                     b.getWorld().dropItemNaturally(b.getLocation(), is);
                 }
@@ -191,7 +191,7 @@ public class FarmingBreakBlockExperience implements IExp{
     @Override
     public IExp build(Player p, Block b) {
         this.b = b;
-        this.mp = TempData.pMap.get(p.getUniqueId());
+        this.mp = TempData.getMPlayer(p);
         return this;
     }
 
@@ -207,7 +207,7 @@ public class FarmingBreakBlockExperience implements IExp{
             replant();
             appleBoost();
             lootBoost();
-            mp.addFarming(experience);
+            mp.addExp(Skill.FARMING, experience);
             LevelUpListener.isLevelUp(new Farming(mp));
             return true;
         }

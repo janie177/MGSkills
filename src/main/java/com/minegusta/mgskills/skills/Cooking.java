@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -22,12 +23,12 @@ public class Cooking implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getCookingLevel();
+        return mp.getLevel(Skill.COOKING);
     }
 
     @Override
     public int getExp() {
-        return mp.getCooking();
+        return mp.getExp(Skill.COOKING);
     }
 
     @Override
@@ -37,12 +38,12 @@ public class Cooking implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Chance to get twice as much food: " + ChatColor.GREEN + mp.getCookingLevel() + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Chance to get twice as much food: " + ChatColor.GREEN + mp.getLevel(Skill.COOKING) + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addCookinglevel();
+        mp.addLevel(Skill.COOKING);
     }
 
     @Override

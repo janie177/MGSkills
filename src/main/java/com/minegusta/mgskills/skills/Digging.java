@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,12 +24,12 @@ public class Digging implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getDiggingLevel();
+        return mp.getLevel(Skill.DIGGING);
     }
 
     @Override
     public int getExp() {
-        return mp.getDigging();
+        return mp.getExp(Skill.DIGGING);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Digging implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Bonus experience: " + ChatColor.GREEN + mp.getDiggingLevel() / 5 + ChatColor.LIGHT_PURPLE + ".";
+        return "Bonus experience: " + ChatColor.GREEN + mp.getLevel(Skill.DIGGING) / 5 + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addDigginglevel();
+        mp.addLevel(Skill.DIGGING);
     }
 
     @Override

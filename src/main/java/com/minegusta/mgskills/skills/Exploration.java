@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,12 +24,12 @@ public class Exploration implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getExplorationLevel();
+        return mp.getLevel(Skill.EXPLORATION);
     }
 
     @Override
     public int getExp() {
-        return mp.getExploration();
+        return mp.getExp(Skill.EXPLORATION);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Exploration implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Much explore, very wow: " + ChatColor.GREEN + mp.getExplorationLevel() * 2 + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Much explore, very wow: " + ChatColor.GREEN + mp.getLevel(Skill.EXPLORATION) * 2 + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addExplorationlevel();
+        mp.addLevel(Skill.EXPLORATION);
     }
 
     @Override

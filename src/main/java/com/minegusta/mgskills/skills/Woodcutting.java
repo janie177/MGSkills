@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,12 +24,12 @@ public class Woodcutting implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getWoodcuttingLevel();
+        return mp.getLevel(Skill.WOODCUTTING);
     }
 
     @Override
     public int getExp() {
-        return mp.getWoodcutting();
+        return mp.getExp(Skill.WOODCUTTING);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Woodcutting implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Fast woodcutting boost strength: " + ChatColor.GREEN + mp.getWoodcuttingLevel() / 20 + ChatColor.LIGHT_PURPLE + ".";
+        return "Fast woodcutting boost strength: " + ChatColor.GREEN + mp.getLevel(Skill.WOODCUTTING) / 20 + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addWoodcuttinglevel();
+        mp.addLevel(Skill.WOODCUTTING);
     }
 
     @Override

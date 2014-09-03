@@ -3,6 +3,7 @@ package com.minegusta.mgskills.skills.mining;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.RandomNumber;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,14 +25,14 @@ public class RandomOreBoost implements IExp {
         this.p = p;
         this.mp = TempData.getMPlayer(p);
         this.l = b.getLocation();
-        this.level = mp.getMiningLevel();
+        this.level = mp.getLevel(Skill.MINING);
         return this;
     }
 
     //Checks
 
     private boolean isLucky() {
-        return RandomNumber.get(10000) < (50 + (TempData.getMPlayer(p).getMiningLevel() * 5));
+        return RandomNumber.get(10000) < (50 + (level * 5));
     }
 
     private boolean isStone() {
@@ -52,10 +53,10 @@ public class RandomOreBoost implements IExp {
         else {
             String chosen = "D" + Integer.toString(RandomNumber.get(OresAndLevels.values().length));
             if (OresAndLevels.valueOf(chosen).getLevel() > level) {
-                mp.addMining(15);
+                mp.addExp(Skill.FARMING, 15);
                 return is;
             } else {
-                mp.addMining(OresAndLevels.valueOf(chosen).getExp());
+                mp.addExp(Skill.MINING, OresAndLevels.valueOf(chosen).getExp());
                 return OresAndLevels.valueOf(chosen).get();
             }
         }

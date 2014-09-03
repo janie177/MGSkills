@@ -19,7 +19,7 @@ public class HealingExperience {
     private ItemStack hand;
 
     public HealingExperience(PlayerInteractEntityEvent e) {
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
+        this.mp = TempData.getMPlayer(e.getPlayer());
         this.healer = e.getPlayer();
         this.healed = e.getRightClicked();
         this.hand = healer.getItemInHand();
@@ -37,7 +37,7 @@ public class HealingExperience {
     }
 
     private boolean isCooledDown() {
-        return CoolDown.cooledDown(healer.getUniqueId(), TempData.healMap, coolDownTime);
+        return CoolDown.cooledDown(healer.getUniqueId().toString(), TempData.healMap, coolDownTime);
     }
 
     private void getHealAmount() {

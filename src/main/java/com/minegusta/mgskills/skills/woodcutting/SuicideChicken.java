@@ -6,6 +6,7 @@ import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.util.CoolDown;
 import com.minegusta.mgskills.util.SendMessage;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,7 +28,7 @@ public class SuicideChicken {
 
     public SuicideChicken(PlayerInteractEvent e) {
         if (e.isCancelled()) return;
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
+        this.mp = TempData.getMPlayer(p);
         this.p = e.getPlayer();
         this.hand = p.getItemInHand().getType();
         this.action = e.getAction();
@@ -44,7 +45,7 @@ public class SuicideChicken {
         if (isBlazeRod()) {
             if (!isLevel()) return;
             if (!cooledDown()) {
-                new SendMessage(p, Lists.newArrayList("You have to wait another " + (20 - CoolDown.getRemainingTime(p.getUniqueId(), TempData.chickenMap)) + " seconds."));
+                new SendMessage(p, Lists.newArrayList("You have to wait another " + (20 - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.chickenMap)) + " seconds."));
                 return;
             }
             spawnChicken();
@@ -65,19 +66,19 @@ public class SuicideChicken {
     }
 
     private boolean isLevel() {
-        return mp.getWoodcuttingLevel() > 71;
+        return mp.getLevel(Skill.WOODCUTTING) > 71;
     }
 
     private boolean cooledDown() {
-        return CoolDown.cooledDown(p.getUniqueId(), TempData.chickenMap, 20);
+        return CoolDown.cooledDown(p.getUniqueId().toString(), TempData.chickenMap, 20);
     }
 
     private void spawnChicken() {
         Entity ent = p.getWorld().spawnEntity(l.add(0, 1, 0), EntityType.CHICKEN);
         final Chicken c = (Chicken) ent;
-        CoolDown.newCooldown(p.getUniqueId(), TempData.chickenMap);
+        CoolDown.newCooldown(p.getUniqueId().toString(), TempData.chickenMap);
         c.setCustomNameVisible(true);
-        mp.addWoodcutting(30);
+        mp.addExp(Skill.WOODCUTTING, 30);
         boomTask(c);
 
     }

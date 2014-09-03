@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,12 +24,12 @@ public class Summoning implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getSummoningLevel();
+        return mp.getLevel(Skill.SUMMONING);
     }
 
     @Override
     public int getExp() {
-        return mp.getSummoning();
+        return mp.getExp(Skill.SUMMONING);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Summoning implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Who knows: " + ChatColor.GREEN + mp.getSummoningLevel() / 2 + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Who knows: " + ChatColor.GREEN + mp.getLevel(Skill.SUMMONING) / 2 + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addSummoninglevel();
+        mp.addLevel(Skill.SUMMONING);
     }
 
     @Override

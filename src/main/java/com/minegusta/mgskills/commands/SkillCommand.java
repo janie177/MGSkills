@@ -82,7 +82,7 @@ public class SkillCommand implements CommandExecutor {
 
     private void sendInfoList(String[] list, String skill) {
         try {
-            if (Skill.valueOf(skill.toLowerCase()).name() == null) {
+            if (Skill.valueOf(skill.toUpperCase()).name() == null) {
                 sendList(SkillInfo.SKILLS.getInfo());
                 return;
             }
@@ -91,7 +91,7 @@ public class SkillCommand implements CommandExecutor {
         }
 
         DetailedMPlayer mPlayer = TempData.getMPlayer(p);
-        ISkill skillClass = Skill.valueOf(skill.toLowerCase()).getSkill();
+        ISkill skillClass = Skill.valueOf(skill.toUpperCase()).getSkill();
         skillClass.insertMPlayer(mPlayer);
         List<String> list2 = Lists.newArrayList("Current Level: " + ChatColor.GREEN + skillClass.getLevel(), "Progress to next level: " + ChatColor.GREEN + skillClass.getExp() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(skillClass.getLevel() + 1)).getExp(), skillClass.getSpecialBoost());
 

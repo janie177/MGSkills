@@ -4,6 +4,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Woodcutting;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,7 +34,7 @@ public class WoodCuttingExp implements IExp {
 
     //Apply
     private void giveExp() {
-        mp.addWoodcutting(25);
+        mp.addExp(Skill.WOODCUTTING, 25);
     }
 
     @Override

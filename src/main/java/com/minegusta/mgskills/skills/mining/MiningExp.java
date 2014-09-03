@@ -4,6 +4,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Mining;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -94,7 +95,7 @@ public class MiningExp implements IExp {
     @Override
     public boolean apply() {
         if (check()) {
-            mp.addMining(getExp());
+            mp.addExp(Skill.MINING, getExp());
             LevelUpListener.isLevelUp(new Mining(mp));
             return true;
         }

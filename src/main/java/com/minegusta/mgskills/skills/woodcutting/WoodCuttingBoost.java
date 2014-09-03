@@ -6,6 +6,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.SendMessage;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -32,7 +33,7 @@ public class WoodCuttingBoost implements IExp {
         this.mp = TempData.getMPlayer(p);
         this.p = p;
         this.is = p.getItemInHand();
-        this.level = mp.getWoodcuttingLevel();
+        this.level = mp.getLevel(Skill.WOODCUTTING);
         this.b = b;
         this.l = b.getLocation().add(0.5, 0.5, 0.5);
         return this;
@@ -128,7 +129,7 @@ public class WoodCuttingBoost implements IExp {
         if (check()) {
             if (isBirdNest()) {
                 runNest();
-                mp.addWoodcutting(100);
+                mp.addExp(Skill.WOODCUTTING, 100);
             }
             giveBoost();
             return true;

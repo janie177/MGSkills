@@ -20,11 +20,8 @@ public enum Skill {
 
     private ISkill skill;
 
-    private String name;
-
     private Skill(ISkill skill) {
         this.skill = skill;
-        name = name().toLowerCase();
     }
 
     public ISkill getSkill() {
@@ -33,7 +30,7 @@ public enum Skill {
 
     public String getName()
     {
-        return name;
+        return name().toLowerCase();
     }
 
 }

@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -22,12 +23,12 @@ public class Mining implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getMiningLevel();
+        return mp.getLevel(Skill.MINING);
     }
 
     @Override
     public int getExp() {
-        return mp.getMining();
+        return mp.getExp(Skill.MINING);
     }
 
     @Override
@@ -37,13 +38,13 @@ public class Mining implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        double chance = 0.5 + (mp.getMiningLevel() * 0.05);
+        double chance = 0.5 + (mp.getLevel(Skill.MINING) * 0.05);
         return "Chance to randomly find ores: " + ChatColor.GREEN + chance + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addMininglevel();
+        mp.addLevel(Skill.MINING);
     }
 
     @Override

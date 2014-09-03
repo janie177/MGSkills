@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -23,12 +24,12 @@ public class Fishing implements ISkill {
 
     @Override
     public int getLevel() {
-        return mp.getFishingLevel();
+        return mp.getLevel(Skill.FISHING);
     }
 
     @Override
     public int getExp() {
-        return mp.getFishing();
+        return mp.getExp(Skill.FISHING);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Fishing implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Chance to catch double fish: " + ChatColor.GREEN + mp.getFishingLevel() + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Chance to catch double fish: " + ChatColor.GREEN + mp.getLevel(Skill.FISHING) + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addFishingLevel();
+        mp.addLevel(Skill.FISHING);
     }
 
     @Override

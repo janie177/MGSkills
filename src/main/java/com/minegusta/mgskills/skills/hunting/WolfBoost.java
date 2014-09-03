@@ -2,10 +2,7 @@ package com.minegusta.mgskills.skills.hunting;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgskills.files.DetailedMPlayer;
-import com.minegusta.mgskills.util.CoolDown;
-import com.minegusta.mgskills.util.SendMessage;
-import com.minegusta.mgskills.util.TempData;
-import com.minegusta.mgskills.util.WorldCheck;
+import com.minegusta.mgskills.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Effect;
@@ -26,16 +23,16 @@ public class WolfBoost implements CommandExecutor {
         if (!(s instanceof Player)) return true;
 
         Player p = (Player) s;
-        DetailedMPlayer mp = TempData.pMap.get(p.getUniqueId());
+        DetailedMPlayer mp = TempData.getMPlayer(p);
 
         if (!(new WorldCheck(p.getWorld()).check())) {
             new SendMessage(p, Lists.newArrayList("You cannot use that in this world!"));
             return true;
         }
 
-        if (mp.getHuntingLevel() >= 72) {
-            if (!CoolDown.cooledDown(p.getUniqueId(), TempData.wolfMap, 60 * 15)) {
-                new SendMessage(p, Lists.newArrayList("You have to wait another " + (60 * 15 - CoolDown.getRemainingTime(p.getUniqueId(), TempData.wolfMap)) + " seconds."));
+        if (mp.getLevel(Skill.HUNTING) >= 72) {
+            if (!CoolDown.cooledDown(p.getUniqueId().toString(), TempData.wolfMap, 60 * 15)) {
+                new SendMessage(p, Lists.newArrayList("You have to wait another " + (60 * 15 - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.wolfMap)) + " seconds."));
                 return true;
             }
             //Summon wolf
@@ -55,8 +52,8 @@ public class WolfBoost implements CommandExecutor {
             wolf.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 60 * 180, 0));
 
             //Cooldown
-            CoolDown.newCooldown(p.getUniqueId(), TempData.wolfMap);
-            mp.addHunting(100);
+            CoolDown.newCooldown(p.getUniqueId().toString(), TempData.wolfMap);
+            mp.addExp(Skill.HUNTING, 100);
             return true;
         }
         new SendMessage(p, Lists.newArrayList("You need hunting level 70 to summon a wolf companion."));

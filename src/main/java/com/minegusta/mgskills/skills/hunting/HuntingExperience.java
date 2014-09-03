@@ -4,6 +4,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Hunting;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.RandomNumber;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -34,8 +35,8 @@ public class HuntingExperience {
 
         if (!isKilledByWolf() && !isKilledByPlayer()) return;
 
-        this.mp = TempData.pMap.get(killer.getUniqueId());
-        this.level = mp.getHuntingLevel();
+        this.mp = TempData.getMPlayer(killer);
+        this.level = mp.getLevel(Skill.HUNTING);
         this.hand = killer.getItemInHand();
 
 
@@ -60,7 +61,7 @@ public class HuntingExperience {
                         Player owner = (Player) wolf.getOwner();
                         if (owner.isOnline()) {
                             killer = owner;
-                            return TempData.pMap.get(killer.getUniqueId()).getHuntingLevel() > 21;
+                            return TempData.getMPlayer(killer).getLevel(Skill.HUNTING) > 21;
                         }
                     }
                 }
@@ -182,7 +183,7 @@ public class HuntingExperience {
     //Apply
 
     private void giveExperience() {
-        mp.addHunting(getExperience());
+        mp.addExp(Skill.HUNTING, getExperience());
     }
 
     private void applyBoost() {

@@ -2,6 +2,7 @@ package com.minegusta.mgskills.skills.mining;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.IExp;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,7 +18,7 @@ public class InfiniteTorchPlaceBoost implements IExp
 
 
     private boolean islevel() {
-        return mp.getMiningLevel() > 99;
+        return mp.getLevel(Skill.MINING) > 99;
     }
 
     private boolean isTorch() {

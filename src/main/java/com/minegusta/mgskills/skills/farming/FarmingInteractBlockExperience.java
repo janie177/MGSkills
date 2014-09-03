@@ -4,6 +4,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Farming;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -21,7 +22,7 @@ public class FarmingInteractBlockExperience implements IExp
     }
 
     private boolean hasLevel() {
-        return mp.getFarmingLevel() > 74;
+        return mp.getLevel(Skill.FARMING) > 74;
     }
 
     private void makeTree() {
@@ -73,7 +74,7 @@ public class FarmingInteractBlockExperience implements IExp
         if(check())
         {
             makeTree();
-            mp.addFarming(48);
+            mp.addExp(Skill.FARMING, 48);
             LevelUpListener.isLevelUp(new Farming(mp));
             return true;
         }
