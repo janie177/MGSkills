@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgskills.skills.Cooking;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.RandomNumber;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -30,7 +31,7 @@ public class CookingSmeltExperience {
             e.getResult().setAmount(amount);
 
             for (Player p : players) {
-                LevelUpListener.isLevelUp(new Cooking(TempData.pMap.get(p.getUniqueId())));
+                LevelUpListener.isLevelUp(new Cooking(TempData.getMPlayer(p)));
             }
         }
     }
@@ -92,7 +93,7 @@ public class CookingSmeltExperience {
         int chance = 0;
 
         for (Player p : players) {
-            chance = chance + TempData.pMap.get(p.getUniqueId()).getCookingLevel();
+            chance = chance + TempData.getMPlayer(p).getLevel(Skill.COOKING);
         }
 
         if (RandomNumber.get(total) <= chance) {
@@ -103,7 +104,7 @@ public class CookingSmeltExperience {
 
     private void applyExperience() {
         for (Player p : players) {
-            TempData.pMap.get(p.getUniqueId()).addCooking(experience);
+            TempData.getMPlayer(p).addExp(Skill.COOKING, experience);
         }
     }
 }

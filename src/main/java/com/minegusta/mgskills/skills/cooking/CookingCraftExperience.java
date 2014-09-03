@@ -4,6 +4,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Cooking;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.RandomNumber;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -19,11 +20,11 @@ public class CookingCraftExperience {
     private DetailedMPlayer mp;
 
     public CookingCraftExperience(CraftItemEvent e) {
-        this.mp = TempData.pMap.get(e.getWhoClicked().getUniqueId());
+        this.mp = TempData.getMPlayer(e.getWhoClicked().getUniqueId().toString());
         this.is = e.getRecipe().getResult();
         this.cooked = e.getRecipe().getResult().getType();
         this.amount = e.getCurrentItem().getAmount();
-        this.level = mp.getCookingLevel();
+        this.level = mp.getLevel(Skill.COOKING);
         if (e.isCancelled()) return;
 
         if (isFood()) {
@@ -34,7 +35,6 @@ public class CookingCraftExperience {
             mp.getPlayer().updateInventory();
             LevelUpListener.isLevelUp(new Cooking(mp));
         }
-
     }
 
 
@@ -103,6 +103,6 @@ public class CookingCraftExperience {
 
     private void applyExp() {
         experience = (bonusLoot + amount) * experience;
-        mp.addCooking(experience);
+        mp.addExp(Skill.COOKING, experience);
     }
 }

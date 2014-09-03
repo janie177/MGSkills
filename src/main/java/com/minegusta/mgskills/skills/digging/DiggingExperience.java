@@ -4,6 +4,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.skills.Digging;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -60,7 +61,7 @@ public class DiggingExperience implements IExp{
     public boolean apply() {
         if(check())
         {
-            mp.addDigging(getExp() + mp.getDiggingLevel() / 5);
+            mp.addExp(Skill.DIGGING, getExp() + mp.getLevel(Skill.DIGGING) / 5);
             LevelUpListener.isLevelUp(new Digging(mp));
             return true;
         }

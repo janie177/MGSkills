@@ -7,6 +7,7 @@ import com.minegusta.mgskills.skills.Farming;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.RandomNumber;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -100,7 +101,7 @@ public class FarmingBreakBlockExperience implements IExp{
     }
 
     private void replant() {
-        if (mp.getFarmingLevel() >= 62 && hasHoe()) {
+        if (mp.getLevel(Skill.FARMING) >= 62 && hasHoe()) {
             boolean replant = false;
 
             switch (b.getType()) {

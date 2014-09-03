@@ -1,6 +1,7 @@
 package com.minegusta.mgskills.skills.cooking;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
@@ -14,7 +15,7 @@ public class CakeEatBoost {
     private Material m;
 
     public CakeEatBoost(PlayerInteractEvent e) {
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
+        this.mp = TempData.getMPlayer(e.getPlayer().getUniqueId().toString());
         this.action = e.getAction();
         if (e.isCancelled()) return;
 
@@ -32,7 +33,7 @@ public class CakeEatBoost {
     }
 
     private boolean isCake() {
-        return (m.equals(Material.CAKE_BLOCK) || m.equals(Material.CAKE)) && mp.getCookingLevel() > 67 && mp.getPlayer().getFoodLevel() < 20;
+        return (m.equals(Material.CAKE_BLOCK) || m.equals(Material.CAKE)) && mp.getLevel(Skill.COOKING) > 67 && mp.getPlayer().getFoodLevel() < 20;
     }
 
     private void apply() {

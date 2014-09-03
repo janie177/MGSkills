@@ -1,6 +1,7 @@
 package com.minegusta.mgskills.skills.cooking;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -9,7 +10,7 @@ public class FoodBoost {
     private DetailedMPlayer mp;
 
     public FoodBoost(PlayerItemConsumeEvent e) {
-        this.mp = TempData.pMap.get(e.getPlayer().getUniqueId());
+        this.mp = TempData.getMPlayer(e.getPlayer().getUniqueId().toString());
         if (e.isCancelled()) return;
 
         Player p = e.getPlayer();
@@ -19,7 +20,7 @@ public class FoodBoost {
     }
 
     private int apply() {
-        int level = mp.getCookingLevel();
+        int level = mp.getLevel(Skill.COOKING);
         int amount = 0;
 
         if (level >= 100) {

@@ -26,6 +26,6 @@ public class RemoveFromMap {
 
     private void removeFromMap() {
         SaveTask.savePlayer(uuid);
-        TempData.pMap.remove(uuid);
+        TempData.removeMPlayer(uuid.toString());
     }
 }

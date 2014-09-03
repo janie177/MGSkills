@@ -18,6 +18,16 @@ public class TempData {
         return pMap.get(playerId);
     }
 
+    public static void addMPlayer(String uuid, DetailedMPlayer mp)
+    {
+        pMap.put(uuid, mp);
+    }
+
+    public static void removeMPlayer(String uuid)
+    {
+        pMap.remove(uuid);
+    }
+
     public static boolean containsMPlayer(String uuid)
     {
         return pMap.containsKey(uuid);

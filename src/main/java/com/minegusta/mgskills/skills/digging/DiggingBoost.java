@@ -5,6 +5,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.treasuremaps.TreasureMapItem;
 import com.minegusta.mgskills.util.RandomNumber;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -75,7 +76,7 @@ public class DiggingBoost implements IExp {
 
     //Gravel boost --------------------------------------------------------------------------------
     private boolean isGravelBoost() {
-        return mp.getDiggingLevel() > 14 && b.getType().equals(Material.GRAVEL) && RandomNumber.get(100) <= 20;
+        return mp.getLevel(Skill.DIGGING) > 14 && b.getType().equals(Material.GRAVEL) && RandomNumber.get(100) <= 20;
     }
 
     private void giveFlint() {
@@ -86,7 +87,7 @@ public class DiggingBoost implements IExp {
     //Tool boost ----------------------------------------------------------------------------------
     private boolean isToolBoost() {
         int chance = RandomNumber.get(600);
-        if (mp.getDiggingLevel() > 29 && chance < 7) {
+        if (mp.getLevel(Skill.DIGGING) > 29 && chance < 7) {
             this.chance = chance;
             return true;
         }
@@ -123,7 +124,7 @@ public class DiggingBoost implements IExp {
     //Grass boost ------------------------------------------------------------------------------------
 
     private boolean isGrassBoost() {
-        return b.getType().equals(Material.GRASS) && mp.getDiggingLevel() > 69;
+        return b.getType().equals(Material.GRASS) && mp.getLevel(Skill.DIGGING) > 69;
     }
 
     private void giveGrass() {
@@ -134,7 +135,7 @@ public class DiggingBoost implements IExp {
     //Treasuremap boost ------------------------------------------------------------------------------
 
     private boolean isMap() {
-        return mp.getDiggingLevel() > 59 && RandomNumber.get(100000) <= mp.getDiggingLevel();
+        return mp.getLevel(Skill.DIGGING) > 59 && RandomNumber.get(100000) <= mp.getLevel(Skill.DIGGING);
     }
 
     private void giveMap() {
@@ -146,7 +147,7 @@ public class DiggingBoost implements IExp {
     //Unbreaking shovel boost ------------------------------------------------------------------------
 
     private boolean isUnBreakingBoost() {
-        return mp.getDiggingLevel() > 99;
+        return mp.getLevel(Skill.DIGGING) > 99;
     }
 
     private void repairShovel() {
