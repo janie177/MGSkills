@@ -8,19 +8,24 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
 public class TempData {
-    public static ConcurrentMap<UUID, DetailedMPlayer> pMap = Maps.newConcurrentMap();
+    private static ConcurrentMap<String, DetailedMPlayer> pMap = Maps.newConcurrentMap();
 
     public static DetailedMPlayer getMPlayer(Player player) {
-        return getMPlayer(player.getUniqueId());
+        return getMPlayer(player.getUniqueId().toString());
     }
 
-    public static DetailedMPlayer getMPlayer(UUID playerId) {
+    public static DetailedMPlayer getMPlayer(String playerId) {
         return pMap.get(playerId);
     }
 
-    public static ConcurrentMap<UUID, Long> wolfMap = Maps.newConcurrentMap();
+    public static boolean containsMPlayer(String uuid)
+    {
+        return pMap.containsKey(uuid);
+    }
 
-    public static ConcurrentMap<UUID, Long> healMap = Maps.newConcurrentMap();
+    public static ConcurrentMap<String, Long> wolfMap = Maps.newConcurrentMap();
 
-    public static ConcurrentMap<UUID, Long> chickenMap = Maps.newConcurrentMap();
+    public static ConcurrentMap<String, Long> healMap = Maps.newConcurrentMap();
+
+    public static ConcurrentMap<String, Long> chickenMap = Maps.newConcurrentMap();
 }

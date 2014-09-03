@@ -2,6 +2,7 @@ package com.minegusta.mgskills.files;
 
 import com.google.common.collect.Maps;
 import com.minegusta.mgskills.util.ProgressBar;
+import com.minegusta.mgskills.util.Skill;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,25 +37,25 @@ public class DetailedMPlayer implements ConfigurationSerializable {
         return i;
     }
 
-    public int getLevel(String skill)
+    public int getLevel(Skill skill)
     {
-        return map.get(skill.toLowerCase() + "Level");
+        return map.get(skill.getName() + "Level");
     }
 
-    public int getExp(String skill)
+    public int getExp(Skill skill)
     {
-        return map.get(skill.toLowerCase());
+        return map.get(skill.getName());
     }
 
-    public void addExp(String skill, int experience)
+    public void addExp(Skill skill, int experience)
     {
-        new ProgressBar(experience, getPlayer(), WordUtils.capitalize(skill.toLowerCase()));
-        map.put(skill.toLowerCase(), getExp(skill.toLowerCase()) + experience);
+        new ProgressBar(experience, getPlayer(), WordUtils.capitalize(skill.getName()));
+        map.put(skill.getName(), getExp(skill) + experience);
     }
 
-    public void addLevel(String skill)
+    public void addLevel(Skill skill)
     {
-        map.put(skill.toLowerCase() + "Level", getLevel(skill) + 1);
+        map.put(skill.getName() + "Level", getLevel(skill) + 1);
     }
 
     public Player getPlayer() {

@@ -2,10 +2,12 @@ package com.minegusta.mgskills.commands;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgskills.files.DetailedMPlayer;
+import com.minegusta.mgskills.files.LoadToMap;
+import com.minegusta.mgskills.files.RemoveFromMap;
 import com.minegusta.mgskills.skills.SkillInfo;
 import com.minegusta.mgskills.struct.ISkill;
 import com.minegusta.mgskills.util.ExpTable;
-import com.minegusta.mgskills.util.SkillFromString;
+import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import com.minegusta.mgskills.util.YamlUtil;
 import org.bukkit.Bukkit;
@@ -80,7 +82,7 @@ public class SkillCommand implements CommandExecutor {
 
     private void sendInfoList(String[] list, String skill) {
         try {
-            if (SkillFromString.valueOf(skill.toLowerCase()).name() == null) {
+            if (Skill.valueOf(skill.toLowerCase()).name() == null) {
                 sendList(SkillInfo.SKILLS.getInfo());
                 return;
             }
@@ -88,8 +90,8 @@ public class SkillCommand implements CommandExecutor {
             sendList(SkillInfo.HELP.getInfo());
         }
 
-        DetailedMPlayer mPlayer = TempData.pMap.get(p.getUniqueId());
-        ISkill skillClass = SkillFromString.valueOf(skill.toLowerCase()).getSkill();
+        DetailedMPlayer mPlayer = TempData.getMPlayer(p);
+        ISkill skillClass = Skill.valueOf(skill.toLowerCase()).getSkill();
         skillClass.insertMPlayer(mPlayer);
         List<String> list2 = Lists.newArrayList("Current Level: " + ChatColor.GREEN + skillClass.getLevel(), "Progress to next level: " + ChatColor.GREEN + skillClass.getExp() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(skillClass.getLevel() + 1)).getExp(), skillClass.getSpecialBoost());
 
@@ -107,11 +109,12 @@ public class SkillCommand implements CommandExecutor {
     private boolean sendStats(UUID uuid) {
         if (uuid == null) return false;
         DetailedMPlayer mp;
-        if (TempData.pMap.containsKey(uuid)) {
-            mp = TempData.pMap.get(uuid);
+        if (TempData.containsMPlayer(uuid.toString())) {
+            mp = TempData.getMPlayer(p);
         } else {
             if (!YamlUtil.exists("/players/", uuid.toString() + ".yml")) return false;
-            mp = new DetailedMPlayer(YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml"), uuid);
+            new LoadToMap(p);
+            mp = TempData.getMPlayer(p);
         }
 
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
@@ -119,19 +122,23 @@ public class SkillCommand implements CommandExecutor {
         p.sendMessage("   ");
         p.sendMessage(ChatColor.GRAY + "  Skill            Level      Experience/NextLevel");
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Fishing" + ChatColor.GOLD + "]" + "          " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getFishingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getFishingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getFishing() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getFishingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Mining" + ChatColor.GOLD + "]" + "           " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getMiningLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getMiningLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getMining() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getMiningLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Cooking" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getCookingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getCookingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getCooking() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getCookingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Summoning" + ChatColor.GOLD + "]" + "     " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getSummoningLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getSummoningLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getSummoning() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getSummoningLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Farming" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getFarmingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getFarmingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getFarming() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getFarmingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Hunting" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getHuntingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getHuntingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getHunting() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getHuntingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Woodcutting" + ChatColor.GOLD + "]" + "   " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getWoodcuttingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getWoodcuttingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getWoodcutting() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getWoodcuttingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Digging" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getDiggingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getDiggingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getDigging() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getDiggingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Brewing" + ChatColor.GOLD + "]" + "        " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getBrewingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getBrewingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getBrewing() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getBrewingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Healing" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getHealingLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getHealingLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getHealing() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getHealingLevel() + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Exploration" + ChatColor.GOLD + "]" + "   " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getExplorationLevel() + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getExplorationLevel()) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExploration() + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getExplorationLevel() + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Fishing" + ChatColor.GOLD + "]" + "          " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.FISHING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.FISHING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.FISHING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.FISHING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Mining" + ChatColor.GOLD + "]" + "           " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.MINING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.MINING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.DIGGING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.DIGGING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Cooking" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.COOKING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.COOKING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.COOKING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.COOKING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Summoning" + ChatColor.GOLD + "]" + "     " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.SUMMONING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.SUMMONING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.SUMMONING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.SUMMONING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Farming" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.FARMING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.FARMING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.FARMING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.FARMING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Hunting" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.HUNTING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.HUNTING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.HUNTING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.HUNTING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Woodcutting" + ChatColor.GOLD + "]" + "   " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.WOODCUTTING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.WOODCUTTING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.WOODCUTTING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.WOODCUTTING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Digging" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.DIGGING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.DIGGING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.DIGGING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.DIGGING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Brewing" + ChatColor.GOLD + "]" + "        " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.BREWING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.BREWING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.BREWING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.BREWING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Healing" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.HEALING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.HEALING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.HEALING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.HEALING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Exploration" + ChatColor.GOLD + "]" + "   " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.EXPLORATION) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.EXPLORATION)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.EXPLORATION) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.EXPLORATION) + 1)).getExp() + ChatColor.GOLD + "]");
         p.sendMessage("   ");
         p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Total Level" + ChatColor.GOLD + "]" + "   " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getAll() + ChatColor.GOLD + "]");
+
+        //Unload from map again
+        new RemoveFromMap(p);
+
         return true;
     }
 

@@ -65,6 +65,6 @@ public class LoadToMap {
 
     private void loadToMap() {
         //Load to the TempDataMap
-        TempData.pMap.put(uuid, mPlayer);
+        TempData.pMap.put(uuid.toString(), mPlayer);
     }
 }
