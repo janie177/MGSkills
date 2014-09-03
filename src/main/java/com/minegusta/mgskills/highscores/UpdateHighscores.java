@@ -52,7 +52,7 @@ public class UpdateHighscores {
         for (int i = start; i > 0; i--) {
             if (all > levelList.get(i - 1)) {
                 manager.set(uuid.toString(), i, all);
-                Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "MG" + ChatColor.YELLOW + "] " + ChatColor.RED + Bukkit.getPlayer(uuid).getName() + ChatColor.YELLOW + " is now " + ChatColor.RED + "#" + i + ChatColor.YELLOW + " in the highscores!");
+                Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "MG" + ChatColor.YELLOW + "] " + ChatColor.RED + Bukkit.getOfflinePlayer(uuid).getName() + ChatColor.YELLOW + " is now " + ChatColor.RED + "#" + i + ChatColor.YELLOW + " in the highscores!");
                 if (i < 10 && !(playerList.get(i - 1).equals(uuid.toString()))) {
                     manager.set(playerList.get(i - 1), i + 1, levelList.get(i - 1));
                 }

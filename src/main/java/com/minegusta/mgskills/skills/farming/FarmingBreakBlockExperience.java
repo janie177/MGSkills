@@ -201,7 +201,7 @@ public class FarmingBreakBlockExperience implements IExp{
 
     @Override
     public boolean apply() {
-        if(apply())
+        if(check())
         {
             replant();
             appleBoost();

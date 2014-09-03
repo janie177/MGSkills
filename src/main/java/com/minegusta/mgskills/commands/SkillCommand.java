@@ -55,7 +55,7 @@ public class SkillCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("info")) {
                     try {
                         String skill = args[1];
-                        sendInfoList(SkillInfo.valueOf(skill.toLowerCase()).getInfo(), skill);
+                        sendInfoList(SkillInfo.valueOf(skill.toUpperCase()).getInfo(), skill);
                         return true;
 
                     } catch (Exception ignored) {

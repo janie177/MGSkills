@@ -29,7 +29,7 @@ public class DiggingBoost implements IExp {
 
     @Override
     public boolean check() {
-        return isShovel();
+        return isDig() && isShovel();
     }
 
     @Override

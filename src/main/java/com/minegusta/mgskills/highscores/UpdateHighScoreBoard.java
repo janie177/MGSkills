@@ -14,7 +14,7 @@ public class UpdateHighScoreBoard {
 
         World w = Bukkit.getWorld(m.getWorld());
         for (int i = 1; i < 7; i++) {
-            if (m.getLoc(i) == null) return false;
+            if (m.getLoc(i).size() < 3) return false;
             Location loc = new Location(w, m.getLoc(i).get(0), m.getLoc(i).get(1), m.getLoc(i).get(2));
             if (!(w.getBlockAt(loc) != null && w.getBlockAt(loc).getType().equals(Material.WALL_SIGN))) {
                 return false;
