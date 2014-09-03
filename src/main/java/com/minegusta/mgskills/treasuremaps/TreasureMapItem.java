@@ -5,16 +5,14 @@ import com.minegusta.mgskills.util.RandomNumber;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.map.MapRenderer;
-import org.bukkit.map.MapView;
 
 import java.util.List;
 
 public class TreasureMapItem {
-    public static ItemStack getNewTreasureMap(World w) {
+    public static ItemStack getNewTreasureMap(World w)
+    {
         ItemStack is = new ItemStack(Material.MAP, 1);
         double x = RandomNumber.get(20000) - 10000;
         double y = RandomNumber.get(64);
@@ -25,14 +23,6 @@ public class TreasureMapItem {
         meta.setLore(lore);
         meta.setDisplayName(ChatColor.YELLOW + "Treasure Map");
         is.setItemMeta(meta);
-
-        MapView m = (MapView) is.getData();
-        for(MapRenderer r : m.getRenderers())
-        {
-            m.removeRenderer(r);
-        }
-        m.addRenderer(new TreasureMapImage());
-
         return is;
     }
 }

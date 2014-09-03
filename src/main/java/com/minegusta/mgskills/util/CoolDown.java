@@ -1,6 +1,5 @@
 package com.minegusta.mgskills.util;
 
-import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 

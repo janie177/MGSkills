@@ -28,8 +28,8 @@ public class SuicideChicken {
 
     public SuicideChicken(PlayerInteractEvent e) {
         if (e.isCancelled()) return;
-        this.mp = TempData.getMPlayer(p);
         this.p = e.getPlayer();
+        this.mp = TempData.getMPlayer(p);
         this.hand = p.getItemInHand().getType();
         this.action = e.getAction();
         if (!isRightClick()) return;

@@ -2,7 +2,6 @@ package com.minegusta.mgskills.util;
 
 import com.minegusta.mgskills.skills.*;
 import com.minegusta.mgskills.struct.ISkill;
-import org.apache.commons.lang.WordUtils;
 
 public enum Skill {
     FISHING(new Fishing()),

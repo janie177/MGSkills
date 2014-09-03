@@ -5,11 +5,9 @@ import com.minegusta.mgskills.util.ProgressBar;
 import com.minegusta.mgskills.util.Skill;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 

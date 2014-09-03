@@ -4,11 +4,13 @@ import com.google.common.collect.Maps;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 public class TempData {
     private static ConcurrentMap<String, DetailedMPlayer> pMap = Maps.newConcurrentMap();
+
+
 
     public static DetailedMPlayer getMPlayer(Player player) {
         return getMPlayer(player.getUniqueId().toString());
@@ -23,6 +25,11 @@ public class TempData {
         pMap.put(uuid, mp);
     }
 
+    public static Set<String> getKeySet()
+    {
+        return pMap.keySet();
+    }
+
     public static void removeMPlayer(String uuid)
     {
         pMap.remove(uuid);
@@ -32,6 +39,8 @@ public class TempData {
     {
         return pMap.containsKey(uuid);
     }
+
+
 
     public static ConcurrentMap<String, Long> wolfMap = Maps.newConcurrentMap();
 
