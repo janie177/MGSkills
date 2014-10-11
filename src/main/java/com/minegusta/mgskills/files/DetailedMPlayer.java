@@ -51,9 +51,10 @@ public class DetailedMPlayer implements ConfigurationSerializable {
 
     public void addExp(Skill skill, int experience)
     {
+
         ProgressBar.showBar(experience, getPlayer(), WordUtils.capitalize(skill.getSkillName()));
         map.put(skill.getSkillName().toLowerCase(), getExp(skill) + experience);
-        LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
+        LevelUpListener.isLevelUp(p, getExp(skill), skill.getSkillName(), getLevel(skill));
     }
 
     public void addLevel(Skill skill)

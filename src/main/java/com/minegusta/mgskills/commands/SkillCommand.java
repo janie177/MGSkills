@@ -33,7 +33,6 @@ public class SkillCommand implements CommandExecutor {
                     sendStats(p.getUniqueId());
                     return true;
                 }
-
                 if (args[0].equalsIgnoreCase("info")) {
                     sendList(SkillInfo.SKILLS.getInfo());
                     return true;
@@ -136,8 +135,8 @@ public class SkillCommand implements CommandExecutor {
         p.sendMessage("   ");
         p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Total Level" + ChatColor.GOLD + "]" + "   " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getAll() + ChatColor.GOLD + "]");
 
-        //Unload from map again
-        new RemoveFromMap(p);
+        //Unload from map again IF PLAYER IS OFFLINE. IDIOT.
+        if(!p.isOnline())new RemoveFromMap(p);
 
         return true;
     }

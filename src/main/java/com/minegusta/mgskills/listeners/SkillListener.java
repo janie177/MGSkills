@@ -73,7 +73,6 @@ public class SkillListener implements Listener {
         Player p = e.getPlayer();
         Block b = e.getBlock();
 
-
         /**Mining**/
         exp = ExperienceUtil.getMiningExp(e.getBlock().getType(), ItemUtil.hasSilkTouch(p.getItemInHand()));
         //Applying experience and random ore boost
@@ -171,7 +170,7 @@ public class SkillListener implements Listener {
         }
 
         //Apple boost
-        if(BlockUtil.isLeaves(b) && level > 43 && RandomNumber.get(25) == 1)
+        else if(BlockUtil.isLeaves(b) && level > 43 && RandomNumber.get(25) == 1)
         {
             if(RandomNumber.get(5) == 1 && level > 99)
             {

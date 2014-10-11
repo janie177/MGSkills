@@ -22,7 +22,13 @@ public class LevelUp
         fireWorks(p);
         playSong(p);
         sendMessage(p, skill, level);
+        addLevel(p, Skill.valueOf(skill.toUpperCase()));
         new UpdateHighscores(p);
+    }
+
+    private static void addLevel(Player p, Skill skill)
+    {
+        TempData.getMPlayer(p).addLevel(skill);
     }
 
     private static void publicAnounce(int level, Player p, String skill) {
