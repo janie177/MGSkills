@@ -1,8 +1,6 @@
 package com.minegusta.mgskills.skills.cooking;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
-import com.minegusta.mgskills.skills.Cooking;
-import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
@@ -33,7 +31,6 @@ public class CookingCraftExperience {
                 mp.getPlayer().getInventory().addItem(new ItemStack(e.getRecipe().getResult().getType(), bonusLoot));
             applyExp();
             mp.getPlayer().updateInventory();
-            LevelUpListener.isLevelUp(new Cooking(mp));
         }
     }
 

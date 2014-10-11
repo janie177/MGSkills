@@ -11,7 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class TreasureListener {
+public class TreasureListener
+{
     private Player p;
     private Action click;
     private ItemStack is;
@@ -21,7 +22,7 @@ public class TreasureListener {
         this.is = p.getItemInHand();
         this.click = e.getAction();
 
-        if (isRightClick() && isTreasureMap() && isLocation()) {
+        if (isRightClick() && isLocation()) {
             if (!hasInventory()) {
                 p.sendMessage(ChatColor.RED + "You need atleast 6 free inventory spaces!");
             } else {
@@ -34,11 +35,6 @@ public class TreasureListener {
 
     private boolean isRightClick() {
         return click.equals(Action.RIGHT_CLICK_AIR) || click.equals(Action.RIGHT_CLICK_BLOCK);
-    }
-
-    private boolean isTreasureMap() {
-
-        return is.getType().equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().size() == 6 && is.getItemMeta().getLore().get(5).equalsIgnoreCase(ChatColor.GRAY + "Rightclick map at location.");
     }
 
     private boolean isLocation() {

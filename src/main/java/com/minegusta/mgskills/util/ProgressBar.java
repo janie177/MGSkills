@@ -8,20 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
 public class ProgressBar {
-    private int exp;
-    private Player p;
-    private String skill;
 
-    public ProgressBar(int exp, Player p, String skill) {
-        this.exp = exp;
-        this.p = p;
-        this.skill = skill;
-
-        showBar();
-    }
-
-
-    private void showBar() {
+    public static void showBar(int exp, final Player p, String skill) {
         final ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard sb = manager.getNewScoreboard();
         Objective experience = sb.registerNewObjective(p.getName(), "dummy");

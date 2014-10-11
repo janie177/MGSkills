@@ -1,12 +1,7 @@
 package com.minegusta.mgskills.skills.digging;
 
-import com.google.common.collect.Lists;
-import com.minegusta.mgskills.files.DetailedMPlayer;
-import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.treasuremaps.TreasureMapItem;
 import com.minegusta.mgskills.util.RandomNumber;
-import com.minegusta.mgskills.util.Skill;
-import com.minegusta.mgskills.util.TempData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -14,87 +9,62 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
+public class DiggingBoost
+{
+    private static int chance = 0;
+    private static Player p;
+    private static Block b;
+    private static int level;
 
-public class DiggingBoost implements IExp {
-    private Block b;
-    private DetailedMPlayer mp;
-    private int chance;
 
-    @Override
-    public IExp build(Player p, Block b) {
-        this.mp = TempData.getMPlayer(p);
-        this.b = b;
-        return this;
-    }
-
-    @Override
-    public boolean check() {
-        return isDig() && isShovel();
-    }
-
-    @Override
-    public boolean apply() {
-        if(check())
-        {
-            if (isGravelBoost()) {
-                giveFlint();
-            }
-            if (isToolBoost()) {
-                giveTool();
-            }
-            if (isGrassBoost()) {
-                giveGrass();
-            }
-            if (isUnBreakingBoost()) {
-                repairShovel();
-            }
-            if (isMap()) {
-                giveMap();
-            }
-            return true;
+    public static boolean check(Player pl, int lv, Block bl)
+    {
+        p = pl;
+        level = lv;
+        b = bl;
+        if (isGravelBoost()) {
+            giveFlint();
         }
-        return false;
+        if (isToolBoost()) {
+            giveTool();
+        }
+        if (isGrassBoost()) {
+            giveGrass();
+        }
+        if (isUnBreakingBoost()) {
+            repairShovel();
+        }
+        if (isMap()) {
+            giveMap();
+        }
+        return true;
     }
 
     //Global check
 
-    private boolean isDig() {
-        List<Material> mList = Lists.newArrayList(Material.DIRT, Material.GRAVEL, Material.SOUL_SAND, Material.SAND, Material.GRASS, Material.SOIL);
-        return mList.contains(b.getType());
-    }
 
-    private boolean isShovel() {
-        if (mp.getPlayer().getItemInHand().getType().equals(Material.AIR)) return false;
-        Material[] shovels = {Material.IRON_SPADE, Material.GOLD_SPADE, Material.DIAMOND_SPADE, Material.WOOD_SPADE, Material.STONE_SPADE};
-        for (Material mat : shovels) {
-            if (mat.equals(mp.getPlayer().getItemInHand().getType())) return true;
-        }
-        return false;
-    }
 
 
     //Gravel boost --------------------------------------------------------------------------------
-    private boolean isGravelBoost() {
-        return mp.getLevel(Skill.DIGGING) > 14 && b.getType().equals(Material.GRAVEL) && RandomNumber.get(100) <= 20;
+    private static boolean isGravelBoost() {
+        return level > 14 && b.getType().equals(Material.GRAVEL) && RandomNumber.get(100) <= 20;
     }
 
-    private void giveFlint() {
+    private static void giveFlint() {
         b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.FLINT, 1));
     }
 
 
     //Tool boost ----------------------------------------------------------------------------------
-    private boolean isToolBoost() {
-        int chance = RandomNumber.get(600);
-        if (mp.getLevel(Skill.DIGGING) > 29 && chance < 7) {
-            this.chance = chance;
+    private static boolean isToolBoost() {
+        chance = RandomNumber.get(600);
+        if (level > 29 && chance < 7) {
             return true;
         }
         return false;
     }
 
-    private void giveTool() {
+    private static void giveTool() {
         Material material;
         switch (chance) {
             case 1:
@@ -123,35 +93,35 @@ public class DiggingBoost implements IExp {
 
     //Grass boost ------------------------------------------------------------------------------------
 
-    private boolean isGrassBoost() {
-        return b.getType().equals(Material.GRASS) && mp.getLevel(Skill.DIGGING) > 69;
+    private static boolean isGrassBoost() {
+        return b.getType().equals(Material.GRASS) && level > 69;
     }
 
-    private void giveGrass() {
+    private static void giveGrass() {
         b.setType(Material.AIR);
         b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.GRASS, 1));
     }
 
     //Treasuremap boost ------------------------------------------------------------------------------
 
-    private boolean isMap() {
-        return mp.getLevel(Skill.DIGGING) > 59 && RandomNumber.get(100000) <= mp.getLevel(Skill.DIGGING);
+    private static boolean isMap() {
+        return level > 59 && RandomNumber.get(100000) <= level;
     }
 
-    private void giveMap() {
+    private static void giveMap() {
         b.getWorld().dropItemNaturally(b.getLocation(), TreasureMapItem.getNewTreasureMap(b.getWorld()));
         b.getWorld().playSound(b.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
-        mp.getPlayer().sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
+        p.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
     }
 
     //Unbreaking shovel boost ------------------------------------------------------------------------
 
-    private boolean isUnBreakingBoost() {
-        return mp.getLevel(Skill.DIGGING) > 99;
+    private static boolean isUnBreakingBoost() {
+        return level > 99;
     }
 
-    private void repairShovel() {
-        mp.getPlayer().getItemInHand().setDurability(new ItemStack(mp.getPlayer().getItemInHand().getType(), 1).getDurability());
+    private static void repairShovel() {
+        p.getItemInHand().setDurability(new ItemStack(p.getItemInHand().getType(), 1).getDurability());
     }
 
 }

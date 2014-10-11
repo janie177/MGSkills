@@ -1,8 +1,6 @@
 package com.minegusta.mgskills.skills.hunting;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
-import com.minegusta.mgskills.skills.Hunting;
-import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
@@ -43,7 +41,6 @@ public class HuntingExperience {
         giveExperience();
         applyBoost();
         healALittle();
-        LevelUpListener.isLevelUp(new Hunting(mp));
     }
 
     //Checks

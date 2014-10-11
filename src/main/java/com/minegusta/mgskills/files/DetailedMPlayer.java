@@ -1,10 +1,10 @@
 package com.minegusta.mgskills.files;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.ProgressBar;
 import com.minegusta.mgskills.util.Skill;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
@@ -15,12 +15,16 @@ public class DetailedMPlayer implements ConfigurationSerializable {
 
     private String uuid;
 
+    private Player p;
+
     private ConcurrentMap<String, Integer> map = Maps.newConcurrentMap();
     
     public DetailedMPlayer(){}
 
-    public DetailedMPlayer(ConcurrentMap<String, Integer> map, UUID uuid) {
-        this.uuid = uuid.toString();
+    public DetailedMPlayer(ConcurrentMap<String, Integer> map, Player p)
+    {
+        this.p = p;
+        this.uuid = p.getUniqueId().toString();
         this.map = map;
     }
 
@@ -37,27 +41,28 @@ public class DetailedMPlayer implements ConfigurationSerializable {
 
     public int getLevel(Skill skill)
     {
-        return map.get(skill.getName() + "Level");
+        return map.get(skill.getSkillName().toLowerCase() + "Level");
     }
 
     public int getExp(Skill skill)
     {
-        return map.get(skill.getName());
+        return map.get(skill.getSkillName().toLowerCase());
     }
 
     public void addExp(Skill skill, int experience)
     {
-        new ProgressBar(experience, getPlayer(), WordUtils.capitalize(skill.getName()));
-        map.put(skill.getName(), getExp(skill) + experience);
+        ProgressBar.showBar(experience, getPlayer(), WordUtils.capitalize(skill.getSkillName()));
+        map.put(skill.getSkillName().toLowerCase(), getExp(skill) + experience);
+        LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
     }
 
     public void addLevel(Skill skill)
     {
-        map.put(skill.getName() + "Level", getLevel(skill) + 1);
+        map.put(skill.getSkillName().toLowerCase() + "Level", getLevel(skill) + 1);
     }
 
     public Player getPlayer() {
-        return Bukkit.getPlayer(getUUID());
+        return p;
     }
 
     

@@ -1,59 +1,34 @@
 package com.minegusta.mgskills.skills.mining;
 
 import com.minegusta.mgskills.files.DetailedMPlayer;
-import com.minegusta.mgskills.struct.IExp;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.Skill;
-import com.minegusta.mgskills.util.TempData;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class RandomOreBoost implements IExp {
-    private Player p;
-    private DetailedMPlayer mp;
-    private Location l;
-    private int level;
-    private Material m;
-
-    @Override
-    public IExp build(Player p, Block b) {
-        this.m = b.getType();
-        this.p = p;
-        this.mp = TempData.getMPlayer(p);
-        this.l = b.getLocation();
-        this.level = mp.getLevel(Skill.MINING);
-        return this;
-    }
-
-    //Checks
-
-    private boolean isLucky() {
-        return RandomNumber.get(10000) < (50 + (level * 5));
-    }
-
-    private boolean isStone() {
-        return m.equals(Material.STONE);
-    }
-
-    @Override
-    public boolean check() {
-        return isLucky() && isStone();
-    }
+public class RandomOreBoost
+{
 
     //Apply
 
-    private ItemStack getOre() {
+    public static boolean drop(Player p, DetailedMPlayer mp)
+    {
+        p.getWorld().dropItemNaturally(p.getLocation(), getOre(mp));
+        p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
+        return true;
+    }
+
+    private static ItemStack getOre(DetailedMPlayer mp)
+    {
         ItemStack is = new ItemStack(Material.COAL, 1);
 
         if (RandomNumber.get(4) < 4) return is;
         else {
             String chosen = "D" + Integer.toString(RandomNumber.get(OresAndLevels.values().length));
-            if (OresAndLevels.valueOf(chosen).getLevel() > level) {
-                mp.addExp(Skill.FARMING, 15);
+            if (OresAndLevels.valueOf(chosen).getLevel() > mp.getLevel(Skill.MINING)) {
+                mp.addExp(Skill.MINING, 15);
                 return is;
             } else {
                 mp.addExp(Skill.MINING, OresAndLevels.valueOf(chosen).getExp());
@@ -62,15 +37,6 @@ public class RandomOreBoost implements IExp {
         }
     }
 
-    @Override
-    public boolean apply() {
-        if (check()) {
-            p.getWorld().dropItemNaturally(l, getOre());
-            p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
-            return true;
-        }
-        return false;
-    }
 
     private enum OresAndLevels {
         D1(new ItemStack(Material.COAL, 2), 1, 6),

@@ -82,7 +82,7 @@ public class SkillCommand implements CommandExecutor {
 
     private void sendInfoList(String[] list, String skill) {
         try {
-            if (Skill.valueOf(skill.toUpperCase()).name() == null) {
+            if (Skill.valueOf(skill.toUpperCase()).getSkillName() == null) {
                 sendList(SkillInfo.SKILLS.getInfo());
                 return;
             }

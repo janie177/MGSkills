@@ -21,8 +21,6 @@ public class UpdateHighscores {
     public UpdateHighscores(PlayerJoinEvent e) {
         this.uuid = e.getPlayer().getUniqueId();
         all = TempData.getMPlayer(e.getPlayer()).getAll();
-
-        update();
     }
 
     public UpdateHighscores(Player p) {

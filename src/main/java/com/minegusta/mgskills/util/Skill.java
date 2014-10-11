@@ -4,32 +4,34 @@ import com.minegusta.mgskills.skills.*;
 import com.minegusta.mgskills.struct.ISkill;
 
 public enum Skill {
-    FISHING(new Fishing()),
-    MINING(new Mining()),
-    COOKING(new Cooking()),
-    SUMMONING(new Summoning()),
-    FARMING(new Farming()),
-    HUNTING(new Hunting()),
-    WOODCUTTING(new Woodcutting()),
-    DIGGING(new Digging()),
-    BREWING(new Brewing()),
-    HEALING(new Healing()),
-    EXPLORATION(new Exploration());
+    FISHING(new Fishing(), "Fishing"),
+    MINING(new Mining(), "Mining"),
+    COOKING(new Cooking(), "Cooking"),
+    SUMMONING(new Summoning(), "Summoning"),
+    FARMING(new Farming(), "Farming"),
+    HUNTING(new Hunting(), "Hunting"),
+    WOODCUTTING(new Woodcutting(), "Woodcutting"),
+    DIGGING(new Digging(), "Digging"),
+    BREWING(new Brewing(), "Brewing"),
+    HEALING(new Healing(), "Healing"),
+    EXPLORATION(new Exploration(), "Exploration");
 
 
     private ISkill skill;
+    private String skillName;
 
-    private Skill(ISkill skill) {
+    private Skill(ISkill skill, String skillName) {
         this.skill = skill;
+        this.skillName = skillName;
     }
 
     public ISkill getSkill() {
         return skill;
     }
 
-    public String getName()
+    public String getSkillName()
     {
-        return name().toLowerCase();
+        return skillName;
     }
 
 }

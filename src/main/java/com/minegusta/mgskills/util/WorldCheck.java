@@ -1,18 +1,14 @@
 package com.minegusta.mgskills.util;
 
 import com.minegusta.mgskills.files.DefaultConfig;
-import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 
-public class WorldCheck {
-    private FileConfiguration conf = DefaultConfig.getConfig();
-    private String worldName;
+import java.util.List;
 
-    public WorldCheck(World world) {
-        worldName = world.getName();
-    }
+public class WorldCheck
+{
+    private static List<String> list = DefaultConfig.getConfig().getStringList("enabled_worlds");
 
-    public boolean check() {
-        return conf.getStringList("enabled_worlds").contains(worldName);
+    public static boolean check(String worldName) {
+        return list.contains(worldName);
     }
 }

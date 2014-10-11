@@ -8,16 +8,17 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 public class TempData {
-    private static ConcurrentMap<String, DetailedMPlayer> pMap = Maps.newConcurrentMap();
+
+    public static ConcurrentMap<String, DetailedMPlayer> pMap = Maps.newConcurrentMap();
 
 
 
     public static DetailedMPlayer getMPlayer(Player player) {
-        return getMPlayer(player.getUniqueId().toString());
+        return pMap.get(player.getUniqueId().toString());
     }
 
-    public static DetailedMPlayer getMPlayer(String playerId) {
-        return pMap.get(playerId);
+    public static DetailedMPlayer getMPlayer(String uuid) {
+        return pMap.get(uuid);
     }
 
     public static void addMPlayer(String uuid, DetailedMPlayer mp)

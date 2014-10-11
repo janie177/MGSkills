@@ -25,7 +25,7 @@ public class WolfBoost implements CommandExecutor {
         Player p = (Player) s;
         DetailedMPlayer mp = TempData.getMPlayer(p);
 
-        if (!(new WorldCheck(p.getWorld()).check())) {
+        if (!WorldCheck.check(p.getWorld().getName())) {
             new SendMessage(p, Lists.newArrayList("You cannot use that in this world!"));
             return true;
         }
