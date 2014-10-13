@@ -39,7 +39,8 @@ public class Healing implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "le le le: " + ChatColor.GREEN + mp.getLevel(Skill.HEALING) * 5 + "%" + ChatColor.LIGHT_PURPLE + ".";
+        int healable = 1 + (mp.getLevel(Skill.HEALING) / 5);
+        return "You can heal " + ChatColor.DARK_RED + healable + ChatColor.LIGHT_PURPLE + " health.";
     }
 
     @Override

@@ -39,11 +39,12 @@ public class Brewing implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Moonshine: " + ChatColor.GREEN + mp.getLevel(Skill.BREWING) * 6 + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Chance to clone potions on throwing them: " + ChatColor.GREEN + mp.getLevel(Skill.BREWING) * 3 + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
-    public void levelUp() {
+    public void levelUp()
+    {
         mp.addLevel(Skill.BREWING);
     }
 

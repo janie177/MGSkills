@@ -12,7 +12,6 @@ import com.minegusta.mgskills.util.TempData;
 import com.minegusta.mgskills.util.YamlUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,19 +28,37 @@ public class SkillCommand implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("skills") && s instanceof Player) {
             p = (Player) s;
             if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("show")) {
+                if (args[0].equalsIgnoreCase("show") || args[0].equalsIgnoreCase("s")) {
                     sendStats(p.getUniqueId());
                     return true;
                 }
-                if (args[0].equalsIgnoreCase("info")) {
+                if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("i")) {
                     sendList(SkillInfo.SKILLS.getInfo());
                     return true;
                 }
+                if (args[0].equalsIgnoreCase("toggle") || args[0].equalsIgnoreCase("t"))
+                {
+                    boolean show = TempData.getMPlayer(p).showExp();
+                    if(show)
+                    {
+                        sendString("Experience is no longer shown in chat when earned.");
+                        sendString("Use " + ChatColor.GOLD  + "/Skills Toggle" + ChatColor.YELLOW + " to re-enable this feature.");
+                        TempData.getMPlayer(p).setShowExp(false);
+                    }
+                    else
+                    {
+                        sendString("Experience is now shown in chat when earned.");
+                        sendString("Use " + ChatColor.GOLD  + "/Skills Toggle" + ChatColor.YELLOW + " to disable this feature.");
+                        TempData.getMPlayer(p).setShowExp(true);
+                    }
+                    return true;
+                }
             }
-            if (args.length == 2) {
-                if (args[0].equalsIgnoreCase("show")) {
+            if (args.length == 2)
+            {
+                if (args[0].equalsIgnoreCase("show") || args[0].equalsIgnoreCase("s")) {
                     try {
-                        OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(args[1]);
+                        Player oPlayer = Bukkit.getOfflinePlayer(args[1]).getPlayer();
                         if (sendStats(oPlayer.getUniqueId())) return true;
                         sendString("That player cannot be found! They might not exist or never played.");
                         return true;
@@ -53,7 +70,7 @@ public class SkillCommand implements CommandExecutor {
 
                 }
 
-                if (args[0].equalsIgnoreCase("info")) {
+                if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("i")) {
                     try {
                         String skill = args[1];
                         sendInfoList(SkillInfo.valueOf(skill.toUpperCase()).getInfo(), skill);
@@ -109,11 +126,11 @@ public class SkillCommand implements CommandExecutor {
         if (uuid == null) return false;
         DetailedMPlayer mp;
         if (TempData.containsMPlayer(uuid.toString())) {
-            mp = TempData.getMPlayer(p);
+            mp = TempData.getMPlayer(Bukkit.getPlayer(uuid));
         } else {
             if (!YamlUtil.exists("/players/", uuid.toString() + ".yml")) return false;
-            new LoadToMap(p);
-            mp = TempData.getMPlayer(p);
+            new LoadToMap(Bukkit.getPlayer(uuid));
+            mp = TempData.getMPlayer(Bukkit.getPlayer(uuid));
         }
 
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
@@ -122,7 +139,7 @@ public class SkillCommand implements CommandExecutor {
         p.sendMessage(ChatColor.GRAY + "  Skill            Level      Experience/NextLevel");
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Fishing" + ChatColor.GOLD + "]" + "          " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.FISHING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.FISHING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.FISHING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.FISHING) + 1)).getExp() + ChatColor.GOLD + "]");
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Mining" + ChatColor.GOLD + "]" + "           " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.MINING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.MINING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.DIGGING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.DIGGING) + 1)).getExp() + ChatColor.GOLD + "]");
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Mining" + ChatColor.GOLD + "]" + "           " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.MINING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.MINING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.MINING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.DIGGING) + 1)).getExp() + ChatColor.GOLD + "]");
         p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Cooking" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.COOKING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.COOKING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.COOKING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.COOKING) + 1)).getExp() + ChatColor.GOLD + "]");
         p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Summoning" + ChatColor.GOLD + "]" + "     " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.SUMMONING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.SUMMONING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.SUMMONING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.SUMMONING) + 1)).getExp() + ChatColor.GOLD + "]");
         p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Farming" + ChatColor.GOLD + "]" + "         " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getLevel(Skill.FARMING) + ChatColor.GOLD + "]" + "   " + ChatColor.GRAY + fitString(mp.getLevel(Skill.FARMING)) + ChatColor.GOLD + "[" + ChatColor.GREEN + mp.getExp(Skill.FARMING) + ChatColor.YELLOW + "/" + ChatColor.DARK_GREEN + ExpTable.valueOf("L" + Integer.toString(mp.getLevel(Skill.FARMING) + 1)).getExp() + ChatColor.GOLD + "]");
@@ -152,6 +169,6 @@ public class SkillCommand implements CommandExecutor {
     }
 
     private void sendString(String s) {
-        p.sendMessage(ChatColor.RED + s);
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "S" + ChatColor.GOLD+ "] " + ChatColor.YELLOW + s);
     }
 }

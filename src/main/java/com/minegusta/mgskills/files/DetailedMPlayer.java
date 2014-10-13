@@ -1,10 +1,10 @@
 package com.minegusta.mgskills.files;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgskills.util.ExpMultiplier;
 import com.minegusta.mgskills.util.LevelUpListener;
-import com.minegusta.mgskills.util.ProgressBar;
 import com.minegusta.mgskills.util.Skill;
-import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
@@ -17,6 +17,8 @@ public class DetailedMPlayer implements ConfigurationSerializable {
 
     private Player p;
 
+    private boolean showExp = false;
+
     private ConcurrentMap<String, Integer> map = Maps.newConcurrentMap();
     
     public DetailedMPlayer(){}
@@ -28,6 +30,15 @@ public class DetailedMPlayer implements ConfigurationSerializable {
         this.map = map;
     }
 
+    public void setShowExp(boolean show)
+    {
+        showExp = show;
+    }
+
+    public boolean showExp()
+    {
+        return showExp;
+    }
 
     public int getAll()
     {
@@ -51,10 +62,10 @@ public class DetailedMPlayer implements ConfigurationSerializable {
 
     public void addExp(Skill skill, int experience)
     {
-
-        ProgressBar.showBar(experience, getPlayer(), WordUtils.capitalize(skill.getSkillName()));
-        map.put(skill.getSkillName().toLowerCase(), getExp(skill) + experience);
+        int added = experience * ExpMultiplier.get();
+        map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
         LevelUpListener.isLevelUp(p, getExp(skill), skill.getSkillName(), getLevel(skill));
+        if (showExp)p.sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
     }
 
     public void addLevel(Skill skill)
@@ -65,7 +76,6 @@ public class DetailedMPlayer implements ConfigurationSerializable {
     public Player getPlayer() {
         return p;
     }
-
     
     public UUID getUUID() {
         return UUID.fromString(uuid);

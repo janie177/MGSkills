@@ -39,7 +39,7 @@ public class Fishing implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Chance to catch double fish: " + ChatColor.GREEN + mp.getLevel(Skill.FISHING) + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return "Chance to catch double fish: " + ChatColor.GREEN + getLevel() + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override

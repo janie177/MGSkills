@@ -6,7 +6,7 @@ commands:
   skills:
     usage: /Skills
     description: Show general skill help.
-    aliases: [sk, skill, levels, level]
+    aliases: [s, sk, skill, levels, level]
   highscore:
     usage: /HighScore
     aliases: [hs, hisghscores, score, hiscore]

@@ -22,17 +22,19 @@ public class LevelUp
         fireWorks(p);
         playSong(p);
         sendMessage(p, skill, level);
-        addLevel(p, Skill.valueOf(skill.toUpperCase()));
+        addLevel(p, skill, level);
         new UpdateHighscores(p);
     }
 
-    private static void addLevel(Player p, Skill skill)
+    private static void addLevel(Player p, String skill, int level)
     {
-        TempData.getMPlayer(p).addLevel(skill);
+        TempData.getMPlayer(p).addLevel(Skill.valueOf(skill.toUpperCase()));
+        ProgressBar.showBar(level, p, skill);
     }
 
     private static void publicAnounce(int level, Player p, String skill) {
-        if (level % 20 == 0) {
+        if (level % 20 == 0)
+        {
             Bukkit.broadcastMessage(ChatColor.YELLOW + "-=-=-=-" + ChatColor.RED + "Skills Anouncement" + ChatColor.YELLOW + "-=-=-=-");
             Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + p.getName() + ChatColor.LIGHT_PURPLE + " just reached level " + level + " in " + skill + ChatColor.LIGHT_PURPLE + ".");
         }

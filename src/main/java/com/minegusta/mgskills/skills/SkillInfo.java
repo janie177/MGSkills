@@ -9,21 +9,21 @@ public enum SkillInfo {
             ChatColor.GRAY + "Farming, Fishing, Healing, Hunting",
             ChatColor.GRAY + "Mining, Summoning, WoodCutting"
     }),
-    HELP(new String[]{" - /Skills" + ChatColor.GRAY + " - Show this help menu.", " - /Skills Show" + ChatColor.GRAY + " - Show your own skills.", " - /Skills Show <Name>" + ChatColor.GRAY + " - Show the given players' skills.", " - /Skills info <Skill>" + ChatColor.GRAY + " - Show information for the given skill.", " - /HighScores" + ChatColor.GRAY + " - Show the top 10 players.", " - /<SkillName>" + ChatColor.GRAY + " - Display specific skill information."}),
-    /*FISHING(new String[]{
+    HELP(new String[]{" - /Skills" + ChatColor.GRAY + " - Show this help menu.", " - /Skills Show" + ChatColor.GRAY + " - Show your own skills.", " - /Skills Show <Name>" + ChatColor.GRAY + " - Show the given players' skills.", " - /Skills info <Skill>" + ChatColor.GRAY + " - Show information for the given skill.", " - /HighScores" + ChatColor.GRAY + " - Show the top 10 players.", " - /<SkillName>" + ChatColor.GRAY + " - Display specific skill information.", " - /Skill Toggle" + ChatColor.GRAY + " - Show when you earn experience in the chat."}),
+    FISHING(new String[]{
             ChatColor.GRAY + "Fishing is all about catching fish. Experience is given when you catch something.",
             ChatColor.GRAY + "Bonus experience is awarded when you catch loot.",
             ChatColor.GOLD + "Bonuses Per Level:",
-            " - " + ChatColor.GREEN + "10: " + ChatColor.GRAY + "You can catch junk now.",
-            " - " + ChatColor.GREEN + "28: " + ChatColor.GRAY + "You can now catch gold loot.",
-            " - " + ChatColor.GREEN + "42: " + ChatColor.GRAY + "You can now catch iron loot.",
-            " - " + ChatColor.GREEN + "52: " + ChatColor.GRAY + "You can now catch treasure maps.",
-            " - " + ChatColor.GREEN + "75: " + ChatColor.GRAY + "You can now catch enchanted iron loot.",
-            " - " + ChatColor.GREEN + "90: " + ChatColor.GRAY + "You can catch diamond loot.",
-            " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "You can catch enchanted diamond loot.",
+            " - " + ChatColor.GREEN + "1: " + ChatColor.GRAY + "You can now catch tier 1 junk now.",
+            " - " + ChatColor.GREEN + "20: " + ChatColor.GRAY + "You can now catch tier 2 loot.",
+            " - " + ChatColor.GREEN + "40: " + ChatColor.GRAY + "You can now catch tier 3 loot.",
+            " - " + ChatColor.GREEN + "60: " + ChatColor.GRAY + "You can now catch tier 4 loot.",
+            " - " + ChatColor.GREEN + "68: " + ChatColor.GRAY + "You can now catch treasure maps.",
+            " - " + ChatColor.GREEN + "80: " + ChatColor.GRAY + "You can now catch tier 5 loot.",
+            " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "You can now catch tier 6 loot.",
             ChatColor.GOLD + "Bonuses That Increase Per Level:",
             " - " + ChatColor.GRAY + "You gain " + ChatColor.RED + "1%" + ChatColor.GRAY +" chance for a double catch per level."
-    }),*/
+    }),
     MINING(new String[]{
             ChatColor.GRAY + "Mining experience is gained when mining stone or ores that break.",
             ChatColor.GRAY + "Ores like iron and gold do not give extra experience.",
@@ -88,7 +88,7 @@ public enum SkillInfo {
             " - " + ChatColor.GREEN + "72: " + ChatColor.GRAY + "You can summon a wolf every 15 minutes using " + ChatColor.RED + "/Wolf" + ChatColor.LIGHT_PURPLE + ".",
             " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "All mobs drop triple loot.",
             ChatColor.GOLD + "Bonuses That Increase Per Level:",
-            " - " + ChatColor.GRAY + "Animals have a " + ChatColor.RED + "0.25%" + ChatColor.GRAY + " chance per level to respawn when killed."
+            " - " + ChatColor.GRAY + "Animals have a " + ChatColor.RED + "0.25%" + ChatColor.GRAY + " chance per level to re-spawn when killed."
     }),
     WOODCUTTING(new String[]{
             ChatColor.GRAY + "Woodcutting is all about collecting logs.",
@@ -102,7 +102,7 @@ public enum SkillInfo {
             " - " + ChatColor.GREEN + "72: " + ChatColor.GRAY + "You destroyed lots of bird nests while woodcutting.",
             "   " + ChatColor.GREEN + "     " + ChatColor.GRAY + "This made you the master of birds.",
             "   " + ChatColor.GREEN + "     " + ChatColor.GRAY + "Summon exploding bird minions using a",
-            "   " + ChatColor.GREEN + "     " + ChatColor.GRAY + "blaze rod. This has a 20 second cooldown.",
+            "   " + ChatColor.GREEN + "     " + ChatColor.GRAY + "blaze rod. This has a 20 second cool down.",
             " - " + ChatColor.GREEN + "80: " + ChatColor.GRAY + "Your speed boost is increased by 1.",
             " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "Your speed boost is increased by 1.",
             ChatColor.GOLD + "Bonuses That Increase Per Level:",
@@ -110,11 +110,11 @@ public enum SkillInfo {
     }),
     DIGGING(new String[]{
             ChatColor.GRAY + "Are you a true mole or maus? Get your shovel and prove it!",
-            ChatColor.GRAY + "Dig dirt, gravel sand or any other light substance to gain experience.",
+            ChatColor.GRAY + "Dig dirt, gravel sand or any other light substances to gain experience.",
             ChatColor.GOLD + "Bonuses Per Level:",
             " - " + ChatColor.GREEN + "15: " + ChatColor.GRAY + "You have a 20% chance to get extra flint when digging gravel.",
             " - " + ChatColor.GREEN + "30: " + ChatColor.GRAY + "You can now find lost iron tools in the dirt.",
-            " - " + ChatColor.GREEN + "60: " + ChatColor.GRAY + "You have a chance to dig up treasuremaps.",
+            " - " + ChatColor.GREEN + "60: " + ChatColor.GRAY + "You have a chance to dig up treasure maps.",
             " - " + ChatColor.GREEN + "76: " + ChatColor.GRAY + "Grass no longer becomes dirt when digging it.",
             " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "Shovels will never break.",
             ChatColor.GOLD + "Bonuses That Increase Per Level:",
@@ -122,11 +122,35 @@ public enum SkillInfo {
             " - " + ChatColor.GRAY + "The chance to find treasure maps increases each level."
     }),
     SUMMONING(new String[]{ChatColor.YELLOW + "This skill will be released in update 2!", ChatColor.YELLOW + "Send suggestions towards Jan!"}),
-    BREWING(new String[]{ChatColor.YELLOW + "This skill will be released in update 2!", ChatColor.YELLOW + "Send suggestions towards Jan!"}),
-    HEALING(new String[]{ChatColor.YELLOW + "This skill will be released in update 2!", ChatColor.YELLOW + "Send suggestions towards Jan!"}),
-    EXPLORATION(new String[]{ChatColor.YELLOW + "This skill will be released in update 2!", ChatColor.YELLOW + "Send suggestions towards Jan!"}),
-    FISHING(new String[]{ChatColor.YELLOW + "This skill will be released in update 2!", ChatColor.YELLOW + "Send suggestions towards Jan!"});
-
+    BREWING(new String[]{
+            ChatColor.GRAY + "The art of potion making.",
+            ChatColor.GRAY + "Brew potions and throw them to gain experience.",
+            ChatColor.GOLD + "Bonuses Per Level:",
+            " - " + ChatColor.GREEN + "23: " + ChatColor.GRAY + ".",
+            " - " + ChatColor.GREEN + "36: " + ChatColor.GRAY + "You can now find lost iron tools in the dirt.",
+            " - " + ChatColor.GREEN + "52: " + ChatColor.GRAY + "You have a chance to dig up treasure maps.",
+            " - " + ChatColor.GREEN + "69: " + ChatColor.GRAY + "You can now stack potions.",
+            " - " + ChatColor.GREEN + "84: " + ChatColor.GRAY + "When brewing potions, get twice as many potions.",
+            " - " + ChatColor.GREEN + "94: " + ChatColor.GRAY + "Shovels will never break.",
+            " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "All potion effects last twice as long.",
+            ChatColor.GOLD + "Bonuses That Increase Per Level:",
+            " - " + ChatColor.GRAY + "You gain " + ChatColor.RED + "3%" + ChatColor.GRAY + " chance to clone potions on throwing them.",
+    }),
+    HEALING(new String[]{
+            ChatColor.GRAY + "Healing is all about teamwork.",
+            ChatColor.GRAY + "Heal other players and creatures by bandaging their wounds using paper.",
+            ChatColor.GOLD + "Bonuses Per Level:",
+            " - " + ChatColor.GREEN + "50: " + ChatColor.GRAY + "You can now heal beings in a radius of 2 around you.",
+            " - " + ChatColor.GREEN + "63: " + ChatColor.GRAY + "People you heal will get a short protecting effect.",
+            " - " + ChatColor.GREEN + "72: " + ChatColor.GRAY + "You now also heal yourself when healing another being.",
+            " - " + ChatColor.GREEN + "80: " + ChatColor.GRAY + "Players you heal will get a short speed boost.",
+            " - " + ChatColor.GREEN + "88: " + ChatColor.GRAY + "You can heal creatures in a radius of 3 around you.",
+            " - " + ChatColor.GREEN + "95: " + ChatColor.GRAY + "You can heal creatures in a radius of 6 around you.",
+            " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "Left clicking the air with paper will cause a healing storm.",
+            ChatColor.GOLD + "Bonuses That Increase Per Level:",
+            " - " + ChatColor.GRAY + "You gain " + ChatColor.RED + "+ 1" + ChatColor.GRAY + " healing bonus every 5 levels.",
+    }),
+    EXPLORATION(new String[]{ChatColor.YELLOW + "This skill will be released in update 2!", ChatColor.YELLOW + "Send suggestions towards Jan!"});
     private String[] info;
 
     private SkillInfo(String[] info) {

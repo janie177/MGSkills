@@ -50,6 +50,7 @@ public class HuntingExperience {
     }
 
     private boolean isKilledByWolf() {
+        if(killed.getLastDamageCause() == null) return false;
         if (killed.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
             if (killed.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
                 if (((EntityDamageByEntityEvent) killed.getLastDamageCause()).getDamager() instanceof Wolf) {

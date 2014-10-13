@@ -1,5 +1,7 @@
 package com.minegusta.mgskills.listeners;
 
+import com.google.common.collect.Lists;
+import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.files.LoadToMap;
 import com.minegusta.mgskills.files.RemoveFromMap;
@@ -10,24 +12,21 @@ import com.minegusta.mgskills.skills.cooking.FoodBoost;
 import com.minegusta.mgskills.skills.digging.DiggingBoost;
 import com.minegusta.mgskills.skills.farming.FarmingInteractBlockExperience;
 import com.minegusta.mgskills.skills.farming.FarmingInteractEntityExperience;
+import com.minegusta.mgskills.skills.fishing.FishingExp;
+import com.minegusta.mgskills.skills.fishing.FishingLoot;
+import com.minegusta.mgskills.skills.healing.HealPlayer;
 import com.minegusta.mgskills.skills.hunting.HuntingExperience;
 import com.minegusta.mgskills.skills.mining.RandomOreBoost;
 import com.minegusta.mgskills.skills.woodcutting.BirdNestBoost;
 import com.minegusta.mgskills.skills.woodcutting.SuicideChicken;
 import com.minegusta.mgskills.treasuremaps.TreasureListener;
-import com.minegusta.mgskills.util.RandomNumber;
-import com.minegusta.mgskills.util.Skill;
-import com.minegusta.mgskills.util.TempData;
-import com.minegusta.mgskills.util.WorldCheck;
+import com.minegusta.mgskills.util.*;
 import com.minegusta.mgskills.util.checks.BlockUtil;
 import com.minegusta.mgskills.util.checks.ExperienceUtil;
 import com.minegusta.mgskills.util.checks.ItemUtil;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -60,6 +59,49 @@ public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(PlayerFishEvent e) {
         if (!worldCheck(e.getPlayer().getWorld()) || e.isCancelled()) return;
+
+        Player p = e.getPlayer();
+        DetailedMPlayer mp = TempData.getMPlayer(p);
+        int level = mp.getLevel(Skill.FISHING);
+
+        /** Fishing **/
+        if(e.getState().equals(PlayerFishEvent.State.CAUGHT_FISH))
+        {
+            if(e.getCaught() instanceof Item)
+            {
+                ItemStack is = ((Item)e.getCaught()).getItemStack();
+
+                //Check for feeeesh
+                if(is.getType().equals(Material.RAW_FISH))
+                {
+                    int exp = FishingExp.getExp(is);
+
+                    //Check for bonus loot
+                    if(RandomNumber.get(4) == 1)
+                    {
+                        new SendMessage(p, Lists.newArrayList("You found some random loot while fishing!"));
+                        p.getWorld().dropItemNaturally(p.getLocation(),FishingLoot.get(level));
+                        exp = exp + 100;
+                    }
+
+                    //Treasure map
+                    if(level > 67 && RandomNumber.get(510) == 1)
+                    {
+                        exp = exp + 1000;
+                        FishingLoot.giveTreasureMap(p);
+                    }
+
+                    //Feeeeesh
+                    if(RandomNumber.get(100) > level)
+                    {
+                        exp = exp + 50;
+                        FishingLoot.doubleCatch(is);
+                    }
+                    mp.addExp(Skill.FISHING, exp);
+                }
+            }
+        }
+
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -201,19 +243,23 @@ public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(PlayerInteractEvent e) {
 
-        if (!worldCheck(e.getPlayer().getWorld()) || e.isCancelled()) return;
+        //Automatically cnacelled for right click air. Make sure to check this seperately for the boosts.
+        if (!worldCheck(e.getPlayer().getWorld())) return;
 
         //Data
         DetailedMPlayer mp = TempData.getMPlayer(e.getPlayer());
-
-        int level = mp.getLevel(Skill.FARMING);
         ItemStack is = e.getPlayer().getItemInHand();
-        Material m = e.getClickedBlock().getType();
+        Material m = null;
+        if(e.hasBlock())
+        {
+            m = e.getClickedBlock().getType();
+        }
+        Material hand = is.getType();
 
         //Skill checks
 
         /**treasure**/
-        if(is.getType().equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().size() == 6 && is.getItemMeta().getLore().get(5).equalsIgnoreCase(ChatColor.GRAY + "Rightclick map at location.")) {
+        if(hand.equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().size() == 6 && is.getItemMeta().getLore().get(5).equalsIgnoreCase(ChatColor.GRAY + "Rightclick map at location.")) {
             new TreasureListener(e);
         }
 
@@ -221,16 +267,53 @@ public class SkillListener implements Listener {
         new SuicideChicken(e);
 
         /**Cake food boost**/
-        if(e.hasBlock() && (m.equals(Material.CAKE_BLOCK) || m.equals(Material.CAKE)) && mp.getLevel(Skill.COOKING) > 67 && mp.getPlayer().getFoodLevel() < 20)
+        if(!e.isCancelled() && e.hasBlock() && (m.equals(Material.CAKE_BLOCK) || m.equals(Material.CAKE)) && mp.getLevel(Skill.COOKING) > 67 && mp.getPlayer().getFoodLevel() < 20)
         {
             new CakeEatBoost(e);
         }
 
+        /** Healing Storm **/
+        int level = mp.getLevel(Skill.HEALING);
+
+        if(level > 99 && hand.equals(Material.PAPER) && e.getAction().equals(Action.LEFT_CLICK_AIR))
+        {
+            int coolDownTime = 300; //Seconds
+            Player p = e.getPlayer();
+
+            if (!CoolDown.cooledDown(p.getUniqueId().toString(), TempData.healStormMap, coolDownTime)) {
+                new SendMessage(p, Lists.newArrayList("You cannot call a healing storm yet!", "You have to wait another " + (coolDownTime - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.healStormMap)) + " seconds."));
+            } else {
+                int exp = 500;
+
+                CoolDown.newCooldown(p.getUniqueId().toString(), TempData.healStormMap);
+                mp.addExp(Skill.HEALING, exp);
+                new SendMessage(p, Lists.newArrayList("You launch a healing storm at your location!!"));
+
+                for(int i = 0; i <= 10 * 20; i++) {
+                    final Player player = p;
+
+                    if (i % 5 == 0) {
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
+                            @Override
+                            public void run() {
+                                player.getWorld().spigot().playEffect(player.getLocation().add(0,9,0), Effect.HEART, 0, 0, 2, 1, 2, 1, 65, 15);
+                                ThrownPotion potion = (ThrownPotion) player.getWorld().spawnEntity(player.getLocation().add(RandomNumber.get(3) - 2, 9, RandomNumber.get(3) - 2), EntityType.SPLASH_POTION);
+                                potion.setItem(new ItemStack(Material.POTION, 1, (short) 16389));
+                                potion.setShooter(player);
+                            }
+                        }, i);
+                    }
+                }
+            }
+        }
+
+
 
         /**Farming**/
+        level = mp.getLevel(Skill.FARMING);
 
         //Farming tree planting grow hand thing
-        if (e.hasBlock() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.SAPLING) && level > 74) {
+        if (!e.isCancelled() && e.hasBlock() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.SAPLING) && level > 74) {
             if(FarmingInteractBlockExperience.makeTree(e.getClickedBlock()))
             {
                 mp.addExp(Skill.FARMING, 48);
@@ -268,9 +351,11 @@ public class SkillListener implements Listener {
     public void onEvent(PlayerInteractEntityEvent e) {
         if (!worldCheck(e.getPlayer().getWorld()) || e.isCancelled()) return;
 
-        EntityType type = e.getRightClicked().getType();
+        Entity clicked = e.getRightClicked();
+        EntityType type = clicked.getType();
         Material hand = e.getPlayer().getItemInHand().getType();
-        DetailedMPlayer mp = TempData.getMPlayer(e.getPlayer());
+        Player p = e.getPlayer();
+        DetailedMPlayer mp = TempData.getMPlayer(p);
 
         int exp = 0;
 
@@ -297,6 +382,33 @@ public class SkillListener implements Listener {
         if(exp != 0)
         {
             mp.addExp(Skill.FARMING, exp);
+        }
+
+
+        /** Healing Skill **/
+        if(hand.equals(Material.PAPER) && clicked instanceof LivingEntity)
+        {
+            int coolDownTime = 35; //Seconds
+
+            if (!CoolDown.cooledDown(p.getUniqueId().toString(), TempData.healMap, coolDownTime)) {
+                new SendMessage(p, Lists.newArrayList("You cannot heal creatures yet!", "You have to wait another " + (coolDownTime - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.healMap)) + " seconds."));
+            } else {
+                int level = mp.getLevel(Skill.HEALING);
+                double amount = 1 + level / 5;
+                int radius = 1;
+                boolean healSelf = false;
+                if (level > 49) radius = 2;
+                if (level > 87) radius = 3;
+                if (level > 94) radius = 6;
+                if (level > 71) healSelf = true;
+
+                boolean speed = level > 79;
+                boolean protection = level > 62;
+
+                exp = HealPlayer.healEntities(p, amount, radius, protection, speed, healSelf);
+                CoolDown.newCooldown(p.getUniqueId().toString(), TempData.healMap);
+                mp.addExp(Skill.HEALING, exp);
+            }
         }
     }
 
