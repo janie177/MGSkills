@@ -9,12 +9,12 @@ import java.util.UUID;
 
 public class OnReload {
     public static void reLoadToMap() {
-        if (DefaultConfig.getConfig().getBoolean("convert_from_yaml", true)) {
+        if (Main.PLUGIN.getConfig().getBoolean("convert_from_yaml", true)) {
             File folder = new File(Main.PLUGIN.getDataFolder().getPath() + "/players/");
             for (File file : folder.listFiles()) {
                 new com.minegusta.mgskills.files.yaml.LoadToMap(UUID.fromString(file.getName().substring(0, file.getName().length() - 4)));
             }
-            DefaultConfig.getConfig().set("convert_from_yaml", false);
+            Main.PLUGIN.getConfig().set("convert_from_yaml", false);
         } else {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 new LoadToMap(p);
