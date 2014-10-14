@@ -109,7 +109,7 @@ public class DiggingBoost
     }
 
     private static void giveMap() {
-        b.getWorld().dropItemNaturally(b.getLocation(), TreasureMapItem.getNewTreasureMap(b.getWorld()));
+        b.getWorld().dropItemNaturally(b.getLocation(), TreasureMapItem.getNewTreasureMap(b.getWorld(), p));
         b.getWorld().playSound(b.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
         p.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
     }

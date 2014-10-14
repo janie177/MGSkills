@@ -1,19 +1,25 @@
 package com.minegusta.mgskills.treasuremaps;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgskills.util.ImageUtil;
 import com.minegusta.mgskills.util.RandomNumber;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.map.MapView;
 
 import java.util.List;
 
-public class TreasureMapItem {
-    public static ItemStack getNewTreasureMap(World w)
+public class TreasureMapItem
+{
+    public static ItemStack getNewTreasureMap(World w, Player p)
     {
-        ItemStack is = new ItemStack(Material.MAP, 1);
+        MapView mv = ImageUtil.sendMapImage(p, ImageUtil.getImageResource("TreasureMap.png"));
+
+        ItemStack is = new ItemStack(Material.MAP, 1, mv.getId());
         double x = RandomNumber.get(20000) - 10000;
         double y = RandomNumber.get(64);
         double z = RandomNumber.get(20000) - 10000;

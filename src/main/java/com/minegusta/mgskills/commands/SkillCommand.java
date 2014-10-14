@@ -1,15 +1,16 @@
 package com.minegusta.mgskills.commands;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.files.LoadToMap;
 import com.minegusta.mgskills.files.RemoveFromMap;
-import com.minegusta.mgskills.files.yaml.YamlUtil;
 import com.minegusta.mgskills.skills.SkillInfo;
 import com.minegusta.mgskills.struct.ISkill;
 import com.minegusta.mgskills.util.ExpTable;
 import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
+import com.minegusta.mgskills.util.json.JsonFileUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -123,7 +124,7 @@ public class SkillCommand implements CommandExecutor {
         if (TempData.containsMPlayer(uuid.toString())) {
             mp = TempData.getMPlayer(Bukkit.getPlayer(uuid));
         } else {
-            if (!YamlUtil.exists("/players/", uuid.toString() + ".yml")) return false;
+            if (!JsonFileUtil.exists(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".yml")) return false;
             new LoadToMap(Bukkit.getPlayer(uuid));
             mp = TempData.getMPlayer(Bukkit.getPlayer(uuid));
         }

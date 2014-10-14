@@ -36,6 +36,17 @@ public class JsonFileUtil {
     }
 
     /**
+     *
+     * @param path The path to the JSon file
+     * @param fileName Filename including extension.
+     * @return Does this file exist in the given directory?
+     */
+    public static boolean exists(String path, String fileName) {
+        File dataFile = new File(path + fileName);
+        return dataFile.exists();
+    }
+
+    /**
      * Load a JsonSection from a json file.
      *
      * @param dataFile The json file.
@@ -70,7 +81,7 @@ public class JsonFileUtil {
             // Create the new file.
             dataFile.createNewFile();
         } catch (Exception errored) {
-            throw new RuntimeException("DGClassic couldn't create a data file!", errored);
+            throw new RuntimeException("MGSkills couldn't create a data file!", errored);
         }
     }
 

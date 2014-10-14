@@ -57,7 +57,7 @@ public class FishingLoot
     //Treasure Maps
     public static void giveTreasureMap(Player p)
     {
-        p.getWorld().dropItemNaturally(p.getLocation(), TreasureMapItem.getNewTreasureMap(p.getWorld()));
+        p.getWorld().dropItemNaturally(p.getLocation(), TreasureMapItem.getNewTreasureMap(p.getWorld(), p));
         p.getWorld().playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
         p.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You caught a treasure map!");
     }
