@@ -78,7 +78,8 @@
                         <configuration>
                             <artifactSet>
                                 <excludes>
-                                    <exclude>*:*</exclude>
+                                    <exclude>org.spigotmc:*</exclude>
+                                    <exclude>com.google.code.gson:*</exclude>
                                 </excludes>
                             </artifactSet>
                             <relocations>
