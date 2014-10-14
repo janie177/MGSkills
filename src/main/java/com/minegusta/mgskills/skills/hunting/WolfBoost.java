@@ -1,6 +1,5 @@
 package com.minegusta.mgskills.skills.hunting;
 
-import com.google.common.collect.Lists;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.util.*;
 import org.bukkit.ChatColor;
@@ -26,17 +25,17 @@ public class WolfBoost implements CommandExecutor {
         DetailedMPlayer mp = TempData.getMPlayer(p);
 
         if (!WorldCheck.check(p.getWorld().getName())) {
-            new SendMessage(p, Lists.newArrayList("You cannot use that in this world!"));
+            SendMessage.send(p, "You cannot use that in this world!");
             return true;
         }
 
         if (mp.getLevel(Skill.HUNTING) >= 72) {
             if (!CoolDown.cooledDown(p.getUniqueId().toString(), TempData.wolfMap, 60 * 15)) {
-                new SendMessage(p, Lists.newArrayList("You have to wait another " + (60 * 15 - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.wolfMap)) + " seconds."));
+                SendMessage.send(p, "You have to wait another " + (60 * 15 - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.wolfMap)) + " seconds.");
                 return true;
             }
             //Summon wolf
-            new SendMessage(p, Lists.newArrayList("You summoned a wolf companion.", "May Hircine be with you!"));
+            SendMessage.send(p, "You summoned a wolf companion.", "May Hircine be with you!");
             Entity ent = p.getWorld().spawnEntity(p.getLocation(), EntityType.WOLF);
             Wolf wolf = (Wolf) ent;
             wolf.getWorld().spigot().playEffect(wolf.getLocation(), Effect.MOBSPAWNER_FLAMES, 1, 1, 1, 1, 1, 1, 25, 15);
@@ -56,7 +55,7 @@ public class WolfBoost implements CommandExecutor {
             mp.addExp(Skill.HUNTING, 100);
             return true;
         }
-        new SendMessage(p, Lists.newArrayList("You need hunting level 70 to summon a wolf companion."));
+        SendMessage.send(p, "You need hunting level 70 to summon a wolf companion.");
         return true;
     }
 }

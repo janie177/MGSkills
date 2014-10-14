@@ -24,7 +24,6 @@ public enum NestLoot {
     L15(new ItemStack(Material.EMERALD, 3)),
     L16(new ItemStack(Material.DIAMOND, 2));
 
-
     private ItemStack loot;
 
     private NestLoot(ItemStack loot) {

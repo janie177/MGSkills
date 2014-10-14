@@ -1,6 +1,5 @@
 package com.minegusta.mgskills.listeners;
 
-import com.google.common.collect.Lists;
 import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.files.LoadToMap;
@@ -65,35 +64,29 @@ public class SkillListener implements Listener {
         int level = mp.getLevel(Skill.FISHING);
 
         /** Fishing **/
-        if(e.getState().equals(PlayerFishEvent.State.CAUGHT_FISH))
-        {
-            if(e.getCaught() instanceof Item)
-            {
-                ItemStack is = ((Item)e.getCaught()).getItemStack();
+        if (e.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
+            if (e.getCaught() instanceof Item) {
+                ItemStack is = ((Item) e.getCaught()).getItemStack();
 
                 //Check for feeeesh
-                if(is.getType().equals(Material.RAW_FISH))
-                {
+                if (is.getType().equals(Material.RAW_FISH)) {
                     int exp = FishingExp.getExp(is);
 
                     //Check for bonus loot
-                    if(RandomNumber.get(4) == 1)
-                    {
-                        new SendMessage(p, Lists.newArrayList("You found some random loot while fishing!"));
-                        p.getWorld().dropItemNaturally(p.getLocation(),FishingLoot.get(level));
+                    if (RandomNumber.get(4) == 1) {
+                        SendMessage.send(p, "You found some random loot while fishing!");
+                        p.getWorld().dropItemNaturally(p.getLocation(), FishingLoot.get(level));
                         exp = exp + 100;
                     }
 
                     //Treasure map
-                    if(level > 67 && RandomNumber.get(510) == 1)
-                    {
+                    if (level > 67 && RandomNumber.get(510) == 1) {
                         exp = exp + 1000;
                         FishingLoot.giveTreasureMap(p);
                     }
 
                     //Feeeeesh
-                    if(RandomNumber.get(100) > level)
-                    {
+                    if (RandomNumber.get(100) > level) {
                         exp = exp + 50;
                         FishingLoot.doubleCatch(is);
                     }
@@ -118,17 +111,14 @@ public class SkillListener implements Listener {
         /**Mining**/
         exp = ExperienceUtil.getMiningExp(e.getBlock().getType(), ItemUtil.hasSilkTouch(p.getItemInHand()));
         //Applying experience and random ore boost
-        if(exp != 0)
-        {
-            if(b.getType().equals(Material.STONE) && RandomNumber.get(10000) < (50 + (level * 5)))
-            {
+        if (exp != 0) {
+            if (b.getType().equals(Material.STONE) && RandomNumber.get(10000) < (50 + (level * 5))) {
                 RandomOreBoost.drop(p, mp);
             }
             mp.addExp(Skill.MINING, exp);
         }
         //Torches at level 100+
-        if(exp == 0 && b.getType().equals(Material.TORCH) && level > 99)
-        {
+        if (exp == 0 && b.getType().equals(Material.TORCH) && level > 99) {
             if (p.getInventory().contains(Material.TORCH)) b.setType(Material.AIR);
         }
 
@@ -137,14 +127,12 @@ public class SkillListener implements Listener {
 
         boolean isAxe = ItemUtil.isAxe(p.getItemInHand());
         level = mp.getLevel(Skill.WOODCUTTING);
-        if(BlockUtil.isLog(b))
-        {
+        if (BlockUtil.isLog(b)) {
             //base exp
             mp.addExp(Skill.WOODCUTTING, 25);
 
             //Woodcutting speed boost
-            if(level > 19 && isAxe)
-            {
+            if (level > 19 && isAxe) {
                 int amplifier = level / 20;
                 for (PotionEffect pe : p.getActivePotionEffects()) {
                     if (pe.getType().equals(PotionEffectType.FAST_DIGGING) && pe.getAmplifier() <= amplifier - 1) {
@@ -155,8 +143,7 @@ public class SkillListener implements Listener {
             }
 
             //Bird nest check
-            if(level > 44 && isAxe && RandomNumber.get(300) == 1)
-            {
+            if (level > 44 && isAxe && RandomNumber.get(300) == 1) {
                 new BirdNestBoost(p, b).runNest();
                 mp.addExp(Skill.WOODCUTTING, 100);
             }
@@ -166,8 +153,7 @@ public class SkillListener implements Listener {
         exp = ExperienceUtil.getDiggingExp(b);
         level = mp.getLevel(Skill.DIGGING);
 
-        if(exp != 0)
-        {
+        if (exp != 0) {
             //Add base exp
             mp.addExp(Skill.DIGGING, exp + level / 5);
 
@@ -180,14 +166,12 @@ public class SkillListener implements Listener {
         exp = ExperienceUtil.getFarmingExp(b, ItemUtil.hasSilkTouch(p.getItemInHand()));
 
         //Applying exp and replant boost
-        if(exp != 0)
-        {
+        if (exp != 0) {
             //Try replanting
             boolean fullGrown = BlockUtil.tryReplant(level, ItemUtil.isHoe(p.getItemInHand()), b);
 
             //Boost the exp
-            if(fullGrown)
-            {
+            if (fullGrown) {
                 if (RandomNumber.get(100) <= level * 2) {
                     exp = exp * 2;
                     for (ItemStack is : b.getDrops()) {
@@ -195,12 +179,9 @@ public class SkillListener implements Listener {
                     }
                 }
 
-                if (level * 2 > 100)
-                {
-                    if (RandomNumber.get(100) <= (mp.getLevel(Skill.FARMING) * 2) - 100)
-                    {
-                        for (ItemStack is : b.getDrops())
-                        {
+                if (level * 2 > 100) {
+                    if (RandomNumber.get(100) <= (mp.getLevel(Skill.FARMING) * 2) - 100) {
+                        for (ItemStack is : b.getDrops()) {
                             b.getWorld().dropItemNaturally(b.getLocation(), is);
                         }
                     }
@@ -212,14 +193,10 @@ public class SkillListener implements Listener {
         }
 
         //Apple boost
-        else if(BlockUtil.isLeaves(b) && level > 43 && RandomNumber.get(25) == 1)
-        {
-            if(RandomNumber.get(5) == 1 && level > 99)
-            {
+        else if (BlockUtil.isLeaves(b) && level > 43 && RandomNumber.get(25) == 1) {
+            if (RandomNumber.get(5) == 1 && level > 99) {
                 b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
-            }
-            else
-            {
+            } else {
                 b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.APPLE, 1));
             }
         }
@@ -234,9 +211,9 @@ public class SkillListener implements Listener {
         Block b = e.getBlock();
 
         //Infinite torch placement
-        if(b.getType().equals(Material.TORCH) && mp.getLevel(Skill.MINING) > 99)
-        {
-            if (!e.getPlayer().getInventory().contains(Material.TORCH)) e.getPlayer().getInventory().addItem(new ItemStack(Material.TORCH, 1));
+        if (b.getType().equals(Material.TORCH) && mp.getLevel(Skill.MINING) > 99) {
+            if (!e.getPlayer().getInventory().contains(Material.TORCH))
+                e.getPlayer().getInventory().addItem(new ItemStack(Material.TORCH, 1));
         }
     }
 
@@ -250,8 +227,7 @@ public class SkillListener implements Listener {
         DetailedMPlayer mp = TempData.getMPlayer(e.getPlayer());
         ItemStack is = e.getPlayer().getItemInHand();
         Material m = null;
-        if(e.hasBlock())
-        {
+        if (e.hasBlock()) {
             m = e.getClickedBlock().getType();
         }
         Material hand = is.getType();
@@ -259,7 +235,7 @@ public class SkillListener implements Listener {
         //Skill checks
 
         /**treasure**/
-        if(hand.equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().size() == 6 && is.getItemMeta().getLore().get(5).equalsIgnoreCase(ChatColor.GRAY + "Rightclick map at location.")) {
+        if (hand.equals(Material.MAP) && is.hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().size() == 6 && is.getItemMeta().getLore().get(5).equalsIgnoreCase(ChatColor.GRAY + "Rightclick map at location.")) {
             new TreasureListener(e);
         }
 
@@ -267,36 +243,34 @@ public class SkillListener implements Listener {
         new SuicideChicken(e);
 
         /**Cake food boost**/
-        if(!e.isCancelled() && e.hasBlock() && (m.equals(Material.CAKE_BLOCK) || m.equals(Material.CAKE)) && mp.getLevel(Skill.COOKING) > 67 && mp.getPlayer().getFoodLevel() < 20)
-        {
+        if (!e.isCancelled() && e.hasBlock() && (m.equals(Material.CAKE_BLOCK) || m.equals(Material.CAKE)) && mp.getLevel(Skill.COOKING) > 67 && mp.getPlayer().getFoodLevel() < 20) {
             new CakeEatBoost(e);
         }
 
         /** Healing Storm **/
         int level = mp.getLevel(Skill.HEALING);
 
-        if(level > 99 && hand.equals(Material.PAPER) && e.getAction().equals(Action.LEFT_CLICK_AIR))
-        {
+        if (level > 99 && hand.equals(Material.PAPER) && e.getAction().equals(Action.LEFT_CLICK_AIR)) {
             int coolDownTime = 300; //Seconds
             Player p = e.getPlayer();
 
             if (!CoolDown.cooledDown(p.getUniqueId().toString(), TempData.healStormMap, coolDownTime)) {
-                new SendMessage(p, Lists.newArrayList("You cannot call a healing storm yet!", "You have to wait another " + (coolDownTime - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.healStormMap)) + " seconds."));
+                SendMessage.send(p, "You cannot call a healing storm yet!", "You have to wait another " + (coolDownTime - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.healStormMap)) + " seconds.");
             } else {
                 int exp = 500;
 
                 CoolDown.newCooldown(p.getUniqueId().toString(), TempData.healStormMap);
                 mp.addExp(Skill.HEALING, exp);
-                new SendMessage(p, Lists.newArrayList("You launch a healing storm at your location!!"));
+                SendMessage.send(p, "You launch a healing storm at your location!!");
 
-                for(int i = 0; i <= 10 * 20; i++) {
+                for (int i = 0; i <= 10 * 20; i++) {
                     final Player player = p;
 
                     if (i % 5 == 0) {
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                             @Override
                             public void run() {
-                                player.getWorld().spigot().playEffect(player.getLocation().add(0,9,0), Effect.HEART, 0, 0, 2, 1, 2, 1, 65, 15);
+                                player.getWorld().spigot().playEffect(player.getLocation().add(0, 9, 0), Effect.HEART, 0, 0, 2, 1, 2, 1, 65, 15);
                                 ThrownPotion potion = (ThrownPotion) player.getWorld().spawnEntity(player.getLocation().add(RandomNumber.get(3) - 2, 9, RandomNumber.get(3) - 2), EntityType.SPLASH_POTION);
                                 potion.setItem(new ItemStack(Material.POTION, 1, (short) 16389));
                                 potion.setShooter(player);
@@ -308,14 +282,12 @@ public class SkillListener implements Listener {
         }
 
 
-
         /**Farming**/
         level = mp.getLevel(Skill.FARMING);
 
         //Farming tree planting grow hand thing
         if (!e.isCancelled() && e.hasBlock() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.SAPLING) && level > 74) {
-            if(FarmingInteractBlockExperience.makeTree(e.getClickedBlock()))
-            {
+            if (FarmingInteractBlockExperience.makeTree(e.getClickedBlock())) {
                 mp.addExp(Skill.FARMING, 48);
             }
         }
@@ -325,7 +297,7 @@ public class SkillListener implements Listener {
     public void onEvent(FurnaceSmeltEvent e) {
         if (!worldCheck(e.getBlock().getWorld()) || e.isCancelled()) return;
 
-            new CookingSmeltExperience(e);
+        new CookingSmeltExperience(e);
 
     }
 
@@ -360,38 +332,33 @@ public class SkillListener implements Listener {
         int exp = 0;
 
         /**Farming**/
-        if(type.equals(EntityType.SHEEP) && hand.equals(Material.SHEARS))
-        {
+        if (type.equals(EntityType.SHEEP) && hand.equals(Material.SHEARS)) {
             exp = FarmingInteractEntityExperience.woolBonus(e.getRightClicked());
         }
 
 
-        if(type.equals(EntityType.MUSHROOM_COW) && hand.equals(Material.BOWL))
-        {
+        if (type.equals(EntityType.MUSHROOM_COW) && hand.equals(Material.BOWL)) {
             exp = FarmingInteractEntityExperience.soupBonus(e.getPlayer());
         }
 
 
-        if(type.equals(EntityType.COW) && hand.equals(Material.BUCKET))
-        {
+        if (type.equals(EntityType.COW) && hand.equals(Material.BUCKET)) {
             exp = FarmingInteractEntityExperience.milkBonus(e.getPlayer());
         }
 
         //Add experience
 
-        if(exp != 0)
-        {
+        if (exp != 0) {
             mp.addExp(Skill.FARMING, exp);
         }
 
 
         /** Healing Skill **/
-        if(hand.equals(Material.PAPER) && clicked instanceof LivingEntity)
-        {
+        if (hand.equals(Material.PAPER) && clicked instanceof LivingEntity) {
             int coolDownTime = 35; //Seconds
 
             if (!CoolDown.cooledDown(p.getUniqueId().toString(), TempData.healMap, coolDownTime)) {
-                new SendMessage(p, Lists.newArrayList("You cannot heal creatures yet!", "You have to wait another " + (coolDownTime - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.healMap)) + " seconds."));
+                SendMessage.send(p, "You cannot heal creatures yet!", "You have to wait another " + (coolDownTime - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.healMap)) + " seconds.");
             } else {
                 int level = mp.getLevel(Skill.HEALING);
                 double amount = 1 + level / 5;

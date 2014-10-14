@@ -1,22 +1,12 @@
 package com.minegusta.mgskills.treasuremaps;
 
-import com.google.common.collect.Lists;
 import com.minegusta.mgskills.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 public class TreasureSong {
-    private final Player p;
-
-    public TreasureSong(Player p) {
-        this.p = p;
-        playSong();
-    }
-
-    List<Sound> song = Lists.newArrayList(
+    private static final Sound[] SONG = {
             Sound.NOTE_BASS,
             Sound.NOTE_STICKS,
             Sound.NOTE_BASS,
@@ -58,9 +48,9 @@ public class TreasureSong {
             Sound.NOTE_PIANO,
             Sound.NOTE_PLING,
             Sound.NOTE_PLING
-    );
+    };
 
-    private void playSong() {
+    public static void playSong(final Player p) {
         for (int i = 0; i < 20 * 20 + 1; i++) {
             final int k = i;
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
@@ -69,11 +59,11 @@ public class TreasureSong {
                     if (k % 5 == 0) p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
                     if (k % 10 == 0) {
                         int count = k / 10;
-                        p.playSound(p.getLocation(), song.get(count), 1, 1);
+                        p.playSound(p.getLocation(), SONG[count], 1, 1);
                     }
                 }
             }, i);
-
         }
     }
 }
+

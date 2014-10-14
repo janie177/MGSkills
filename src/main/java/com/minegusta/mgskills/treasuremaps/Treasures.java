@@ -317,5 +317,4 @@ public enum Treasures {
     public ItemStack get() {
         return is;
     }
-
 }

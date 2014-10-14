@@ -1,7 +1,5 @@
 package com.minegusta.mgskills.skills.woodcutting;
 
-
-import com.google.common.collect.Lists;
 import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.util.CoolDown;
@@ -45,7 +43,7 @@ public class SuicideChicken {
         if (isBlazeRod()) {
             if (!isLevel()) return;
             if (!cooledDown()) {
-                new SendMessage(p, Lists.newArrayList("You have to wait another " + (20 - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.chickenMap)) + " seconds."));
+                SendMessage.send(p, "You have to wait another " + (20 - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.chickenMap)) + " seconds.");
                 return;
             }
             spawnChicken();

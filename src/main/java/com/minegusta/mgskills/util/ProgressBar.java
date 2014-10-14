@@ -6,13 +6,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
-public class ProgressBar
-{
+public class ProgressBar {
     final static ScoreboardManager manager = Bukkit.getScoreboardManager();
 
     public static void showBar(int level, final Player p, String skill) {
-
-
         Scoreboard sb = manager.getNewScoreboard();
 
         Objective experience = sb.registerNewObjective(p.getName(), "dummy");
@@ -25,15 +22,11 @@ public class ProgressBar
 
         p.setScoreboard(sb);
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable()
-        {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 p.setScoreboard(manager.getNewScoreboard());
             }
         }, 120);
     }
-
-
 }

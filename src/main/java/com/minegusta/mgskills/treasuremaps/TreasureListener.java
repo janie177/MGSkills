@@ -11,8 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class TreasureListener
-{
+public class TreasureListener {
     private Player p;
     private Action click;
     private ItemStack is;
@@ -24,7 +23,7 @@ public class TreasureListener
 
         if (isRightClick() && isLocation()) {
             if (!hasInventory()) {
-                p.sendMessage(ChatColor.RED + "You need atleast 6 free inventory spaces!");
+                p.sendMessage(ChatColor.RED + "You need at least 6 free inventory spaces!");
             } else {
                 giveTreasure();
             }
@@ -46,8 +45,6 @@ public class TreasureListener
         double z2 = p.getLocation().getZ();
 
         return p.getWorld().getName().equalsIgnoreCase(is.getItemMeta().getLore().get(4)) && isNear(x, x2) && isNear(y, y2) && isNear(z, z2);
-
-
     }
 
     private boolean hasInventory() {
@@ -83,7 +80,7 @@ public class TreasureListener
         p.sendMessage(ChatColor.YELLOW + "-=- " + ChatColor.LIGHT_PURPLE + " Congratulations! You found the treasure! " + ChatColor.YELLOW + "-=-");
         p.sendMessage(ChatColor.YELLOW + "-=- " + ChatColor.GRAY + "                      YARR HARR!!                  " + ChatColor.YELLOW + "-=-");
         p.sendMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-        new TreasureSong(p);
+        TreasureSong.playSong(p);
 
         //Add items
 

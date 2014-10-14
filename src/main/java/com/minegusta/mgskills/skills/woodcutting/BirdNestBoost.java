@@ -1,6 +1,5 @@
 package com.minegusta.mgskills.skills.woodcutting;
 
-import com.google.common.collect.Lists;
 import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.SendMessage;
@@ -12,21 +11,18 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class BirdNestBoost
-{
+public class BirdNestBoost {
     private Player p;
     private Block b;
     private Location l;
 
-    public BirdNestBoost(Player p, Block b)
-    {
+    public BirdNestBoost(Player p, Block b) {
         this.p = p;
         this.b = b;
         this.l = b.getLocation();
     }
 
-    public void runNest()
-    {
+    public void runNest() {
         Material type = b.getRelative(BlockFace.DOWN).getType();
         if (type.equals(Material.LOG) || type.equals(Material.AIR) || type.equals(Material.LOG_2) || type.equals(Material.LEAVES) || type.equals(Material.LEAVES_2) || type.equals(Material.DIRT) || type.equals(Material.GRASS))
             b.getRelative(BlockFace.DOWN).setType(Material.HAY_BLOCK);
@@ -39,7 +35,7 @@ public class BirdNestBoost
     }
 
     private void sendMessage() {
-        new SendMessage(p, Lists.newArrayList("You hit a bird's nest!", "It looks like the birds collected some items.."));
+        SendMessage.send(p, "You hit a bird's nest!", "It looks like the birds collected some items..");
     }
 
     private void spawnChickens() {
