@@ -1,6 +1,6 @@
 package com.minegusta.mgskills.highscores;
 
-import com.minegusta.mgskills.util.YamlUtil;
+import com.minegusta.mgskills.files.yaml.YamlUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class HighScoreFile {

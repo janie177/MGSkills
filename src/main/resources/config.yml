@@ -3,3 +3,4 @@ enabled_worlds:
   - 'world_nether'
   - 'world_the_end'
 exp_multiplier: '1.0'
+convert_from_yaml: true

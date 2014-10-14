@@ -4,12 +4,12 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.files.LoadToMap;
 import com.minegusta.mgskills.files.RemoveFromMap;
+import com.minegusta.mgskills.files.yaml.YamlUtil;
 import com.minegusta.mgskills.skills.SkillInfo;
 import com.minegusta.mgskills.struct.ISkill;
 import com.minegusta.mgskills.util.ExpTable;
 import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
-import com.minegusta.mgskills.util.YamlUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -36,26 +36,21 @@ public class SkillCommand implements CommandExecutor {
                     sendList(SkillInfo.SKILLS.getInfo());
                     return true;
                 }
-                if (args[0].equalsIgnoreCase("toggle") || args[0].equalsIgnoreCase("t"))
-                {
+                if (args[0].equalsIgnoreCase("toggle") || args[0].equalsIgnoreCase("t")) {
                     boolean show = TempData.getMPlayer(p).showExp();
-                    if(show)
-                    {
+                    if (show) {
                         sendString("Experience is no longer shown in chat when earned.");
-                        sendString("Use " + ChatColor.GOLD  + "/Skills Toggle" + ChatColor.YELLOW + " to re-enable this feature.");
+                        sendString("Use " + ChatColor.GOLD + "/Skills Toggle" + ChatColor.YELLOW + " to re-enable this feature.");
                         TempData.getMPlayer(p).setShowExp(false);
-                    }
-                    else
-                    {
+                    } else {
                         sendString("Experience is now shown in chat when earned.");
-                        sendString("Use " + ChatColor.GOLD  + "/Skills Toggle" + ChatColor.YELLOW + " to disable this feature.");
+                        sendString("Use " + ChatColor.GOLD + "/Skills Toggle" + ChatColor.YELLOW + " to disable this feature.");
                         TempData.getMPlayer(p).setShowExp(true);
                     }
                     return true;
                 }
             }
-            if (args.length == 2)
-            {
+            if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("show") || args[0].equalsIgnoreCase("s")) {
                     try {
                         Player oPlayer = Bukkit.getOfflinePlayer(args[1]).getPlayer();
@@ -153,7 +148,7 @@ public class SkillCommand implements CommandExecutor {
         p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "Total Level" + ChatColor.GOLD + "]" + "   " + ChatColor.GOLD + "[" + ChatColor.YELLOW + mp.getAll() + ChatColor.GOLD + "]");
 
         //Unload from map again IF PLAYER IS OFFLINE. IDIOT.
-        if(!p.isOnline())new RemoveFromMap(p);
+        if (!p.isOnline()) new RemoveFromMap(p);
 
         return true;
     }
@@ -169,6 +164,6 @@ public class SkillCommand implements CommandExecutor {
     }
 
     private void sendString(String s) {
-        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "S" + ChatColor.GOLD+ "] " + ChatColor.YELLOW + s);
+        p.sendMessage(ChatColor.GOLD + "[" + ChatColor.LIGHT_PURPLE + "S" + ChatColor.GOLD + "] " + ChatColor.YELLOW + s);
     }
 }

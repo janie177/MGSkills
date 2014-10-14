@@ -5,7 +5,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class DefaultConfig {
     public static void loadConfig() {
-        Main.PLUGIN.saveDefaultConfig();
+        Main.PLUGIN.getConfig().options().copyDefaults(true);
+        Main.PLUGIN.saveConfig();
     }
 
     public static FileConfiguration getConfig() {

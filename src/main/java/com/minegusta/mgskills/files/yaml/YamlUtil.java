@@ -1,4 +1,4 @@
-package com.minegusta.mgskills.util;
+package com.minegusta.mgskills.files.yaml;
 
 import com.minegusta.mgskills.Main;
 import org.bukkit.configuration.file.FileConfiguration;

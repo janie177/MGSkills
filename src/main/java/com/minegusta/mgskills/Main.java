@@ -41,13 +41,11 @@ public class Main extends JavaPlugin {
         SAVETASK = SaveTask.playerSaveTask;
 
         //Config
-
-        HighScoreFile.loadFile();
         DefaultConfig.loadConfig();
+        HighScoreFile.loadFile();
 
         //On Reload
         OnReload.reLoadToMap();
-
     }
 
     @Override

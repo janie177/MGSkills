@@ -1,10 +1,10 @@
-package com.minegusta.mgskills.files;
+package com.minegusta.mgskills.files.yaml;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.highscores.UpdateHighscores;
 import com.minegusta.mgskills.util.TempData;
-import com.minegusta.mgskills.util.json.JsonFileUtil;
-import com.minegusta.mgskills.util.json.JsonSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -14,14 +14,14 @@ import java.util.concurrent.ConcurrentMap;
 public class LoadToMap {
     private UUID uuid;
     private Player p;
-    private JsonSection conf;
+    private FileConfiguration conf;
     private DetailedMPlayer mPlayer;
     private ConcurrentMap<String, Integer> map = Maps.newConcurrentMap();
 
     public LoadToMap(PlayerJoinEvent e) {
         this.p = e.getPlayer();
         this.uuid = p.getUniqueId();
-        this.conf = JsonFileUtil.getSection("/players/", uuid.toString() + ".json");
+        this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
         create();
 
         new UpdateHighscores(e);
@@ -30,7 +30,7 @@ public class LoadToMap {
     public LoadToMap(Player p) {
         this.p = p;
         this.uuid = p.getUniqueId();
-        this.conf = JsonFileUtil.getSection("/players/", uuid.toString() + ".json");
+        this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
         create();
     }
 
