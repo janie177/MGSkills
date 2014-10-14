@@ -130,7 +130,7 @@ public enum SkillInfo {
             " - " + ChatColor.GREEN + "36: " + ChatColor.GRAY + "You can now find lost iron tools in the dirt.",
             " - " + ChatColor.GREEN + "52: " + ChatColor.GRAY + "You have a chance to dig up treasure maps.",
             " - " + ChatColor.GREEN + "69: " + ChatColor.GRAY + "You can now stack potions.",
-            " - " + ChatColor.GREEN + "84: " + ChatColor.GRAY + "When brewing potions, get twice as many potions.",
+            " - " + ChatColor.GREEN + "84: " + ChatColor.GRAY + "When brewing potions, get 50% chance to brew twice as many potions.",
             " - " + ChatColor.GREEN + "94: " + ChatColor.GRAY + "You can call an acid rain on your location.",
             " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "All potion effects last twice as long.",
             ChatColor.GOLD + "Bonuses That Increase Per Level:",
