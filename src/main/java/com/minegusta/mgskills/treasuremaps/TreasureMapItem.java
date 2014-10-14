@@ -23,6 +23,7 @@ public class TreasureMapItem {
         meta.setLore(lore);
         meta.setDisplayName(ChatColor.YELLOW + "Treasure Map");
         is.setItemMeta(meta);
+
         return is;
     }
 }
