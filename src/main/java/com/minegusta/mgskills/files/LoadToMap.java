@@ -1,6 +1,7 @@
 package com.minegusta.mgskills.files;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.highscores.UpdateHighscores;
 import com.minegusta.mgskills.util.TempData;
 import com.minegusta.mgskills.util.json.JsonFileUtil;
@@ -21,7 +22,7 @@ public class LoadToMap {
     public LoadToMap(PlayerJoinEvent e) {
         this.p = e.getPlayer();
         this.uuid = p.getUniqueId();
-        this.conf = JsonFileUtil.getSection("/players/", uuid.toString() + ".json");
+        this.conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".json");
         create();
 
         new UpdateHighscores(e);
@@ -30,7 +31,7 @@ public class LoadToMap {
     public LoadToMap(Player p) {
         this.p = p;
         this.uuid = p.getUniqueId();
-        this.conf = JsonFileUtil.getSection("/players/", uuid.toString() + ".json");
+        this.conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".json");
         create();
     }
 

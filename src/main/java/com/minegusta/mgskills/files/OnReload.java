@@ -15,6 +15,7 @@ public class OnReload {
                 new com.minegusta.mgskills.files.yaml.LoadToMap(UUID.fromString(file.getName().substring(0, file.getName().length() - 4)));
             }
             Main.PLUGIN.getConfig().set("convert_from_yaml", false);
+            Main.PLUGIN.saveConfig();
         } else {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 new LoadToMap(p);

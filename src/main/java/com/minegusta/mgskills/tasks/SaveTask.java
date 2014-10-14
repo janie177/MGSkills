@@ -16,7 +16,7 @@ public class SaveTask {
         @Override
         public void run() {
             for (String uuid : TempData.getKeySet()) {
-                JsonSection conf = JsonFileUtil.getSection("/players/", uuid + ".json");
+                JsonSection conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json");
                 Map<String, Object> map = TempData.getMPlayer(uuid).serialize();
 
                 for (String s : map.keySet()) {
@@ -24,7 +24,7 @@ public class SaveTask {
                 }
 
                 //Save
-                JsonFileUtil.saveFile("/players/", uuid + ".json", conf);
+                JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json", conf);
             }
             HighScoreFile.saveFile();
             UpdateHighScoreBoard.updateHighScoreBoard();
@@ -34,7 +34,7 @@ public class SaveTask {
 
     public static void save() {
         for (String uuid : TempData.getKeySet()) {
-            JsonSection conf = JsonFileUtil.getSection("/players/", uuid + ".json");
+            JsonSection conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json");
             Map<String, Object> map = TempData.getMPlayer(uuid).serialize();
 
             for (String s : map.keySet()) {
@@ -42,19 +42,19 @@ public class SaveTask {
             }
 
             //Save
-            JsonFileUtil.saveFile("/players/", uuid + ".json", conf);
+            JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json", conf);
         }
         HighScoreFile.saveFile();
     }
 
     public static void savePlayer(UUID uuid) {
-        JsonSection conf = JsonFileUtil.getSection("/players/", uuid.toString() + ".json");
+        JsonSection conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".json");
         Map<String, Object> map = TempData.getMPlayer(uuid.toString()).serialize();
 
         for (String s : map.keySet()) {
             conf.set(s, map.get(s));
         }
         //Save
-        JsonFileUtil.saveFile("/players/", uuid.toString() + ".json", conf);
+        JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".json", conf);
     }
 }
