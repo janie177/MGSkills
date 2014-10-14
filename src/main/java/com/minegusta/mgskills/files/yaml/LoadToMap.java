@@ -13,14 +13,13 @@ import java.util.concurrent.ConcurrentMap;
 
 public class LoadToMap {
     private UUID uuid;
-    private Player p;
+
     private FileConfiguration conf;
     private DetailedMPlayer mPlayer;
     private ConcurrentMap<String, Integer> map = Maps.newConcurrentMap();
 
     public LoadToMap(PlayerJoinEvent e) {
-        this.p = e.getPlayer();
-        this.uuid = p.getUniqueId();
+        this.uuid = e.getPlayer().getUniqueId();
         this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
         create();
 
@@ -28,8 +27,13 @@ public class LoadToMap {
     }
 
     public LoadToMap(Player p) {
-        this.p = p;
         this.uuid = p.getUniqueId();
+        this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
+        create();
+    }
+
+    public LoadToMap(UUID id) {
+        this.uuid = id;
         this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
         create();
     }
@@ -38,7 +42,7 @@ public class LoadToMap {
         //Create the MPlayer object
 
         //Just a small check in case of..
-        if (uuid == null) p.kickPlayer("Your UUID is null! This causes plugins to malfunction. Please re-log.");
+        // if (uuid == null) p.kickPlayer("Your UUID is null! This causes plugins to malfunction. Please re-log.");
 
         map.put("fishing", conf.getInt("fishing", 0));
         map.put("mining", conf.getInt("mining", 0));
@@ -64,7 +68,7 @@ public class LoadToMap {
         map.put("healingLevel", conf.getInt("healingLevel", 1));
         map.put("explorationLevel", conf.getInt("explorationLevel", 1));
 
-        this.mPlayer = new DetailedMPlayer(map, p);
+        this.mPlayer = new DetailedMPlayer(map, uuid);
         loadToMap();
     }
 

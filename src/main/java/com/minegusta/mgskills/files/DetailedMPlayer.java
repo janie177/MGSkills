@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.minegusta.mgskills.util.ExpMultiplier;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.Skill;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -11,10 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
 public class DetailedMPlayer {
-
     private String uuid;
-
-    private Player p;
 
     private boolean showExp = false;
 
@@ -24,8 +22,12 @@ public class DetailedMPlayer {
     }
 
     public DetailedMPlayer(ConcurrentMap<String, Integer> map, Player p) {
-        this.p = p;
         this.uuid = p.getUniqueId().toString();
+        this.map = map;
+    }
+
+    public DetailedMPlayer(ConcurrentMap<String, Integer> map, UUID id) {
+        this.uuid = id.toString();
         this.map = map;
     }
 
@@ -56,9 +58,9 @@ public class DetailedMPlayer {
     public void addExp(Skill skill, int experience) {
         int added = experience * ExpMultiplier.get();
         map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
-        LevelUpListener.isLevelUp(p, getExp(skill), skill.getSkillName(), getLevel(skill));
+        LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
         if (showExp)
-            p.sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
+            getPlayer().sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
     }
 
     public void addLevel(Skill skill) {
@@ -66,7 +68,7 @@ public class DetailedMPlayer {
     }
 
     public Player getPlayer() {
-        return p;
+        return Bukkit.getPlayer(getUUID());
     }
 
     public UUID getUUID() {
