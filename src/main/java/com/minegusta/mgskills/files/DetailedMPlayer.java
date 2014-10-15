@@ -6,6 +6,7 @@ import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -55,12 +56,13 @@ public class DetailedMPlayer {
         return map.get(skill.getSkillName().toLowerCase());
     }
 
-    public void addExp(Skill skill, int experience) {
+    public void addExp(Skill skill, int experience)
+    {
+        if(!getPlayer().getGameMode().equals(GameMode.SURVIVAL))return;
         int added = experience * ExpMultiplier.get();
         map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
         LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
-        if (showExp)
-            getPlayer().sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
+        if (showExp) getPlayer().sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
     }
 
     public void addLevel(Skill skill) {

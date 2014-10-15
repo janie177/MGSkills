@@ -22,7 +22,7 @@ public class ItemUtil
      */
     public static boolean hasSilkTouch(ItemStack i)
     {
-        return i.getType().equals(Material.AIR) && i.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS);
+        return !i.getType().equals(Material.AIR) && i.containsEnchantment(Enchantment.SILK_TOUCH);
     }
 
 

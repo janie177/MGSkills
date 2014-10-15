@@ -4,6 +4,10 @@ import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.files.LoadToMap;
 import com.minegusta.mgskills.files.RemoveFromMap;
+import com.minegusta.mgskills.skills.brewing.PotionExperience;
+import com.minegusta.mgskills.skills.brewing.custombrewing.BrewingData;
+import com.minegusta.mgskills.skills.brewing.custombrewing.BrewingLab;
+import com.minegusta.mgskills.skills.brewing.custombrewing.BrewingProcess;
 import com.minegusta.mgskills.skills.cooking.CakeEatBoost;
 import com.minegusta.mgskills.skills.cooking.CookingCraftExperience;
 import com.minegusta.mgskills.skills.cooking.CookingSmeltExperience;
@@ -33,9 +37,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -193,7 +201,7 @@ public class SkillListener implements Listener {
         }
 
         //Apple boost
-        else if (BlockUtil.isLeaves(b) && level > 43 && RandomNumber.get(25) == 1) {
+        if (BlockUtil.isLeaves(b) && level > 43 && RandomNumber.get(25) == 1) {
             if (RandomNumber.get(5) == 1 && level > 99) {
                 b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 1));
             } else {
@@ -201,6 +209,13 @@ public class SkillListener implements Listener {
             }
         }
 
+        /** Custom Brewing Check **/
+        if(BrewingData.hasBrewingLab(b.getLocation()))
+        {
+            SendMessage.send(p, "You cancelled brewing a potion by breaking the cauldron.", "Some gasses escape and cause an explosion!");
+            BrewingData.getBrew(b.getLocation()).cancelBrew();
+            b.getWorld().createExplosion(b.getLocation(), 4, false);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -220,11 +235,12 @@ public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(PlayerInteractEvent e) {
 
-        //Automatically cnacelled for right click air. Make sure to check this seperately for the boosts.
+        //Automatically cancelled for right click air. Make sure to check this seperately for the boosts.
         if (!worldCheck(e.getPlayer().getWorld())) return;
 
         //Data
-        DetailedMPlayer mp = TempData.getMPlayer(e.getPlayer());
+        Player p = e.getPlayer();
+        DetailedMPlayer mp = TempData.getMPlayer(p);
         ItemStack is = e.getPlayer().getItemInHand();
         Material m = null;
         if (e.hasBlock()) {
@@ -252,7 +268,6 @@ public class SkillListener implements Listener {
 
         if (level > 99 && hand.equals(Material.PAPER) && e.getAction().equals(Action.LEFT_CLICK_AIR)) {
             int coolDownTime = 300; //Seconds
-            Player p = e.getPlayer();
 
             if (!CoolDown.cooledDown(p.getUniqueId().toString(), TempData.healStormMap, coolDownTime)) {
                 SendMessage.send(p, "You cannot call a healing storm yet!", "You have to wait another " + (coolDownTime - CoolDown.getRemainingTime(p.getUniqueId().toString(), TempData.healStormMap)) + " seconds.");
@@ -281,14 +296,61 @@ public class SkillListener implements Listener {
             }
         }
 
+        /** Custom Potion brewing **/
+
+        level = mp.getLevel(Skill.BREWING);
+
+        if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && m.equals(Material.CAULDRON))
+        {
+            if(BrewingLab.isLab(e.getClickedBlock()))
+            {
+                if(BrewingData.hasBrewingLab(e.getClickedBlock().getLocation()))
+                {
+                    SendMessage.send(p, "This lab is busy. Opening/Breaking it would be unsafe.");
+                }
+                else
+                {
+                    Inventory inv = Bukkit.createInventory(null, 9, ChatColor.DARK_RED + "Brewing Lab");
+                    p.openInventory(inv);
+                    BrewingData.brewInvMap.put(p.getName(), e.getClickedBlock());
+                }
+            }
+
+
+        }
+
 
         /**Farming**/
         level = mp.getLevel(Skill.FARMING);
 
         //Farming tree planting grow hand thing
         if (!e.isCancelled() && e.hasBlock() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.SAPLING) && level > 74) {
-            if (FarmingInteractBlockExperience.makeTree(e.getClickedBlock())) {
+            if (FarmingInteractBlockExperience.makeTree(e.getClickedBlock()))
+            {
                 mp.addExp(Skill.FARMING, 48);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEvent(InventoryCloseEvent e)
+    {
+        if (!worldCheck(e.getPlayer().getWorld())) return;
+
+        Player p = (Player) e.getPlayer();
+        String name = e.getPlayer().getName();
+
+        /** Brewing skill **/
+        if(BrewingData.brewInvMap.containsKey(name))
+        {
+            Inventory inv = e.getInventory();
+            Block b = BrewingData.brewInvMap.remove(name);
+            int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
+            ItemStack[] is = inv.getContents();
+            if(BrewingLab.isLab(b))
+            {
+                //Start brewing
+                new BrewingProcess(b, is, level);
             }
         }
     }
@@ -317,6 +379,49 @@ public class SkillListener implements Listener {
     public void onEvent(EntityDeathEvent e) {
         if (!worldCheck(e.getEntity().getWorld())) return;
         new HuntingExperience(e);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEvent(BrewEvent e)
+    {
+        if(!worldCheck(e.getBlock().getWorld()) || e.isCancelled())return;
+
+        /** Brewing skill experience normal potions **/
+
+        int exp = 0;
+        for(ItemStack i : e.getContents().getContents())
+        {
+            if(i.getType().equals(Material.POTION))
+            {
+                exp = PotionExperience.getExperience(i);
+                break;
+            }
+        }
+        if(exp == 0)return;
+
+        Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.EXPERIENCE_ORB);
+
+        for(Entity ent: temp.getNearbyEntities(10,10,10))
+        {
+            if(ent instanceof Player)
+            {
+                TempData.getMPlayer((Player)ent).addExp(Skill.BREWING, exp);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEvent(PotionSplashEvent e)
+    {
+        if (!worldCheck(e.getPotion().getWorld()) || e.isCancelled()) return;
+
+        /** Brewing splash potion EXP **/
+        if(e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
+        {
+            Player p = (Player) e.getEntity().getShooter();
+
+            TempData.getMPlayer(p).addExp(Skill.BREWING, 25);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
