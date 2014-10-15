@@ -1,9 +1,6 @@
 package com.minegusta.mgskills;
 
-import com.minegusta.mgskills.commands.HighScoreCommand;
-import com.minegusta.mgskills.commands.ScoreBoardCommand;
-import com.minegusta.mgskills.commands.SkillCommand;
-import com.minegusta.mgskills.commands.SkillInfoCommand;
+import com.minegusta.mgskills.commands.*;
 import com.minegusta.mgskills.files.DefaultConfig;
 import com.minegusta.mgskills.files.OnReload;
 import com.minegusta.mgskills.highscores.HighScoreFile;
@@ -31,6 +28,7 @@ public class Main extends JavaPlugin {
         getCommand("highscore").setExecutor(new HighScoreCommand());
         getCommand("wolf").setExecutor(new WolfBoost());
         getCommand("hsb").setExecutor(new ScoreBoardCommand());
+        getCommand("alchemy").setExecutor(new AlchemyCommand());
 
         String[] skillCommands = {"brewing", "cooking", "digging", "exploration", "farming", "fishing", "healing", "hunting", "mining", "summoning", "woodcutting"};
         for (String s : skillCommands) {
