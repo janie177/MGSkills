@@ -4,6 +4,7 @@ import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.files.LoadToMap;
 import com.minegusta.mgskills.files.RemoveFromMap;
+import com.minegusta.mgskills.skills.brewing.PotionBounce;
 import com.minegusta.mgskills.skills.brewing.PotionExperience;
 import com.minegusta.mgskills.skills.brewing.custombrewing.BrewingData;
 import com.minegusta.mgskills.skills.brewing.custombrewing.BrewingLab;
@@ -415,12 +416,17 @@ public class SkillListener implements Listener {
     {
         if (!worldCheck(e.getPotion().getWorld()) || e.isCancelled()) return;
 
-        /** Brewing splash potion EXP **/
+        /** Brewing splash potion **/
         if(e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player)
         {
             Player p = (Player) e.getEntity().getShooter();
 
             TempData.getMPlayer(p).addExp(Skill.BREWING, 25);
+
+            DetailedMPlayer mp = TempData.getMPlayer(p);
+            int level = mp.getLevel(Skill.BREWING);
+
+            PotionBounce.bounce(level, e.getPotion());
         }
     }
 
