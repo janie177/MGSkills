@@ -133,7 +133,7 @@ public enum SkillInfo {
             ChatColor.GOLD + "Bonuses Per Level (do not apply to custom potions):",
             " - " + ChatColor.GREEN + "23: " + ChatColor.GRAY + ".",
             " - " + ChatColor.GREEN + "36: " + ChatColor.GRAY + ".",
-            " - " + ChatColor.GREEN + "52: " + ChatColor.GRAY + "You can now stack potions by clicking them.",
+            " - " + ChatColor.GREEN + "72: " + ChatColor.GRAY + "You can now stack potions by clicking them.",
             " - " + ChatColor.GREEN + "82: " + ChatColor.GRAY + "50% chance to brew two potions at once.",
             " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "When drinking potions, effects last twice as long.",
             ChatColor.GOLD + "Bonuses That Increase Per Level:",

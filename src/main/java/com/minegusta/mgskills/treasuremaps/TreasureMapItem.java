@@ -21,7 +21,7 @@ public class TreasureMapItem
 
         ItemStack is = new ItemStack(Material.MAP, 1, mv.getId());
         double x = RandomNumber.get(20000) - 10000;
-        double y = RandomNumber.get(64);
+        double y = RandomNumber.get(62) + 4;
         double z = RandomNumber.get(20000) - 10000;
 
         ItemMeta meta = is.getItemMeta();

@@ -39,15 +39,14 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
-import org.bukkit.event.inventory.BrewEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.inventory.FurnaceSmeltEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
@@ -357,6 +356,36 @@ public class SkillListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
+    public void onEvent(InventoryClickEvent e) {
+        if (!worldCheck(e.getWhoClicked().getWorld()) || e.isCancelled()) return;
+
+        /** Stacking Potions Brewing **/
+        if(e.getCurrentItem() != null && e.getCursor() != null && e.getCursor().getType().equals(Material.POTION) && e.getCursor().getType().equals(e.getCurrentItem().getType()) && e.getCurrentItem().getDurability() == e.getCursor().getDurability())
+        {
+            DetailedMPlayer mp = TempData.getMPlayer((Player)e.getWhoClicked());
+            int level = mp.getLevel(Skill.BREWING);
+
+            if(level > 71)
+            {
+                int amount = e.getCurrentItem().getAmount();
+                int newAmount = amount + e.getCursor().getAmount();
+                if(newAmount > 64)
+                {
+                    e.getCursor().setAmount(newAmount - 64);
+                    e.getCurrentItem().setAmount(64);
+                }
+                else
+                {
+                    e.getCurrentItem().setAmount(newAmount);
+                    e.setCursor(new ItemStack(Material.AIR));
+                }
+            }
+        }
+
+    }
+
+
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(FurnaceSmeltEvent e) {
         if (!worldCheck(e.getBlock().getWorld()) || e.isCancelled()) return;
 
@@ -374,6 +403,29 @@ public class SkillListener implements Listener {
     public void onEvent(PlayerItemConsumeEvent e) {
         if (!worldCheck(e.getPlayer().getWorld()) || e.isCancelled()) return;
         new FoodBoost(e);
+
+        /** Potions at level 100 **/
+
+        DetailedMPlayer mp = TempData.getMPlayer(e.getPlayer());
+        if (e.getItem().getType().equals(Material.POTION) && mp.getLevel(Skill.BREWING) > 99) {
+            try {
+                Potion pot = new Potion(PotionType.getByEffect(PotionEffectType.getById(e.getItem().getDurability())));
+
+                for(PotionEffect effect : pot.getEffects())
+                {
+                    for(PotionEffect effect2 : e.getPlayer().getActivePotionEffects())
+                    {
+                        if(effect.getType().equals(effect2.getType()))
+                        {
+                            e.getPlayer().removePotionEffect(effect2.getType());
+                        }
+                        e.getPlayer().addPotionEffect(new PotionEffect(effect.getType(), effect.getDuration(), effect.getAmplifier(), false));
+                    }
+
+                }
+
+            } catch (Exception ignored){}
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

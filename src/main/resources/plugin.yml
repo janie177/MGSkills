@@ -47,6 +47,10 @@ commands:
     usage: /Wolf
     description: Summon a wolf companion.
     aliases: [wolfcompanion, summonwolf]
+  alchemy:
+    usage: /Alchemy
+    description: Obtain a book of alchemy
+    aliases: [brewbook, alchemybook]
   hsb:
     usage: /HSB <index 1-6>
     description: Set the highscore board when you are an OP. That means not you Lucas.
