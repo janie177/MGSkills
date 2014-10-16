@@ -23,13 +23,19 @@ public class BrewingRecipeBook
 
         String seperator = System.getProperty("line.separator");
 
+        String[] pages = new String[50];
+
         int page = 0;
+
         for(Recipes r : Recipes.values())
         {
             String recipe = r.getRecipe().getInfo();
-            meta.setPage(page, ChatColor.translateAlternateColorCodes('&', recipe.replace("/n", seperator)));
+            pages[page] = (ChatColor.translateAlternateColorCodes('&', recipe.replace("/n", seperator)));
             page++;
+            if(page > 50)break;
         }
+
+        meta.addPage(pages);
 
         //Return
         book.setItemMeta(meta);
