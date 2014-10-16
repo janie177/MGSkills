@@ -389,12 +389,14 @@ public class SkillListener implements Listener {
 
         /** Brewing skill experience normal potions **/
 
+        ItemStack pot = null;
         int exp = 0;
         for(ItemStack i : e.getContents().getContents())
         {
             if(i.getType().equals(Material.POTION))
             {
                 exp = PotionExperience.getExperience(i);
+                pot = i;
                 break;
             }
         }
@@ -406,6 +408,11 @@ public class SkillListener implements Listener {
         {
             if(ent instanceof Player)
             {
+                int level = TempData.getMPlayer((Player)ent).getLevel(Skill.BREWING);
+                if(level > 81 && RandomNumber.get(2) == 1)
+                {
+                    pot.setAmount(pot.getAmount() + 1);
+                }
                 TempData.getMPlayer((Player)ent).addExp(Skill.BREWING, exp);
             }
         }
