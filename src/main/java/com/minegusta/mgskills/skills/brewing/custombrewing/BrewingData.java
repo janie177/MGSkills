@@ -9,20 +9,19 @@ import java.util.concurrent.ConcurrentMap;
 
 public class BrewingData {
 
-    public static void addLocation(Location l, BrewingProcess b)
-    {
+    public static void addLocation(Location l, BrewingProcess b) {
         brewMap.put(l, b);
     }
-    public static boolean hasBrewingLab(Location l)
-    {
+
+    public static boolean hasBrewingLab(Location l) {
         return brewMap.containsKey(l);
     }
-    public static void removeFromMap(Location l)
-    {
-        if(brewMap.containsKey(l))brewMap.remove(l);
+
+    public static void removeFromMap(Location l) {
+        if (brewMap.containsKey(l)) brewMap.remove(l);
     }
-    public static BrewingProcess getBrew(Location l)
-    {
+
+    public static BrewingProcess getBrew(Location l) {
         return brewMap.get(l);
     }
 

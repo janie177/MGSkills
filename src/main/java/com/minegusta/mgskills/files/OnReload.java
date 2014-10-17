@@ -11,10 +11,8 @@ public class OnReload {
     public static void reLoadToMap() {
         if (Main.PLUGIN.getConfig().getBoolean("convert_from_yaml", true)) {
             File folder = new File(Main.PLUGIN.getDataFolder().getPath() + "/players/");
-            for (File file : folder.listFiles())
-            {
-                if(file.getName().toLowerCase().contains(".yml"))
-                {
+            for (File file : folder.listFiles()) {
+                if (file.getName().toLowerCase().contains(".yml")) {
                     new com.minegusta.mgskills.files.yaml.LoadToMap(UUID.fromString(file.getName().substring(0, file.getName().length() - 4)));
                 }
             }

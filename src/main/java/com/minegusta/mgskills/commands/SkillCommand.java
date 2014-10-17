@@ -124,7 +124,8 @@ public class SkillCommand implements CommandExecutor {
         if (TempData.containsMPlayer(uuid.toString())) {
             mp = TempData.getMPlayer(Bukkit.getPlayer(uuid));
         } else {
-            if (!JsonFileUtil.exists(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".yml")) return false;
+            if (!JsonFileUtil.exists(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".yml"))
+                return false;
             new LoadToMap(Bukkit.getPlayer(uuid));
             mp = TempData.getMPlayer(Bukkit.getPlayer(uuid));
         }

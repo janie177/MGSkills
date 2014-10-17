@@ -43,8 +43,7 @@ public class Brewing implements ISkill {
     }
 
     @Override
-    public void levelUp()
-    {
+    public void levelUp() {
         mp.addLevel(Skill.BREWING);
     }
 

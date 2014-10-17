@@ -29,8 +29,7 @@ public enum Skill {
         return skill;
     }
 
-    public String getSkillName()
-    {
+    public String getSkillName() {
         return skillName;
     }
 

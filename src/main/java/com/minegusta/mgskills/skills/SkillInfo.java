@@ -22,7 +22,7 @@ public enum SkillInfo {
             " - " + ChatColor.GREEN + "80: " + ChatColor.GRAY + "You can now catch tier 5 loot.",
             " - " + ChatColor.GREEN + "100: " + ChatColor.GRAY + "You can now catch tier 6 loot.",
             ChatColor.GOLD + "Bonuses That Increase Per Level:",
-            " - " + ChatColor.GRAY + "You gain " + ChatColor.RED + "1%" + ChatColor.GRAY +" chance for a double catch per level."
+            " - " + ChatColor.GRAY + "You gain " + ChatColor.RED + "1%" + ChatColor.GRAY + " chance for a double catch per level."
     }),
     MINING(new String[]{
             ChatColor.GRAY + "Mining experience is gained when mining stone or ores that break.",
@@ -127,7 +127,7 @@ public enum SkillInfo {
             ChatColor.GRAY + "Brewing is an unique skill that allows you to experiment.",
             ChatColor.GRAY + "Brew potions and throw them to gain experience.",
             ChatColor.GRAY + "When you level up, you will be able to make custom brews.",
-            ChatColor.GRAY + "Use the" + ChatColor.RED +  " /alchemy " + ChatColor.GRAY + "command for a list of recipes.",
+            ChatColor.GRAY + "Use the" + ChatColor.RED + " /alchemy " + ChatColor.GRAY + "command for a list of recipes.",
             ChatColor.GRAY + "Custom potions are made in a brewing lab. Make one by",
             ChatColor.GRAY + "placing a cauldron flying above fire.",
             ChatColor.GOLD + "Bonuses Per Level (do not apply to custom potions):",

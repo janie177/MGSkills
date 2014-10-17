@@ -56,13 +56,13 @@ public class DetailedMPlayer {
         return map.get(skill.getSkillName().toLowerCase());
     }
 
-    public void addExp(Skill skill, int experience)
-    {
-        if(!getPlayer().getGameMode().equals(GameMode.SURVIVAL))return;
+    public void addExp(Skill skill, int experience) {
+        if (!getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
         int added = experience * ExpMultiplier.get();
         map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
         LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
-        if (showExp) getPlayer().sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
+        if (showExp)
+            getPlayer().sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
     }
 
     public void addLevel(Skill skill) {

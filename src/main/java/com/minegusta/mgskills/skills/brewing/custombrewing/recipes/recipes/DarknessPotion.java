@@ -10,21 +10,20 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class DarknessPotion implements PotionRecipe{
+public class DarknessPotion implements PotionRecipe {
     @Override
-    public String getInfo()
-    {
-        return  "&0DarknessPotion:" +
-                "/n&4Level: 10" +
+    public String getInfo() {
+        return "&0DarknessPotion:" +
+                "/n&4Level: &c10" +
                 "/n&4Ingredients:" +
-                "/n&b - 1 Spider Eye" +
-                "/n&b - 1 Wool" +
-                "/n&b - 1 Cobweb" +
+                "/n&c - 1 Spider Eye" +
+                "/n&c - 1 Wool" +
+                "/n&c - 1 Cobweb" +
                 "/n&4Requirements:" +
-                "/n&b - Light level < 7" +
+                "/n&c - Light level < 7" +
                 "/n" +
                 "/n&4Result:" +
-                "/n&b - Darkness potion";
+                "/n&c - Darkness potion";
     }
 
     @Override
@@ -38,13 +37,12 @@ public class DarknessPotion implements PotionRecipe{
     }
 
     @Override
-    public ItemStack getPotion()
-    {
+    public ItemStack getPotion() {
         ItemStack potion = new ItemStack(Material.POTION, 1);
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
         //Type duration amp ambient
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 20 , 1, false), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 20, 1, false), true);
         meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 20, 1, false), true);
         meta.setDisplayName(ChatColor.BLACK + "Potion Of Darkness");
 

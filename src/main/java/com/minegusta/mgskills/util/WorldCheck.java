@@ -4,8 +4,7 @@ import com.minegusta.mgskills.files.DefaultConfig;
 
 import java.util.List;
 
-public class WorldCheck
-{
+public class WorldCheck {
     private static List<String> list = DefaultConfig.getConfig().getStringList("enabled_worlds");
 
     public static boolean check(String worldName) {

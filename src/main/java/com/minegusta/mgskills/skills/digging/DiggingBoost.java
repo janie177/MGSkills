@@ -9,16 +9,14 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class DiggingBoost
-{
+public class DiggingBoost {
     private static int chance = 0;
     private static Player p;
     private static Block b;
     private static int level;
 
 
-    public static boolean check(Player pl, int lv, Block bl)
-    {
+    public static boolean check(Player pl, int lv, Block bl) {
         p = pl;
         level = lv;
         b = bl;
@@ -41,8 +39,6 @@ public class DiggingBoost
     }
 
     //Global check
-
-
 
 
     //Gravel boost --------------------------------------------------------------------------------

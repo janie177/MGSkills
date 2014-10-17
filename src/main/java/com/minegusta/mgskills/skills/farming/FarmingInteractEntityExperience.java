@@ -6,8 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.inventory.ItemStack;
 
-public class FarmingInteractEntityExperience
-{
+public class FarmingInteractEntityExperience {
     public static int woolBonus(Entity entity) {
         Sheep sheep = (Sheep) entity;
         if (sheep.isSheared()) return 0;

@@ -6,10 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-public class BlockUtil
-{
+public class BlockUtil {
     /**
-     *
      * @param b
      * @return Returns whether the given block is a tree log.
      */
@@ -19,13 +17,11 @@ public class BlockUtil
 
 
     /**
-     *
      * @param level
      * @param hasHoe
      * @param b
      */
-    public static boolean tryReplant(int level, boolean hasHoe, final Block b)
-    {
+    public static boolean tryReplant(int level, boolean hasHoe, final Block b) {
         boolean replant = false;
         switch (b.getType()) {
             case CARROT: {
@@ -35,8 +31,7 @@ public class BlockUtil
                 }
             }
             break;
-            case POTATO:
-            {
+            case POTATO: {
                 if (b.getData() == 7) {
 
                     replant = true;
@@ -72,8 +67,7 @@ public class BlockUtil
         if (replant && level > 61 && hasHoe) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     b.setType(b.getType());
                 }
             }, 10);
@@ -83,12 +77,10 @@ public class BlockUtil
     }
 
     /**
-     *
      * @param b
      * @return is the given block leaves?
      */
-    public static boolean isLeaves(Block b)
-    {
+    public static boolean isLeaves(Block b) {
         return b.getType().equals(Material.LEAVES) || b.getType().equals(Material.LEAVES_2);
     }
 }

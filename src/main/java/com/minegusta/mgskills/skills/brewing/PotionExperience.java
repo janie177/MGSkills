@@ -2,10 +2,8 @@ package com.minegusta.mgskills.skills.brewing;
 
 import org.bukkit.inventory.ItemStack;
 
-public class PotionExperience
-{
-    public static int getExperience(ItemStack potion)
-    {
+public class PotionExperience {
+    public static int getExperience(ItemStack potion) {
         short id = potion.getDurability();
         int exp;
 

@@ -36,8 +36,7 @@ public class JsonFileUtil {
     }
 
     /**
-     *
-     * @param path The path to the JSon file
+     * @param path     The path to the JSon file
      * @param fileName Filename including extension.
      * @return Does this file exist in the given directory?
      */

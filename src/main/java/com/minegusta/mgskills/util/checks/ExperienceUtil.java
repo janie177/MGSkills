@@ -3,10 +3,8 @@ package com.minegusta.mgskills.util.checks;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-public class ExperienceUtil 
-{
+public class ExperienceUtil {
     /**
-     *
      * @param m
      * @param silkTouch
      * @return Returns the amount of experience earned when mining a block. SilkTouch parameter determines whether to apply a lot or a little exp.
@@ -68,7 +66,6 @@ public class ExperienceUtil
     }
 
     /**
-     *
      * @param b
      * @return Calculate how much experience a player should get from a certain block.
      */
@@ -102,7 +99,6 @@ public class ExperienceUtil
 
 
     /**
-     *
      * @param b
      * @param silkTouch
      * @return Get the farming experience for the given block.

@@ -17,9 +17,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class BrewingProcess
-{
+public class BrewingProcess {
     private int[] i;
     private Block lab;
     private int TASK;
@@ -35,29 +35,34 @@ public class BrewingProcess
     private int requiredLevel;
     private int playerLevel;
 
-    public BrewingProcess(Block lab, int[] i, int playerLevel)
+    public BrewingProcess(Block lab, List<Integer> i, int playerLevel)
     {
         this.lab = lab;
-        this.i = i;
+
+        //Haxish way from list to array :D
+        this.i = new int[i.size()];
+        int count = 0;
+        for(int integer : i)
+        {
+            this.i[count] = integer;
+            count++;
+        }
         this.playerLevel = playerLevel;
     }
 
-    private int isRecipe(int[] is)
-    {
+    private int isRecipe(int[] is) {
         {
-            for(Recipes r : Recipes.values())
-            {
-                if(is.length != r.getIngredients().length)break;
+            for (Recipes r : Recipes.values()) {
+                if (is.length != r.getIngredients().length) break;
 
                 Arrays.sort(is);
-                if(Arrays.equals(i, is))return r.getIndex();
+                if (Arrays.equals(i, is)) return r.getIndex();
             }
             return 0;
         }
     }
 
-    private void applyRecipe()
-    {
+    private void applyRecipe() {
         PotionRecipe r = Recipes.valueOf("R" + Integer.toString(recipeID)).getRecipe();
         this.time = r.getTime();
         this.potion = r.getPotion();
@@ -70,20 +75,18 @@ public class BrewingProcess
     }
 
     public String start() {
-        if (!(i.length == 0))
-        {
+        if (!(i.length == 0)) {
             recipeID = isRecipe(i);
-            if(recipeID == 0)
-            {
+            if (recipeID == 0) {
                 returnItems();
                 return "That is not a valid recipe!";
             }
 
             applyRecipe();
 
-            if(playerLevel < requiredLevel)return "You do not yet know how to make that potion!";
+            if (playerLevel < requiredLevel) return "You do not yet know how to make that potion!";
 
-            if(!hasConditions)return "The conditions for brewing this potion are not met!";
+            if (!hasConditions) return "The conditions for brewing this potion are not met!";
 
             BrewingData.addLocation(lab.getLocation(), this);
             TASK = brewTask();
@@ -94,8 +97,7 @@ public class BrewingProcess
     }
 
 
-    public void cancelBrew()
-    {
+    public void cancelBrew() {
         //Cancel the brewing
         Bukkit.getScheduler().cancelTask(TASK);
         //Cancel the effects
@@ -106,16 +108,13 @@ public class BrewingProcess
         returnItems();
     }
 
-    private void returnItems()
-    {
-        for(int item : i)
-        {
-            lab.getWorld().dropItemNaturally(lab.getLocation().add(0,1,0), new ItemStack(Material.getMaterial(item), 1));
+    private void returnItems() {
+        for (int item : i) {
+            lab.getWorld().dropItemNaturally(lab.getLocation().add(0, 1, 0), new ItemStack(Material.getMaterial(item), 1));
         }
     }
 
-    private int playEffect()
-    {
+    private int playEffect() {
         return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable() {
             @Override
             public void run() {
@@ -125,27 +124,23 @@ public class BrewingProcess
         }, 0, 20);
     }
 
-    private int brewTask()
-    {
+    private int brewTask() {
         return Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 //Cancel the effects
                 Bukkit.getScheduler().cancelTask(PARTICLES);
 
                 //FinishBrew
-                lab.getWorld().dropItemNaturally(lab.getLocation().add(0,1,0), potion);
+                lab.getWorld().dropItemNaturally(lab.getLocation().add(0, 1, 0), potion);
                 lab.getWorld().spigot().playEffect(lab.getLocation(), finishEffect, 0, 0, 1, 1, 1, 1, 5, 20);
 
                 //Apply exp to the people around the potion.
                 Entity temp = lab.getWorld().spawnEntity(lab.getLocation(), EntityType.EXPERIENCE_ORB);
-                for(Entity ent : temp.getNearbyEntities(15, 15, 15))
-                {
-                    if(ent instanceof Player)
-                    {
-                        SendMessage.send((Player)ent, "You successfully made a " + potionName + ".");
-                        TempData.getMPlayer((Player)ent).addExp(Skill.BREWING, experience);
+                for (Entity ent : temp.getNearbyEntities(15, 15, 15)) {
+                    if (ent instanceof Player) {
+                        SendMessage.send((Player) ent, "You successfully made a " + potionName + ".");
+                        TempData.getMPlayer((Player) ent).addExp(Skill.BREWING, experience);
                     }
                 }
                 temp.remove();

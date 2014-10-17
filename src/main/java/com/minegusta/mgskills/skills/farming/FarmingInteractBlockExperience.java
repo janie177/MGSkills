@@ -4,8 +4,7 @@ import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-public class FarmingInteractBlockExperience
-{
+public class FarmingInteractBlockExperience {
     public static boolean makeTree(Block b) {
         String treetype;
         switch (b.getData()) {
@@ -32,8 +31,7 @@ public class FarmingInteractBlockExperience
                 break;
 
         }
-        if (b.getWorld().generateTree(b.getLocation(), TreeType.valueOf((treetype))))
-        {
+        if (b.getWorld().generateTree(b.getLocation(), TreeType.valueOf((treetype)))) {
             b.setType(b.getLocation().getBlock().getRelative(BlockFace.UP).getType());
             return true;
         }

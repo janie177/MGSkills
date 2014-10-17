@@ -8,20 +8,17 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class RandomOreBoost
-{
+public class RandomOreBoost {
 
     //Apply
 
-    public static boolean drop(Player p, DetailedMPlayer mp)
-    {
+    public static boolean drop(Player p, DetailedMPlayer mp) {
         p.getWorld().dropItemNaturally(p.getLocation(), getOre(mp));
         p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
         return true;
     }
 
-    private static ItemStack getOre(DetailedMPlayer mp)
-    {
+    private static ItemStack getOre(DetailedMPlayer mp) {
         ItemStack is = new ItemStack(Material.COAL, 1);
 
         if (RandomNumber.get(4) < 4) return is;
