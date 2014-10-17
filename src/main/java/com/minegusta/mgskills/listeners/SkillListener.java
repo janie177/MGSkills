@@ -36,6 +36,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPistonEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
@@ -339,18 +340,18 @@ public class SkillListener implements Listener {
 
         Player p = (Player) e.getPlayer();
         String name = e.getPlayer().getName();
+        Inventory inv = e.getInventory();
 
         /** Brewing skill **/
-        if(BrewingData.brewInvMap.containsKey(name))
+        if(BrewingData.brewInvMap.containsKey(name) && inv.getName().equals(ChatColor.DARK_RED + "Brewing Lab"))
         {
-            Inventory inv = e.getInventory();
             Block b = BrewingData.brewInvMap.remove(name);
             int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
             ItemStack[] is = inv.getContents();
             if(BrewingLab.isLab(b))
             {
                 //Start brewing
-                new BrewingProcess(b, is, level);
+                SendMessage.send(p, new BrewingProcess(b, is, level).start());
             }
         }
     }
@@ -384,6 +385,21 @@ public class SkillListener implements Listener {
 
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEvent(BlockPistonEvent e) {
+        if (!worldCheck(e.getBlock().getWorld()) || e.isCancelled()) return;
+
+        /** checking for broken Brewingstands **/
+        Block b = e.getBlock();
+
+        if(b.getType().equals(Material.CAULDRON_ITEM) && BrewingData.hasBrewingLab(b.getLocation()))
+        {
+            BrewingData.getBrew(b.getLocation()).cancelBrew();
+            b.getWorld().createExplosion(b.getLocation(), 4, false);
+
+        }
+
+    }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(FurnaceSmeltEvent e) {
