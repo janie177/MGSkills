@@ -8,6 +8,7 @@ import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 
 public class BrewingProcess
 {
-    private ItemStack[] i;
+    private int[] i;
     private Block lab;
     private int TASK;
     private int PARTICLES;
@@ -34,14 +35,14 @@ public class BrewingProcess
     private int requiredLevel;
     private int playerLevel;
 
-    public BrewingProcess(Block lab, ItemStack[] i, int playerLevel)
+    public BrewingProcess(Block lab, int[] i, int playerLevel)
     {
         this.lab = lab;
         this.i = i;
         this.playerLevel = playerLevel;
     }
 
-    private int isRecipe(ItemStack[] is)
+    private int isRecipe(int[] is)
     {
         {
             for(Recipes r : Recipes.values())
@@ -107,9 +108,9 @@ public class BrewingProcess
 
     private void returnItems()
     {
-        for(ItemStack item : i)
+        for(int item : i)
         {
-            lab.getWorld().dropItemNaturally(lab.getLocation().add(0,1,0), item);
+            lab.getWorld().dropItemNaturally(lab.getLocation().add(0,1,0), new ItemStack(Material.getMaterial(item), 1));
         }
     }
 

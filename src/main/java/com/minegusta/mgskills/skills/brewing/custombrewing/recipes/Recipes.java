@@ -1,28 +1,26 @@
 package com.minegusta.mgskills.skills.brewing.custombrewing.recipes;
 
 import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes.DarknessPotion;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
 public enum Recipes
 {
-   R1(new ItemStack[]{new ItemStack(Material.SPIDER_EYE, 1), new ItemStack(Material.WOOL, 1),new ItemStack(Material.WEB, 1)}, new DarknessPotion());
+   R1(new int[]{98,1,4}, new DarknessPotion());
 
-    private ItemStack[] i;
+    private int[] i;
     private PotionRecipe r;
 
-    private Recipes(ItemStack[] i, PotionRecipe r)
+    private Recipes(int[] i, PotionRecipe r)
     {
         this.i = i;
         this.r = r;
     }
 
-    public ItemStack[] getIngredients()
+    public int[] getIngredients()
     {
         Arrays.sort(i);
-        return  i;
+        return i;
     }
 
     public int getIndex()

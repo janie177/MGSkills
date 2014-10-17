@@ -36,7 +36,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPistonEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -372,7 +372,16 @@ public class SkillListener implements Listener {
         {
             Block b = BrewingData.brewInvMap.remove(name);
             int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
-            ItemStack[] is = inv.getContents();
+            int[] is = new int[9];
+            int count = 0;
+            if(!(is.length == 0))
+            {
+                for (ItemStack i : inv.getContents())
+                {
+                    is[count] = i.getTypeId();
+                    count++;
+                }
+            }
             if(BrewingLab.isLab(b))
             {
                 //Start brewing
@@ -411,7 +420,7 @@ public class SkillListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(BlockPistonEvent e) {
+    public void onEvent(BlockPistonExtendEvent e) {
         if (!worldCheck(e.getBlock().getWorld()) || e.isCancelled()) return;
 
         /** checking for broken Brewingstands **/

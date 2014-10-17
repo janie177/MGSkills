@@ -12,8 +12,19 @@ import org.bukkit.potion.PotionEffectType;
 
 public class DarknessPotion implements PotionRecipe{
     @Override
-    public String getInfo() {
-        return "&0DarknessPotion:/n&4Level: 10/n&4Ingredients:/n&b - 1 Spider Eye/n&b - 1 Wool/n&b - 1 Cobweb/n&4Requiredments:/n&b - Light level < 7/n/n&4Result:/n&b - Darkness potion";
+    public String getInfo()
+    {
+        return  "&0DarknessPotion:" +
+                "/n&4Level: 10" +
+                "/n&4Ingredients:" +
+                "/n&b - 1 Spider Eye" +
+                "/n&b - 1 Wool" +
+                "/n&b - 1 Cobweb" +
+                "/n&4Requirements:" +
+                "/n&b - Light level < 7" +
+                "/n" +
+                "/n&4Result:" +
+                "/n&b - Darkness potion";
     }
 
     @Override

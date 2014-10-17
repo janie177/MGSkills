@@ -22,7 +22,7 @@ public class BrewingRecipeBook
         meta.setAuthor(ChatColor.RED + "Satan");
 
         //String seperator = System.getProperty("line.separator");
-        String seperator = "/r/n";
+        String seperator = "\n";
 
         String[] pages = new String[50];
 
