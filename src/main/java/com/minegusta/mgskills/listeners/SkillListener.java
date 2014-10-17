@@ -38,6 +38,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.*;
@@ -103,7 +104,31 @@ public class SkillListener implements Listener {
                 }
             }
         }
+    }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onEvent(EntityDamageEvent e)
+    {
+        if (!worldCheck(e.getEntity().getWorld()) || e.isCancelled()) return;
+
+        /** Poison potion brewing boost **/
+
+        if (e.getEntity() instanceof Player && e.getCause() != null && e.getCause().equals(EntityDamageEvent.DamageCause.POISON))
+        {
+            DetailedMPlayer mp = TempData.getMPlayer((Player) e.getEntity());
+            int level = mp.getLevel(Skill.BREWING);
+            String uuid = e.getEntity().getUniqueId().toString();
+
+            if(level > 57)
+            {
+                if(TempData.poisonMap.containsKey(uuid))
+                {
+                    TempData.poisonMap.remove(uuid);
+                    e.setDamage(0);
+                }
+                TempData.poisonMap.putIfAbsent(uuid, true);
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

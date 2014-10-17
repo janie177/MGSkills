@@ -40,5 +40,7 @@ public class TempData {
 
     public static ConcurrentMap<String, Long> healStormMap = Maps.newConcurrentMap();
 
-    public static ConcurrentMap<String, Long> chickenMap = Maps.newConcurrentMap();
+    public static ConcurrentMap<String, Boolean> poisonMap = Maps.newConcurrentMap();
+
+
 }
