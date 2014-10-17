@@ -3,6 +3,7 @@ package com.minegusta.mgskills.skills.brewing.custombrewing;
 import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.PotionRecipe;
 import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.Recipes;
+import com.minegusta.mgskills.util.CompareRow;
 import com.minegusta.mgskills.util.SendMessage;
 import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
@@ -17,10 +18,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class BrewingProcess {
-    private int[] i;
+    private int[][] i;
     private Block lab;
     private int TASK;
     private int PARTICLES;
@@ -35,28 +35,20 @@ public class BrewingProcess {
     private int requiredLevel;
     private int playerLevel;
 
-    public BrewingProcess(Block lab, List<Integer> i, int playerLevel)
+    public BrewingProcess(Block lab, int[][] i, int playerLevel)
     {
         this.lab = lab;
-
-        //Haxish way from list to array :D
-        this.i = new int[i.size()];
-        int count = 0;
-        for(int integer : i)
-        {
-            this.i[count] = integer;
-            count++;
-        }
+        this.i = i;
         this.playerLevel = playerLevel;
     }
 
-    private int isRecipe(int[] is) {
+    private int isRecipe() {
         {
             for (Recipes r : Recipes.values()) {
-                if (is.length != r.getIngredients().length) break;
+                if (i.length != r.getIngredients().length) continue;
 
-                Arrays.sort(is);
-                if (Arrays.equals(i, is)) return r.getIndex();
+
+                if(Arrays.deepEquals(CompareRow.order(i), CompareRow.order(r.getIngredients()))) return r.getIndex();
             }
             return 0;
         }
@@ -76,7 +68,7 @@ public class BrewingProcess {
 
     public String start() {
         if (!(i.length == 0)) {
-            recipeID = isRecipe(i);
+            recipeID = isRecipe();
             if (recipeID == 0) {
                 returnItems();
                 return "That is not a valid recipe!";
@@ -84,9 +76,17 @@ public class BrewingProcess {
 
             applyRecipe();
 
-            if (playerLevel < requiredLevel) return "You do not yet know how to make that potion!";
+            if (playerLevel < requiredLevel)
+            {
+                returnItems();
+                return "You do not yet know how to make that potion!";
+            }
 
-            if (!hasConditions) return "The conditions for brewing this potion are not met!";
+            if (!hasConditions)
+            {
+                returnItems();
+                return "The conditions for brewing this potion are not met!";
+            }
 
             BrewingData.addLocation(lab.getLocation(), this);
             TASK = brewTask();
@@ -109,8 +109,8 @@ public class BrewingProcess {
     }
 
     private void returnItems() {
-        for (int item : i) {
-            lab.getWorld().dropItemNaturally(lab.getLocation().add(0, 1, 0), new ItemStack(Material.getMaterial(item), 1));
+        for (int[] item : i) {
+            lab.getWorld().dropItemNaturally(lab.getLocation().add(0, 1, 0), new ItemStack(Material.getMaterial(item[0]), item[1], (short) item[2]));
         }
     }
 

@@ -10,18 +10,18 @@ public class PotionBounce {
         int amount = (level * 3);
         for (int i = 0; i < 3; i++) {
             if (RandomNumber.get(100) < amount) {
-                throwPotion(p, i + 1);
+                throwPotion(p);
             }
             amount = amount - 100;
             if (amount < 0) break;
         }
     }
 
-    private static void throwPotion(ThrownPotion p, int number) {
+    private static void throwPotion(ThrownPotion p) {
         ThrownPotion potion = (ThrownPotion) p.getWorld().spawnEntity(p.getLocation(), EntityType.SPLASH_POTION);
 
         potion.setItem(p.getItem());
 
-        potion.setVelocity(new Vector(0, number, 0));
+        potion.setVelocity(new Vector(potion.getVelocity().getX(), 0.3 + ((double)RandomNumber.get(10))/ 100, potion.getVelocity().getZ()));
     }
 }

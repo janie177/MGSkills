@@ -16,9 +16,9 @@ public class DarknessPotion implements PotionRecipe {
         return "&0DarknessPotion:" +
                 "/n&4Level: &c10" +
                 "/n&4Ingredients:" +
-                "/n&c - 1 Spider Eye" +
-                "/n&c - 1 Wool" +
-                "/n&c - 1 Cobweb" +
+                "/n&c - 1 Stone" +
+                "/n&c - 2 Cobblestone" +
+                "/n&c - 1 StoneBrick" +
                 "/n&4Requirements:" +
                 "/n&c - Light level < 7" +
                 "/n" +
@@ -47,6 +47,7 @@ public class DarknessPotion implements PotionRecipe {
         meta.setDisplayName(ChatColor.BLACK + "Potion Of Darkness");
 
         potion.setItemMeta(meta);
+
 
         return potion;
     }

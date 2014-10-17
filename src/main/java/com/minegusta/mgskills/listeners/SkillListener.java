@@ -1,6 +1,5 @@
 package com.minegusta.mgskills.listeners;
 
-import com.google.common.collect.Lists;
 import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.files.LoadToMap;
@@ -50,8 +49,6 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
-
-import java.util.List;
 
 public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
@@ -125,7 +122,7 @@ public class SkillListener implements Listener {
                     TempData.poisonMap.remove(uuid);
                     e.setDamage(0);
                 }
-                TempData.poisonMap.putIfAbsent(uuid, true);
+                else TempData.poisonMap.put(uuid, true);
             }
         }
     }
@@ -362,9 +359,22 @@ public class SkillListener implements Listener {
         if (BrewingData.brewInvMap.containsKey(name) && inv.getName().equals(ChatColor.DARK_RED + "Brewing Lab")) {
             Block b = BrewingData.brewInvMap.remove(name);
             int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
-            List<Integer> is = Lists.newArrayList();
-            for (ItemStack i : inv.getContents()) {
-                if(!(i == null) && !i.getType().equals(Material.AIR)) is.add(i.getType().getId());
+
+            int length = 0;
+            for(ItemStack i : inv.getContents())
+            {
+                if(!(i == null) && !i.getType().equals(Material.AIR))length++;
+            }
+
+            int[][] is = new int[length][3];
+
+            int count = 0;
+            for (ItemStack i : inv.getContents())
+            {
+                if(!(i == null) && !i.getType().equals(Material.AIR)) {
+                    is[count] = new int[]{i.getType().getId(), i.getAmount(), i.getDurability()};
+                    count++;
+                }
             }
             if (BrewingLab.isLab(b))
             {
@@ -374,12 +384,13 @@ public class SkillListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(InventoryClickEvent e) {
-        if (!worldCheck(e.getWhoClicked().getWorld()) || e.isCancelled()) return;
+        if (!worldCheck(e.getWhoClicked().getWorld())) return;
 
         /** Stacking Potions Brewing **/
-        if (e.getCurrentItem() != null && e.getCursor() != null && e.getCursor().getType().equals(Material.POTION) && e.getCursor().getType().equals(e.getCurrentItem().getType()) && e.getCurrentItem().getDurability() == e.getCursor().getDurability()) {
+
+        if (e.getCurrentItem() != null && e.getCursor() != null && e.getCursor().getType().equals(Material.POTION) && e.getCurrentItem().getType().equals(Material.POTION) && e.getCurrentItem().getDurability() == e.getCursor().getDurability()) {
             DetailedMPlayer mp = TempData.getMPlayer((Player) e.getWhoClicked());
             int level = mp.getLevel(Skill.BREWING);
 
@@ -387,12 +398,13 @@ public class SkillListener implements Listener {
                 int amount = e.getCurrentItem().getAmount();
                 int newAmount = amount + e.getCursor().getAmount();
                 if (newAmount > 64) {
-                    e.getCursor().setAmount(newAmount - 64);
-                    e.getCurrentItem().setAmount(64);
+                    e.getCurrentItem().setAmount(newAmount - 64);
+                    e.getCursor().setAmount(64);
                 } else {
-                    e.getCurrentItem().setAmount(newAmount);
-                    e.setCursor(new ItemStack(Material.AIR));
+                    e.getCursor().setAmount(newAmount);
+                    e.setCurrentItem(new ItemStack(Material.AIR));
                 }
+                ((Player) e.getWhoClicked()).updateInventory();
             }
         }
 
@@ -468,32 +480,36 @@ public class SkillListener implements Listener {
         ItemStack pot = null;
         int exp = 0;
         for (ItemStack i : e.getContents().getContents()) {
-            if (i.getType().equals(Material.POTION)) {
+            if (i != null && !i.getType().equals(Material.AIR) && i.getType().equals(Material.POTION)) {
                 exp = PotionExperience.getExperience(i);
                 pot = i;
                 break;
             }
         }
-        if (!(exp == 0)) {
-
-            Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.EXPERIENCE_ORB);
+        if (exp > 0)
+        {
+            Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.SPLASH_POTION);
 
             boolean itemReturned = false;
 
-            for (Entity ent : temp.getNearbyEntities(10, 10, 10)) {
-                if (ent instanceof Player) {
-                    int level = TempData.getMPlayer((Player) ent).getLevel(Skill.BREWING);
+            for (Entity ent : temp.getNearbyEntities(15, 15, 15)) {
+                if (ent instanceof Player)
+                {
+                    Player p = (Player) ent;
+                    int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
                     if (level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64) {
                         pot.setAmount(pot.getAmount() + 1);
                         exp = exp * 2;
                     }
-                    TempData.getMPlayer((Player) ent).addExp(Skill.BREWING, exp);
+                    TempData.getMPlayer(p).addExp(Skill.BREWING, exp);
 
                     /** Ingredient returnal **/
 
                     if (!itemReturned && RandomNumber.get(5) == 1 && TempData.getMPlayer((Player) ent).getLevel(Skill.BREWING) > 37) {
                         itemReturned = true;
-                        e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0, 1, 0), e.getContents().getIngredient());
+                        ItemStack stack = e.getContents().getIngredient();
+                        stack.setAmount(1);
+                        e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0, 1, 0), stack);
                     }
                 }
             }
@@ -502,10 +518,10 @@ public class SkillListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(PotionSplashEvent e) {
-        if (!worldCheck(e.getPotion().getWorld()) || e.isCancelled()) return;
+        if (!worldCheck(e.getPotion().getWorld())) return;
 
         /** Brewing splash potion **/
-        if (e.getEntity().getShooter() != null && e.getEntity().getShooter() instanceof Player) {
+        if (e.getPotion().getShooter() != null && e.getPotion().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
 
             TempData.getMPlayer(p).addExp(Skill.BREWING, 25);

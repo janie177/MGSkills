@@ -129,7 +129,7 @@ public enum SkillInfo {
             ChatColor.GRAY + "When you level up, you will be able to make custom brews.",
             ChatColor.GRAY + "Use the" + ChatColor.RED + " /alchemy " + ChatColor.GRAY + "command for a list of recipes.",
             ChatColor.GRAY + "Custom potions are made in a brewing lab. Make one by",
-            ChatColor.GRAY + "placing a cauldron flying above fire.",
+            ChatColor.GRAY + "placing a cauldron on a coal block.",
             ChatColor.GOLD + "Bonuses Per Level (do not apply to custom potions):",
             " - " + ChatColor.GREEN + "38: " + ChatColor.GRAY + "20% chance to get brewing ingredients back when brewing.",
             " - " + ChatColor.GREEN + "58: " + ChatColor.GRAY + "You take 50% less poison damage.",
