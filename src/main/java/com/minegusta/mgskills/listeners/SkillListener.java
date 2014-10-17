@@ -437,7 +437,6 @@ public class SkillListener implements Listener {
                         }
                         e.getPlayer().addPotionEffect(new PotionEffect(effect.getType(), effect.getDuration(), effect.getAmplifier(), false));
                     }
-
                 }
 
             } catch (Exception ignored){}
@@ -477,7 +476,7 @@ public class SkillListener implements Listener {
             if(ent instanceof Player)
             {
                 int level = TempData.getMPlayer((Player)ent).getLevel(Skill.BREWING);
-                if(level > 81 && RandomNumber.get(2) == 1)
+                if(level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64)
                 {
                     pot.setAmount(pot.getAmount() + 1);
                 }
