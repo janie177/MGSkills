@@ -21,7 +21,8 @@ public class BrewingRecipeBook
         meta.setTitle(ChatColor.DARK_RED + "Book Of Alchemy");
         meta.setAuthor(ChatColor.RED + "Satan");
 
-        String seperator = System.getProperty("line.separator");
+        //String seperator = System.getProperty("line.separator");
+        String seperator = "/r/n";
 
         String[] pages = new String[50];
 
