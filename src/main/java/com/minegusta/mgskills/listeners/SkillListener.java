@@ -475,37 +475,44 @@ public class SkillListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEvent(BrewEvent e)
-    {
-        if(!worldCheck(e.getBlock().getWorld()) || e.isCancelled())return;
+    public void onEvent(BrewEvent e) {
+        if (!worldCheck(e.getBlock().getWorld()) || e.isCancelled()) return;
 
         /** Brewing skill experience normal potions **/
 
         ItemStack pot = null;
         int exp = 0;
-        for(ItemStack i : e.getContents().getContents())
-        {
-            if(i.getType().equals(Material.POTION))
-            {
+        for (ItemStack i : e.getContents().getContents()) {
+            if (i.getType().equals(Material.POTION)) {
                 exp = PotionExperience.getExperience(i);
                 pot = i;
                 break;
             }
         }
-        if(exp == 0)return;
+        if (!(exp == 0)) {
 
-        Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.EXPERIENCE_ORB);
+            Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.EXPERIENCE_ORB);
 
-        for(Entity ent: temp.getNearbyEntities(10,10,10))
-        {
-            if(ent instanceof Player)
-            {
-                int level = TempData.getMPlayer((Player)ent).getLevel(Skill.BREWING);
-                if(level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64)
+            boolean itemReturned = false;
+
+            for (Entity ent : temp.getNearbyEntities(10, 10, 10)) {
+                if (ent instanceof Player)
                 {
-                    pot.setAmount(pot.getAmount() + 1);
+                    int level = TempData.getMPlayer((Player) ent).getLevel(Skill.BREWING);
+                    if (level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64) {
+                        pot.setAmount(pot.getAmount() + 1);
+                        exp = exp * 2;
+                    }
+                    TempData.getMPlayer((Player) ent).addExp(Skill.BREWING, exp);
+
+                    /** Ingredient returnal **/
+
+                    if (!itemReturned && RandomNumber.get(5) == 1 && TempData.getMPlayer((Player) ent).getLevel(Skill.BREWING) > 37)
+                    {
+                        itemReturned = true;
+                        e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0,1,0), e.getContents().getIngredient());
+                    }
                 }
-                TempData.getMPlayer((Player)ent).addExp(Skill.BREWING, exp);
             }
         }
     }
