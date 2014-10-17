@@ -12,27 +12,27 @@ public class FishingExp
         {
             case 0:
             {
-                exp = 50;
+                exp = 100;
             }
             break;
             case 1:
             {
-                exp = 60;
+                exp = 130;
             }
             break;
             case 2:
             {   
-                exp = 70;
+                exp = 150;
             }
             break;
             case 3:
             {
-                exp = 80;
+                exp = 180;
             }
             break;
             default:
             {
-                exp = 50;
+                exp = 90;
             }
             break;
         }

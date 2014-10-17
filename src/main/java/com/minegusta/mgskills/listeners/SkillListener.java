@@ -86,7 +86,7 @@ public class SkillListener implements Listener {
                     if (RandomNumber.get(4) == 1) {
                         SendMessage.send(p, "You found some random loot while fishing!");
                         p.getWorld().dropItemNaturally(p.getLocation(), FishingLoot.get(level));
-                        exp = exp + 100;
+                        exp = exp + 160;
                     }
 
                     //Treasure map
