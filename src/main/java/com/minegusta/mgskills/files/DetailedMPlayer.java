@@ -67,7 +67,7 @@ public class DetailedMPlayer {
         if (showExp)
         {
             getPlayer().sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
-            if(expMultiplier > 1) SendMessage.send(getPlayer(), "Your experience is multiplier by " + ChatColor.RED + expMultiplier + ChatColor.YELLOW + "!");
+            if(expMultiplier > 1) SendMessage.send(getPlayer(), "Your experience is multiplied by " + ChatColor.RED + expMultiplier + ChatColor.YELLOW + "!");
         }
     }
 

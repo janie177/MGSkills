@@ -50,9 +50,13 @@ public class DarknessPotion implements PotionRecipe {
         meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 30 * 20, 1, false), true);
         meta.setDisplayName(ChatColor.BLACK + "Potion Of Darkness");
 
+        Potion pot = Potion.fromItemStack(potion);
+        pot.setSplash(true);
+        pot.setLevel(0);
+
         //Applying the item meta and making it splash
         potion.setItemMeta(meta);
-        Potion.fromItemStack(potion).setSplash(true);
+
 
         return potion;
     }

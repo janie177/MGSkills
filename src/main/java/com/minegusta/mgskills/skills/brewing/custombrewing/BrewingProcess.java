@@ -48,7 +48,10 @@ public class BrewingProcess {
                 if (i.length != r.getIngredients().length) continue;
 
 
-                if(Arrays.deepEquals(CompareRow.order(i), CompareRow.order(r.getIngredients()))) return r.getIndex();
+                if(Arrays.deepEquals(CompareRow.order(i), CompareRow.order(r.getIngredients())))
+                {
+                    return r.getIndex();
+                }
             }
             return 0;
         }
