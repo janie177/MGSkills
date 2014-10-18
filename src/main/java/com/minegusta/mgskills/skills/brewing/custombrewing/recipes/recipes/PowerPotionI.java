@@ -11,17 +11,17 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class DarknessPotion implements PotionRecipe {
+public class PowerPotionI implements PotionRecipe {
     @Override
     public String getInfo() {
-        return "&0&lDarknessPotion:" +
-                "/n&0Level: &410" +
+        return "&0&lPowerPotion I:" +
+                "/n&0Level: &424" +
                 "/n&0Ingredients:" +
-                "/n&4 - 2 Spider Eyes" +
-                "/n&4 - 1 Slowness Potion | 1:30" +
-                "/n&4 - 1 Cobweb" +
+                "/n&4 - 4 Feathers" +
+                "/n&4 - 1 Healing Potion I" +
+                "/n&4 - 1 Apple" +
                 "/n&0Requirements:" +
-                "/n&4 - Light level < 7" +
+                "/n&4 - Light level > 8" +
                 "/n" +
                 "/n&0Result:" +
                 "/n&4 - Darkness potion";
@@ -29,12 +29,12 @@ public class DarknessPotion implements PotionRecipe {
 
     @Override
     public String getPotionName() {
-        return "Darkness Potion";
+        return "Power Potion I";
     }
 
     @Override
     public int getTime() {
-        return 11;
+        return 14;
     }
 
     @Override
@@ -46,9 +46,9 @@ public class DarknessPotion implements PotionRecipe {
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
         //Type duration amp ambient
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30 * 20, 1, false), true);
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 30 * 20, 1, false), true);
-        meta.setDisplayName(ChatColor.BLACK + "Potion Of Darkness");
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 18 * 20, 0, false), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 30 * 20, 0, false), true);
+        meta.setDisplayName(ChatColor.BLACK + "Power Potion I");
 
         //Applying the item meta and making it splash
         potion.setItemMeta(meta);
@@ -59,26 +59,26 @@ public class DarknessPotion implements PotionRecipe {
 
     @Override
     public int getExperience() {
-        return 150;
+        return 175;
     }
 
     @Override
     public Effect getFinishEffect() {
-        return Effect.CLOUD;
+        return Effect.HEART;
     }
 
     @Override
     public Effect getBrewEffect() {
-        return Effect.MOBSPAWNER_FLAMES;
+        return Effect.LARGE_SMOKE;
     }
 
     @Override
     public boolean hasConditions(Block lab) {
-        return lab.getLightLevel() < 7;
+        return lab.getLightLevel() > 8;
     }
 
     @Override
     public int getLevelRequiredment() {
-        return 10;
+        return 24;
     }
 }

@@ -15,6 +15,8 @@ import java.util.concurrent.ConcurrentMap;
 public class DetailedMPlayer {
     private String uuid;
 
+    private final static int expMultiplier = ExpMultiplier.get();
+
     private boolean showExp = false;
 
     private ConcurrentMap<String, Integer> map = Maps.newConcurrentMap();
@@ -58,7 +60,7 @@ public class DetailedMPlayer {
 
     public void addExp(Skill skill, int experience) {
         if (!getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
-        int added = experience * ExpMultiplier.get();
+        int added = experience * expMultiplier;
         map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
         LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
         if (showExp)
