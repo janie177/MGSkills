@@ -68,6 +68,11 @@ public class BrewingProcess {
 
     public String start() {
         if (!(i.length == 0)) {
+            if(BrewingData.hasBrewingLab(lab.getLocation()))
+            {
+                returnItems();
+                return "Someone else already started brewing here!";
+            }
             recipeID = isRecipe();
             if (recipeID == 0) {
                 returnItems();

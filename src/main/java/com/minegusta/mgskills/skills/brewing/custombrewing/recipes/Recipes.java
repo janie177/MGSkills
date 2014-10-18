@@ -4,7 +4,7 @@ import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes.Darkn
 
 public enum Recipes {
     //Format: Material, Amount, DataValue
-    R1(new int[][]{{98, 1, 0}, {4, 2, 0}, {1,1,0}}, new DarknessPotion());
+    R1(new int[][]{{30, 1, 0}, {373, 0, 8202}, {275,2,0}}, new DarknessPotion());
 
     private int[][] i;
     private PotionRecipe r;

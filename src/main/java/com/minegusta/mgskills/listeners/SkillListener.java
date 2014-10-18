@@ -48,7 +48,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
 public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
@@ -449,15 +448,14 @@ public class SkillListener implements Listener {
         DetailedMPlayer mp = TempData.getMPlayer(e.getPlayer());
         if (e.getItem().getType().equals(Material.POTION) && mp.getLevel(Skill.BREWING) > 99) {
             try {
-                Potion pot = new Potion(PotionType.getByEffect(PotionEffectType.getById(e.getItem().getDurability())));
-
+                Potion pot = Potion.fromItemStack(e.getItem());
                 for (PotionEffect effect : pot.getEffects()) {
                     for (PotionEffect effect2 : e.getPlayer().getActivePotionEffects()) {
                         if (effect.getType().equals(effect2.getType())) {
                             e.getPlayer().removePotionEffect(effect2.getType());
                         }
-                        e.getPlayer().addPotionEffect(new PotionEffect(effect.getType(), effect.getDuration(), effect.getAmplifier(), false));
                     }
+                    e.getPlayer().addPotionEffect(new PotionEffect(effect.getType(), effect.getDuration() * 2, effect.getAmplifier(), false));
                 }
 
             } catch (Exception ignored) {
