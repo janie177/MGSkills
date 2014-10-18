@@ -3,13 +3,13 @@ package com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes;
 import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.PotionRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 public class DarknessPotion implements PotionRecipe {
     @Override
@@ -42,20 +42,23 @@ public class DarknessPotion implements PotionRecipe {
 
         //Making the potion
 
-        ItemStack potion = new ItemStack(Material.POTION, 1);
+        Potion pot = new Potion(PotionType.SLOWNESS); //The base potion type. Only defines what the potion looks like!!!
+        pot.setSplash(true);
+        pot.setLevel(1); //Always keep this 1. Otherwise it will throw errors at you ;-;
+
+        //Convert to itemStack
+        ItemStack potion = pot.toItemStack(1);
+
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
+        //Here I set the potion meta.
         //Type duration amp ambient
+        meta.setMainEffect(PotionEffectType.SLOW);
         meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30 * 20, 1, false), true);
         meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 30 * 20, 1, false), true);
         meta.setDisplayName(ChatColor.BLACK + "Potion Of Darkness");
-
-        Potion pot = Potion.fromItemStack(potion);
-        pot.setSplash(true);
-        pot.setLevel(0);
-
-        //Applying the item meta and making it splash
         potion.setItemMeta(meta);
+
 
 
         return potion;

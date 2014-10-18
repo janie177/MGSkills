@@ -6,7 +6,8 @@ import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes.Power
 public enum Recipes {
     //Format: Material, Amount, DataValue
     R1(new int[][]{{30, 1, 0}, {373, 1, 8202}, {375,2,0}}, new DarknessPotion()),
-    R2(new int[][]{{373, 1, 8197},{288,1,0},{260,1,0}}, new PowerPotionI());
+    R2(new int[][]{{373, 1, 8197},{288,1,0},{260,1,0}}, new PowerPotionI()),
+    R3(new int[][]{{1, 1, 0},{1,1,0},{1,1,0}}, new PowerPotionI());
 
     private int[][] i;
     private PotionRecipe r;

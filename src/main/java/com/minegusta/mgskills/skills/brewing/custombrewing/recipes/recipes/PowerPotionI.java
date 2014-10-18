@@ -3,13 +3,13 @@ package com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes;
 import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.PotionRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 public class PowerPotionI implements PotionRecipe {
     @Override
@@ -42,17 +42,24 @@ public class PowerPotionI implements PotionRecipe {
 
         //Making the potion
 
-        ItemStack potion = new ItemStack(Material.POTION, 1);
+        Potion pot = new Potion(PotionType.FIRE_RESISTANCE); //The base potion type. Only defines what the potion looks like!!!
+        pot.setSplash(true);
+        pot.setLevel(1); //Always keep this 1. Otherwise it will throw errors at you ;-;
+
+        //Convert to itemStack
+        ItemStack potion = pot.toItemStack(1);
+
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
+        //Here I set the potion meta.
         //Type duration amp ambient
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 18 * 20, 0, false), true);
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 30 * 20, 0, false), true);
-        meta.setDisplayName(ChatColor.BLACK + "Power Potion I");
-
-        //Applying the item meta and making it splash
+        meta.setMainEffect(PotionEffectType.REGENERATION);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 17 * 20, 0, false), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 30 * 20, 0, false), true);
+        meta.setDisplayName(ChatColor.GOLD + "Power Potion I");
         potion.setItemMeta(meta);
-        Potion.fromItemStack(potion).setSplash(true);
+
+
 
         return potion;
     }

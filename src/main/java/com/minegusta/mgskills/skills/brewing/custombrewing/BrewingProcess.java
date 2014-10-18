@@ -45,10 +45,12 @@ public class BrewingProcess {
     private int isRecipe() {
         {
             for (Recipes r : Recipes.values()) {
-                if (i.length != r.getIngredients().length) continue;
+                if (i.length != r.getIngredients().length)
+                {
+                    continue;
+                }
 
-
-                if(Arrays.deepEquals(CompareRow.order(i), CompareRow.order(r.getIngredients())))
+                else if(Arrays.deepEquals(CompareRow.order(i), CompareRow.order(r.getIngredients())))
                 {
                     return r.getIndex();
                 }

@@ -388,7 +388,6 @@ public class SkillListener implements Listener {
         if (!worldCheck(e.getWhoClicked().getWorld())) return;
 
         /** Stacking Potions Brewing **/
-
         if (e.getCurrentItem() != null && e.getCursor() != null && e.getCursor().getType().equals(Material.POTION) && e.getCurrentItem().getType().equals(Material.POTION) && e.getCurrentItem().getDurability() == e.getCursor().getDurability()) {
             DetailedMPlayer mp = TempData.getMPlayer((Player) e.getWhoClicked());
             int level = mp.getLevel(Skill.BREWING);
@@ -486,7 +485,7 @@ public class SkillListener implements Listener {
         }
         if (exp > 0)
         {
-            Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.SPLASH_POTION);
+            Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.EXPERIENCE_ORB);
 
             boolean itemReturned = false;
 
@@ -511,6 +510,7 @@ public class SkillListener implements Listener {
                     }
                 }
             }
+            temp.remove();
         }
     }
 
