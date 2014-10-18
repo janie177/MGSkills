@@ -3,6 +3,7 @@ package com.minegusta.mgskills.files;
 import com.google.common.collect.Maps;
 import com.minegusta.mgskills.util.ExpMultiplier;
 import com.minegusta.mgskills.util.LevelUpListener;
+import com.minegusta.mgskills.util.SendMessage;
 import com.minegusta.mgskills.util.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -62,10 +63,12 @@ public class DetailedMPlayer {
         if (!getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
         int added = experience * expMultiplier;
         map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
-        getPlayer().sendMessage("The exp multiplier = " + expMultiplier);
         LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
         if (showExp)
+        {
             getPlayer().sendMessage(ChatColor.YELLOW + "+ " + ChatColor.RED + Integer.toString(added) + " " + ChatColor.GOLD + skill.getSkillName() + ChatColor.YELLOW + " experience.");
+            if(expMultiplier > 1) SendMessage.send(getPlayer(), "Your experience is multiplier by " + ChatColor.RED + expMultiplier + ChatColor.YELLOW + "!");
+        }
     }
 
     public void addLevel(Skill skill) {
