@@ -371,7 +371,7 @@ public class SkillListener implements Listener {
             for (ItemStack i : inv.getContents())
             {
                 if(!(i == null) && !i.getType().equals(Material.AIR)) {
-                    is[count] = new int[]{i.getType().getId(), i.getAmount(), i.getDurability()};
+                    is[count] = new int[]{i.getType().getId(), i.getAmount(), i.getData().getData()};
                     count++;
                 }
             }
