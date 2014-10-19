@@ -318,8 +318,6 @@ public class SkillListener implements Listener {
 
         /** Custom Potion brewing **/
 
-        level = mp.getLevel(Skill.BREWING);
-
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && m.equals(Material.CAULDRON)) {
             if (BrewingLab.isLab(e.getClickedBlock())) {
                 if (BrewingData.hasBrewingLab(e.getClickedBlock().getLocation())) {
@@ -371,7 +369,7 @@ public class SkillListener implements Listener {
             for (ItemStack i : inv.getContents())
             {
                 if(!(i == null) && !i.getType().equals(Material.AIR)) {
-                    is[count] = new int[]{i.getType().getId(), i.getAmount(), i.getData().getData()};
+                    is[count] = new int[]{i.getTypeId(), i.getAmount(), i.getDurability()};
                     count++;
                 }
             }

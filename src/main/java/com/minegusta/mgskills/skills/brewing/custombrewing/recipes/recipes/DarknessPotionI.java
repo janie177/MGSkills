@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class PowerPotionI implements PotionRecipe
+public class DarknessPotionI implements PotionRecipe
 {
     /**
      * The name of this potion in color!
@@ -41,7 +41,6 @@ public class PowerPotionI implements PotionRecipe
     private static String ingredient3 = "2 Spider Eyes";
 
     public static int[][] ingredients = {{30, 1, 0}, {373, 1, 8202}, {375,2,0}};
-
     /**
      * The special requirement needed to brew this potion. This has to coded by hand still!
      */

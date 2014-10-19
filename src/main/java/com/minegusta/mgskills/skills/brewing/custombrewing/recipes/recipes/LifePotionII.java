@@ -11,75 +11,75 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class PowerPotionI implements PotionRecipe
+public class LifePotionII implements PotionRecipe
 {
     /**
      * The name of this potion in color!
      */
-    private static String name = ChatColor.BLACK + "Darkness Potion I";
+    private static String name = ChatColor.GOLD + "Life Potion I";
 
     /**
      * The looks of this potion.
      */
-    private static PotionType appearance = PotionType.SLOWNESS;
+    private static PotionType appearance = PotionType.FIRE_RESISTANCE;
 
     /**
      * The level needed to brew this.
      */
-    private static int level = 10;
+    private static int level = 100;
 
     /**
      * Experience earned for brewing this potion.
      */
-    private static int experience = 120;
+    private static int experience = 500;
 
     /**
      * Ingredients needed + amounts.
      */
-    private static String ingredient1 = "1 cobweb";
-    private static String ingredient2 = "1 Slowness 1:30";
-    private static String ingredient3 = "2 Spider Eyes";
+    private static String ingredient1 = "8 Apples";
+    private static String ingredient2 = "1 Healing II";
+    private static String ingredient3 = "4 Gold Ingot";
 
-    public static int[][] ingredients = {{30, 1, 0}, {373, 1, 8202}, {375,2,0}};
+    public static int[][] ingredients = {{260, 8, 0}, {373, 1, 8229}, {266,4,0}};
 
     /**
      * The special requirement needed to brew this potion. This has to coded by hand still!
      */
-    private static String requirement = "Light level < 7";
+    private static String requirement = "Full Moon";
 
     /**
      * Effect#1 of the potion + duration (Seconds) and amplifier (starts at 0).
      */
-    private static PotionEffectType effect1 = PotionEffectType.SLOW;
-    private static int effect1Ampliefier = 0;
-    private static int effect1Duration = 8;
+    private static PotionEffectType effect1 = PotionEffectType.REGENERATION;
+    private static int effect1Ampliefier = 1;
+    private static int effect1Duration = 30;
 
     /**
      * Effect#2 of the potion + duration and amplifier.
      */
-    private static PotionEffectType effect2 = PotionEffectType.BLINDNESS;
-    private static int effect2Ampliefier = 0;
-    private static int effect2Duration = 8;
+    private static PotionEffectType effect2 = PotionEffectType.ABSORPTION;
+    private static int effect2Ampliefier = 1;
+    private static int effect2Duration = 30;
 
     /**
      * The brewEeffect to play while brewing.
      */
-    private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
+    private static Effect brewEeffect = Effect.VILLAGER_THUNDERCLOUD;
 
     /**
      * The brewEeffect to play when finished.
      */
-    private static Effect finishEffect = Effect.CLOUD;
+    private static Effect finishEffect = Effect.HEART;
 
     /**
      * Is this a splash.
      */
-    private static boolean splash = true;
+    private static boolean splash = false;
 
 
     @Override
     public boolean hasConditions(Block lab) {
-        return lab.getLightLevel() < 7;
+        return ((lab.getWorld().getFullTime() / 24000) % 8) == 0;
     }
 
 

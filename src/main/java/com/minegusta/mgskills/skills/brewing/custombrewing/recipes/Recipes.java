@@ -1,13 +1,28 @@
 package com.minegusta.mgskills.skills.brewing.custombrewing.recipes;
 
-import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes.DarknessPotion;
-import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes.PowerPotionI;
+import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes.*;
 
 public enum Recipes {
     //Format: Material, Amount, DataValue
-    R1(new int[][]{{30, 1, 0}, {373, 1, 8202}, {375,2,0}}, new DarknessPotion()),
-    R2(new int[][]{{373, 1, 8197},{288,1,0},{260,1,0}}, new PowerPotionI()),
-    R3(new int[][]{{1, 1, 0},{1,1,0},{1,1,0}}, new PowerPotionI());
+    R1(DarknessPotionI.ingredients, new DarknessPotionI()), // level 10  //Exp = 120
+    R2(PowerPotionI.ingredients, new PowerPotionI()), // level 24
+    R3(SicknessPotionI.ingredients, new SicknessPotionI()), //Level 32
+    R4(MinerPotionI.ingredients, new MinerPotionI()), //Level 38
+    R5(WitheringPotionI.ingredients, new WitheringPotionI()), //Level 45
+    R6(DistortionPotionI.ingredients, new DistortionPotionI()), //Level 54
+    R7(DefencePotionI.ingredients, new DefencePotionI()), //Level 62
+    R8(FeedingPotionI.ingredients, new FeedingPotionI()), //Level 69
+    R9(FleeingPotionI.ingredients, new FleeingPotionI()), //Level 76
+    R10(MinerPotionII.ingredients, new MinerPotionII()), //Level 80
+    R11(LifePotionI.ingredients, new LifePotionI()), //Level 85
+    R12(PotionOfLuck.ingredients, new PotionOfLuck()), //Level 86
+    R13(SicknessPotionII.ingredients, new SicknessPotionII()), //Level 87
+    R14(DefencePotionII.ingredients, new DefencePotionII()), //Level 90
+    R15(DarknessPotionII.ingredients, new DarknessPotionII()), //Level 92
+    R16(WarriorPotionI.ingredients, new WarriorPotionI()), //Level 94
+    R17(PowerPotionII.ingredients, new PowerPotionII()), //Level 97
+    R18(LifePotionII.ingredients, new LifePotionII()); //Level 100   //Exp = 500
+
 
     private int[][] i;
     private PotionRecipe r;

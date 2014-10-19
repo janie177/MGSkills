@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class PowerPotionI implements PotionRecipe
+public class WarriorPotionI implements PotionRecipe
 {
     /**
      * The name of this potion in color!

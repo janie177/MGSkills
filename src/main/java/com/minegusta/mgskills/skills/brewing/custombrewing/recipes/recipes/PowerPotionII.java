@@ -11,7 +11,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class PowerPotionI implements PotionRecipe
+/**
+ * Created by Jan on 19-10-2014.
+ */
+public class PowerPotionII implements PotionRecipe
 {
     /**
      * The name of this potion in color!

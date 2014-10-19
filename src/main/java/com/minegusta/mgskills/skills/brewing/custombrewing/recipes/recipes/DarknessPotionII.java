@@ -11,12 +11,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class PowerPotionI implements PotionRecipe
+public class DarknessPotionII implements PotionRecipe
 {
     /**
      * The name of this potion in color!
      */
-    private static String name = ChatColor.BLACK + "Darkness Potion I";
+    private static String name = ChatColor.BLACK + "Darkness Potion II";
 
     /**
      * The looks of this potion.
@@ -26,40 +26,40 @@ public class PowerPotionI implements PotionRecipe
     /**
      * The level needed to brew this.
      */
-    private static int level = 10;
+    private static int level = 92;
 
     /**
      * Experience earned for brewing this potion.
      */
-    private static int experience = 120;
+    private static int experience = 320;
 
     /**
      * Ingredients needed + amounts.
      */
-    private static String ingredient1 = "1 cobweb";
-    private static String ingredient2 = "1 Slowness 1:30";
-    private static String ingredient3 = "2 Spider Eyes";
+    private static String ingredient1 = "2 cobweb";
+    private static String ingredient2 = "1 obsidian";
+    private static String ingredient3 = "4 Spider Eyes";
 
-    public static int[][] ingredients = {{30, 1, 0}, {373, 1, 8202}, {375,2,0}};
+    public static int[][] ingredients = {{30, 2, 0}, {49, 1, 0}, {375,4,0}};
 
     /**
      * The special requirement needed to brew this potion. This has to coded by hand still!
      */
-    private static String requirement = "Light level < 7";
+    private static String requirement = "Light level < 5";
 
     /**
      * Effect#1 of the potion + duration (Seconds) and amplifier (starts at 0).
      */
     private static PotionEffectType effect1 = PotionEffectType.SLOW;
-    private static int effect1Ampliefier = 0;
-    private static int effect1Duration = 8;
+    private static int effect1Ampliefier = 1;
+    private static int effect1Duration = 12;
 
     /**
      * Effect#2 of the potion + duration and amplifier.
      */
     private static PotionEffectType effect2 = PotionEffectType.BLINDNESS;
-    private static int effect2Ampliefier = 0;
-    private static int effect2Duration = 8;
+    private static int effect2Ampliefier = 1;
+    private static int effect2Duration = 12;
 
     /**
      * The brewEeffect to play while brewing.
@@ -79,7 +79,7 @@ public class PowerPotionI implements PotionRecipe
 
     @Override
     public boolean hasConditions(Block lab) {
-        return lab.getLightLevel() < 7;
+        return lab.getLightLevel() < 5;
     }
 
 

@@ -53,8 +53,8 @@ public class DiggingBoost {
 
     //Tool boost ----------------------------------------------------------------------------------
     private static boolean isToolBoost() {
-        chance = RandomNumber.get(100);
-        if (level > 29 && chance == 1) {
+        chance = RandomNumber.get(1250);
+        if (level > 29 && chance < 7) {
             return true;
         }
         return false;

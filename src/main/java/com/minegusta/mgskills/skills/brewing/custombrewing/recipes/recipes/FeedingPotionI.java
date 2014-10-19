@@ -4,6 +4,7 @@ import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.PotionRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.block.Block;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
@@ -11,75 +12,85 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class PowerPotionI implements PotionRecipe
+public class FeedingPotionI implements PotionRecipe
 {
     /**
      * The name of this potion in color!
      */
-    private static String name = ChatColor.BLACK + "Darkness Potion I";
+    private static String name = ChatColor.LIGHT_PURPLE + "Feeding potion I";
 
     /**
      * The looks of this potion.
      */
-    private static PotionType appearance = PotionType.SLOWNESS;
+    private static PotionType appearance = PotionType.REGEN;
 
     /**
      * The level needed to brew this.
      */
-    private static int level = 10;
+    private static int level = 69;
 
     /**
      * Experience earned for brewing this potion.
      */
-    private static int experience = 120;
+    private static int experience = 220;
 
     /**
      * Ingredients needed + amounts.
      */
-    private static String ingredient1 = "1 cobweb";
-    private static String ingredient2 = "1 Slowness 1:30";
-    private static String ingredient3 = "2 Spider Eyes";
+    private static String ingredient1 = "1 Steak";
+    private static String ingredient2 = "1 Melon Slice";
+    private static String ingredient3 = "1 Normal Fish";
 
-    public static int[][] ingredients = {{30, 1, 0}, {373, 1, 8202}, {375,2,0}};
+    public static int[][] ingredients = {{364, 1, 0}, {360, 1, 0}, {349,1,0}};
 
     /**
      * The special requirement needed to brew this potion. This has to coded by hand still!
      */
-    private static String requirement = "Light level < 7";
+    private static String requirement = "Has to be near a farm animal.";
 
     /**
      * Effect#1 of the potion + duration (Seconds) and amplifier (starts at 0).
      */
-    private static PotionEffectType effect1 = PotionEffectType.SLOW;
-    private static int effect1Ampliefier = 0;
-    private static int effect1Duration = 8;
+    private static PotionEffectType effect1 = PotionEffectType.SATURATION;
+    private static int effect1Ampliefier = 1;
+    private static int effect1Duration = 60;
 
     /**
      * Effect#2 of the potion + duration and amplifier.
      */
-    private static PotionEffectType effect2 = PotionEffectType.BLINDNESS;
-    private static int effect2Ampliefier = 0;
-    private static int effect2Duration = 8;
+    private static PotionEffectType effect2 = PotionEffectType.SPEED;
+    private static int effect2Ampliefier = 1;
+    private static int effect2Duration = 4;
 
     /**
      * The brewEeffect to play while brewing.
      */
-    private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
+    private static Effect brewEeffect = Effect.HEART;
 
     /**
      * The brewEeffect to play when finished.
      */
-    private static Effect finishEffect = Effect.CLOUD;
+    private static Effect finishEffect = Effect.COLOURED_DUST;
 
     /**
      * Is this a splash.
      */
-    private static boolean splash = true;
+    private static boolean splash = false;
 
 
     @Override
     public boolean hasConditions(Block lab) {
-        return lab.getLightLevel() < 7;
+        Entity temp = lab.getWorld().spawnEntity(lab.getLocation(), EntityType.EXPERIENCE_ORB);
+        for(Entity ent : temp.getNearbyEntities(10,10,10))
+        {
+            if(ent instanceof Chicken || ent instanceof Cow || ent instanceof Pig || ent instanceof Sheep || ent instanceof Horse)
+            {
+                temp.remove();
+                return true;
+            }
+        }
+        temp.remove();
+        return false;
     }
 
 
@@ -100,8 +111,8 @@ public class PowerPotionI implements PotionRecipe
                 "/n&0Splash: &4" + splash +
                 "/n&0Experience: &4" + experience +
                 "/n&0Result:" +
-                "/n&4 - " + effect1.getName() + " " + Integer.toString(effect1Ampliefier + 1) +
-                "/n&4 - " + effect2.getName() + " " + Integer.toString(effect2Ampliefier + 1);
+                "/n&4 - " + effect1.toString() +
+                "/n&4 - " + effect2.toString();
     }
 
     @Override
