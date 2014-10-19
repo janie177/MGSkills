@@ -106,8 +106,8 @@ public class DistortionPotionI  implements PotionRecipe
                 "/n&0Splash: &4" + splash +
                 "/n&0Experience: &4" + experience +
                 "/n&0Result:" +
-                "/n&4 - " + effect1.toString() +
-                "/n&4 - " + effect2.toString();
+                "/n&4 - " + effect1.getName() + " " + Integer.toString(effect1Ampliefier + 1) +
+                "/n&4 - " + effect2.getName() + " " + Integer.toString(effect2Ampliefier + 1);
     }
 
     @Override

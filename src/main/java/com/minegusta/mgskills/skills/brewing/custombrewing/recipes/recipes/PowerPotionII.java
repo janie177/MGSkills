@@ -16,7 +16,7 @@ public class PowerPotionII implements PotionRecipe
     /**
      * The name of this potion in color!
      */
-    private static String name = ChatColor.YELLOW + "Power Potion I";
+    private static String name = ChatColor.YELLOW + "Power Potion II";
 
     /**
      * The looks of this potion.

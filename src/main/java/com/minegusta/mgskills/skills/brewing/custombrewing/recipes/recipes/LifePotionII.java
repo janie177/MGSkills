@@ -16,7 +16,7 @@ public class LifePotionII implements PotionRecipe
     /**
      * The name of this potion in color!
      */
-    private static String name = ChatColor.GOLD + "Life Potion I";
+    private static String name = ChatColor.GOLD + "Life Potion II";
 
     /**
      * The looks of this potion.
