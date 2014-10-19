@@ -62,7 +62,7 @@ public class DetailedMPlayer {
     public void addExp(Skill skill, int experience) {
         if (!getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
         int added = experience * expMultiplier;
-        map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
+        if(getLevel(skill) < 100)map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
         LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
         if (showExp)
         {

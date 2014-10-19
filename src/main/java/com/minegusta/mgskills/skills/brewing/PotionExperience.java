@@ -1,6 +1,7 @@
 package com.minegusta.mgskills.skills.brewing;
 
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
 
 public class PotionExperience {
     public static int getExperience(ItemStack potion) {
@@ -20,6 +21,16 @@ public class PotionExperience {
             default:
                 exp = 80;
         }
+
+        try
+        {
+            Potion pot = Potion.fromItemStack(potion);
+
+            if(pot.hasExtendedDuration() || pot.getLevel() > 1)
+            {
+                exp = exp/2;
+            }
+        } catch (Exception ignored){}
 
         return exp;
 

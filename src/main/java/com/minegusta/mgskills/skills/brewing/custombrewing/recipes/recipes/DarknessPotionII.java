@@ -76,6 +76,10 @@ public class DarknessPotionII implements PotionRecipe
      */
     private static boolean splash = true;
 
+    /**
+     * How long does it take to brew this potion?
+     */
+    private static int duration = 14;
 
     @Override
     public boolean hasConditions(Block lab) {
@@ -111,7 +115,7 @@ public class DarknessPotionII implements PotionRecipe
 
     @Override
     public int getTime() {
-        return level;
+        return duration;
     }
 
     @Override

@@ -12,4 +12,11 @@ public class RandomNumber {
     public static int get(int max) {
         return rand.nextInt(max) + 1;
     }
+
+
+
+    public static boolean getBoolean()
+    {
+        return get(2) == 1;
+    }
 }

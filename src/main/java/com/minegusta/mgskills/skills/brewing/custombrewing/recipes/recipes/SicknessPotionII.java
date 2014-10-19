@@ -3,6 +3,7 @@ package com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes;
 import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.PotionRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -16,71 +17,76 @@ public class SicknessPotionII implements PotionRecipe
     /**
      * The name of this potion in color!
      */
-    private static String name = ChatColor.BLACK + "Darkness Potion I";
+    private static String name = ChatColor.DARK_GREEN + "Sickness Potion II";
 
     /**
      * The looks of this potion.
      */
-    private static PotionType appearance = PotionType.SLOWNESS;
+    private static PotionType appearance = PotionType.POISON;
 
     /**
      * The level needed to brew this.
      */
-    private static int level = 10;
+    private static int level = 87;
 
     /**
      * Experience earned for brewing this potion.
      */
-    private static int experience = 120;
+    private static int experience = 260;
 
     /**
      * Ingredients needed + amounts.
      */
-    private static String ingredient1 = "1 cobweb";
-    private static String ingredient2 = "1 Slowness 1:30";
-    private static String ingredient3 = "2 Spider Eyes";
+    private static String ingredient1 = "1 Poison II Pot";
+    private static String ingredient2 = "3 Poison Potato";
+    private static String ingredient3 = "5 Spider Eyes";
 
-    public static int[][] ingredients = {{30, 1, 0}, {373, 1, 8202}, {375,2,0}};
+    public static int[][] ingredients = {{373, 1, 8228}, {394, 3, 0}, {375,5,0}};
 
     /**
      * The special requirement needed to brew this potion. This has to coded by hand still!
      */
-    private static String requirement = "Light level < 7";
+    private static String requirement = "Has to be in a swamp.";
 
     /**
      * Effect#1 of the potion + duration (Seconds) and amplifier (starts at 0).
      */
-    private static PotionEffectType effect1 = PotionEffectType.SLOW;
-    private static int effect1Ampliefier = 0;
-    private static int effect1Duration = 8;
+    private static PotionEffectType effect1 = PotionEffectType.POISON;
+    private static int effect1Ampliefier = 1;
+    private static int effect1Duration = 12;
 
     /**
      * Effect#2 of the potion + duration and amplifier.
      */
-    private static PotionEffectType effect2 = PotionEffectType.BLINDNESS;
-    private static int effect2Ampliefier = 0;
-    private static int effect2Duration = 8;
+    private static PotionEffectType effect2 = PotionEffectType.HUNGER;
+    private static int effect2Ampliefier = 3;
+    private static int effect2Duration = 12;
 
     /**
      * The brewEeffect to play while brewing.
      */
-    private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
+    private static Effect brewEeffect = Effect.HAPPY_VILLAGER;
 
     /**
      * The brewEeffect to play when finished.
      */
-    private static Effect finishEffect = Effect.CLOUD;
+    private static Effect finishEffect = Effect.FLAME;
 
     /**
      * Is this a splash.
      */
     private static boolean splash = true;
 
+    /**
+     * How long does it take to brew this potion?
+     */
+    private static int duration = 16;
 
     @Override
     public boolean hasConditions(Block lab) {
-        return lab.getLightLevel() < 7;
+        return lab.getBiome().equals(Biome.SWAMPLAND) || lab.getBiome().equals(Biome.SWAMPLAND_MOUNTAINS);
     }
+
 
 
     //----------------------------------------------------------------------------------------------------//
@@ -111,7 +117,7 @@ public class SicknessPotionII implements PotionRecipe
 
     @Override
     public int getTime() {
-        return level;
+        return duration;
     }
 
     @Override

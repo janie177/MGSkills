@@ -32,7 +32,7 @@ public class DistortionPotionI  implements PotionRecipe
     /**
      * Experience earned for brewing this potion.
      */
-    private static int experience = 200;
+    private static int experience = 175;
 
     /**
      * Ingredients needed + amounts.
@@ -53,7 +53,7 @@ public class DistortionPotionI  implements PotionRecipe
      */
     private static PotionEffectType effect1 = PotionEffectType.CONFUSION;
     private static int effect1Ampliefier = 0;
-    private static int effect1Duration = 10;
+    private static int effect1Duration = 14;
 
     /**
      * Effect#2 of the potion + duration and amplifier.
@@ -77,6 +77,10 @@ public class DistortionPotionI  implements PotionRecipe
      */
     private static boolean splash = true;
 
+    /**
+     * How long does it take to brew this potion?
+     */
+    private static int duration = 16;
 
     @Override
     public boolean hasConditions(Block lab) {
@@ -113,7 +117,7 @@ public class DistortionPotionI  implements PotionRecipe
 
     @Override
     public int getTime() {
-        return level;
+        return duration;
     }
 
     @Override

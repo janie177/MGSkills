@@ -32,7 +32,7 @@ public class FleeingPotionI implements PotionRecipe
     /**
      * Experience earned for brewing this potion.
      */
-    private static int experience = 270;
+    private static int experience = 240;
 
     /**
      * Ingredients needed + amounts.
@@ -77,6 +77,10 @@ public class FleeingPotionI implements PotionRecipe
      */
     private static boolean splash = true;
 
+    /**
+     * How long does it take to brew this potion?
+     */
+    private static int duration = 8;
 
     @Override
     public boolean hasConditions(Block lab) {
@@ -112,7 +116,7 @@ public class FleeingPotionI implements PotionRecipe
 
     @Override
     public int getTime() {
-        return level;
+        return duration;
     }
 
     @Override

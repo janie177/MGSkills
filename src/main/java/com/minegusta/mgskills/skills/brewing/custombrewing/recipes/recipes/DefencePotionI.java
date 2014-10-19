@@ -33,7 +33,7 @@ public class DefencePotionI implements PotionRecipe
     /**
      * Experience earned for brewing this potion.
      */
-    private static int experience = 140;
+    private static int experience = 190;
 
     /**
      * Ingredients needed + amounts.
@@ -78,6 +78,10 @@ public class DefencePotionI implements PotionRecipe
      */
     private static boolean splash = false;
 
+    /**
+     * How long does it take to brew this potion?
+     */
+    private static int duration = 14;
 
     @Override
     public boolean hasConditions(Block lab) {
@@ -120,7 +124,7 @@ public class DefencePotionI implements PotionRecipe
 
     @Override
     public int getTime() {
-        return level;
+        return duration;
     }
 
     @Override

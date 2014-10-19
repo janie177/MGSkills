@@ -8,10 +8,10 @@ public enum Recipes {
     R2(PowerPotionI.ingredients, new PowerPotionI()), // level 24
     R3(SicknessPotionI.ingredients, new SicknessPotionI()), //Level 32
     R4(MinerPotionI.ingredients, new MinerPotionI()), //Level 38
-    R5(WitheringPotionI.ingredients, new WitheringPotionI()), //Level 45
+    R5(FeedingPotionI.ingredients, new FeedingPotionI()), //Level 45
     R6(DistortionPotionI.ingredients, new DistortionPotionI()), //Level 54
     R7(DefencePotionI.ingredients, new DefencePotionI()), //Level 62
-    R8(FeedingPotionI.ingredients, new FeedingPotionI()), //Level 69
+    R8(WitheringPotionI.ingredients, new WitheringPotionI()), //Level 69
     R9(FleeingPotionI.ingredients, new FleeingPotionI()), //Level 76
     R10(MinerPotionII.ingredients, new MinerPotionII()), //Level 80
     R11(LifePotionI.ingredients, new LifePotionI()), //Level 85
@@ -19,9 +19,8 @@ public enum Recipes {
     R13(SicknessPotionII.ingredients, new SicknessPotionII()), //Level 87
     R14(DefencePotionII.ingredients, new DefencePotionII()), //Level 90
     R15(DarknessPotionII.ingredients, new DarknessPotionII()), //Level 92
-    R16(WarriorPotionI.ingredients, new WarriorPotionI()), //Level 94
-    R17(PowerPotionII.ingredients, new PowerPotionII()), //Level 97
-    R18(LifePotionII.ingredients, new LifePotionII()); //Level 100   //Exp = 500
+    R16(PowerPotionII.ingredients, new PowerPotionII()), //Level 97
+    R17(LifePotionII.ingredients, new LifePotionII()); //Level 100   //Exp = 500
 
 
     private int[][] i;
