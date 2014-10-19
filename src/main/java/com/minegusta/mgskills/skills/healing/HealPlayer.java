@@ -10,7 +10,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class HealPlayer {
-    private static int exp = 0;
+    private static int exp = 20;
 
     public static int healEntities(Player p, double amount, int radius, boolean protection, boolean speed, boolean healSelf) {
         SendMessage.send(p, ChatColor.DARK_RED + "You start healing the entities around you.");
@@ -33,12 +33,12 @@ public class HealPlayer {
         if (e instanceof LivingEntity) {
             double maxHealed = ((LivingEntity) e).getMaxHealth() - ((LivingEntity) e).getHealth();
 
-            if (maxHealed < amount) {
+            if (maxHealed >= amount) {
                 exp = exp + (14 * (int) maxHealed);
-                ((LivingEntity) e).setHealth(((LivingEntity) e).getMaxHealth());
+                ((LivingEntity) e).setHealth(((LivingEntity) e).getHealth() + amount);
             } else {
                 exp = exp + 14 * (int) amount;
-                ((LivingEntity) e).setHealth(((LivingEntity) e).getHealth() + amount);
+                ((LivingEntity) e).setHealth(((LivingEntity) e).getMaxHealth());
             }
             if (e instanceof Player) {
                 if (protection)
