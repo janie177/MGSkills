@@ -27,6 +27,8 @@ public enum SkillInfo {
     MINING(new String[]{
             ChatColor.GRAY + "Mining experience is gained when mining stone or ores that break.",
             ChatColor.GRAY + "Ores like iron and gold do not give extra experience.",
+            ChatColor.GRAY + "Smelting is also integrated in mining.",
+            ChatColor.GRAY + "Your level is the % chance for bonus smelting loot.",
             ChatColor.GRAY + "You will only get 1 exp for mining ores with silk touch.",
             ChatColor.GRAY + "You start with a 0.5% chance to randomly find ore.",
             ChatColor.GOLD + "Bonuses Per Level:",

@@ -21,6 +21,7 @@ import com.minegusta.mgskills.skills.fishing.FishingLoot;
 import com.minegusta.mgskills.skills.healing.HealPlayer;
 import com.minegusta.mgskills.skills.hunting.HuntingExperience;
 import com.minegusta.mgskills.skills.mining.RandomOreBoost;
+import com.minegusta.mgskills.skills.mining.SmeltingExperience;
 import com.minegusta.mgskills.skills.woodcutting.BirdNestBoost;
 import com.minegusta.mgskills.skills.woodcutting.SuicideChicken;
 import com.minegusta.mgskills.treasuremaps.TreasureListener;
@@ -425,7 +426,11 @@ public class SkillListener implements Listener {
     public void onEvent(FurnaceSmeltEvent e) {
         if (!worldCheck(e.getBlock().getWorld()) || e.isCancelled()) return;
 
+        //Cooking
         new CookingSmeltExperience(e);
+
+        //Mining
+        new SmeltingExperience(e);
 
     }
 

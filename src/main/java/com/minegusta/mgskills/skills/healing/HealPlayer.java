@@ -20,6 +20,8 @@ public class HealPlayer {
         for (Entity e : p.getNearbyEntities(radius, radius, radius)) {
             healEntity(e, amount, speed, protection, p);
         }
+
+        if(exp > 5000) exp = 5000;
         return exp;
     }
 
@@ -33,11 +35,13 @@ public class HealPlayer {
         if (e instanceof LivingEntity) {
             double maxHealed = ((LivingEntity) e).getMaxHealth() - ((LivingEntity) e).getHealth();
 
+            //You can heal to your full extend.
             if (maxHealed >= amount) {
-                exp = exp + (14 * (int) maxHealed);
+                exp = exp + (6 * (int) amount);
                 ((LivingEntity) e).setHealth(((LivingEntity) e).getHealth() + amount);
+            //The entity has too high health to be fully healed.
             } else {
-                exp = exp + 14 * (int) amount;
+                exp = exp + (6 * (int) maxHealed);
                 ((LivingEntity) e).setHealth(((LivingEntity) e).getMaxHealth());
             }
             if (e instanceof Player) {
