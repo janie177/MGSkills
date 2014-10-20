@@ -21,7 +21,7 @@ public class HealPlayer {
             healEntity(e, amount, speed, protection, p);
         }
 
-        if(exp > 5000) exp = 5000;
+        if(exp > 10000) exp = 10000;
         return exp;
     }
 
