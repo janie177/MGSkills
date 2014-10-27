@@ -479,11 +479,13 @@ public class SkillListener implements Listener {
 
         ItemStack pot = null;
         int exp = 0;
+        int amount = 0;
+
         for (ItemStack i : e.getContents().getContents()) {
             if (i != null && !i.getType().equals(Material.AIR) && i.getType().equals(Material.POTION)) {
                 exp = PotionExperience.getExperience(i);
                 pot = i;
-                break;
+                amount++;
             }
         }
         if (exp > 0)
@@ -501,7 +503,7 @@ public class SkillListener implements Listener {
                         pot.setAmount(pot.getAmount() + 1);
                         exp = exp * 2;
                     }
-                    TempData.getMPlayer(p).addExp(Skill.BREWING, exp);
+                    TempData.getMPlayer(p).addExp(Skill.BREWING, exp * amount);
 
                     /** Ingredient returnal **/
 
