@@ -41,46 +41,46 @@ public class CookingCraftExperience {
         switch (cooked) {
             case CAKE: {
                 end = true;
-                experience = 35;
+                experience = 150;
             }
             break;
             case CAKE_BLOCK: {
                 end = true;
-                experience = 35;
+                experience = 150;
             }
             break;
             case COOKIE: {
-                experience = 2;
+                experience = 3;
                 end = true;
             }
             break;
             case PUMPKIN_PIE: {
-                experience = 22;
+                experience = 50;
                 end = true;
             }
             break;
             case GOLDEN_APPLE: {
                 if (is.getDurability() == (short) 1) {
-                    experience = 500;
+                    experience = 800;
                     end = true;
                 } else {
-                    experience = 100;
+                    experience = 200;
                     end = true;
                 }
             }
             break;
             case GOLDEN_CARROT: {
-                experience = 28;
+                experience = 100;
                 end = true;
             }
             break;
             case MUSHROOM_SOUP: {
-                experience = 20;
+                experience = 50;
                 end = true;
             }
             break;
             case BREAD: {
-                experience = 18;
+                experience = 45;
                 end = true;
             }
             break;

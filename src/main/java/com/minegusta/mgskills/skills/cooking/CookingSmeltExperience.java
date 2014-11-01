@@ -49,27 +49,27 @@ public class CookingSmeltExperience {
 
         switch (cooked) {
             case COOKED_BEEF: {
-                experience = 14;
+                experience = 30;
                 end = true;
             }
             break;
             case COOKED_CHICKEN: {
-                experience = 12;
+                experience = 25;
                 end = true;
             }
             break;
             case GRILLED_PORK: {
-                experience = 14;
+                experience = 30;
                 end = true;
             }
             break;
             case COOKED_FISH: {
-                experience = 16;
+                experience = 50;
                 end = true;
             }
             break;
             case BAKED_POTATO: {
-                experience = 12;
+                experience = 20;
                 end = true;
             }
             break;

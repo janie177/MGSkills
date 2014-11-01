@@ -86,18 +86,18 @@ public class SkillListener implements Listener {
                     if (RandomNumber.get(4) == 1) {
                         SendMessage.send(p, "You found some random loot while fishing!");
                         p.getWorld().dropItemNaturally(p.getLocation(), FishingLoot.get(level));
-                        exp = exp + 160;
+                        exp = exp + 200;
                     }
 
                     //Treasure map
                     if (level > 67 && RandomNumber.get(510) == 1) {
-                        exp = exp + 1000;
+                        exp = exp + 2000;
                         FishingLoot.giveTreasureMap(p);
                     }
 
                     //Feeeeesh
                     if (RandomNumber.get(100) > level) {
-                        exp = exp + 50;
+                        exp = exp + 180;
                         FishingLoot.doubleCatch(is);
                     }
                     mp.addExp(Skill.FISHING, exp);
@@ -159,7 +159,7 @@ public class SkillListener implements Listener {
         level = mp.getLevel(Skill.WOODCUTTING);
         if (BlockUtil.isLog(b)) {
             //base exp
-            mp.addExp(Skill.WOODCUTTING, 25);
+            mp.addExp(Skill.WOODCUTTING, 75);
 
             //Woodcutting speed boost
             if (level > 19 && isAxe) {
@@ -175,7 +175,7 @@ public class SkillListener implements Listener {
             //Bird nest check
             if (level > 44 && isAxe && RandomNumber.get(300) == 1) {
                 new BirdNestBoost(p, b).runNest();
-                mp.addExp(Skill.WOODCUTTING, 100);
+                mp.addExp(Skill.WOODCUTTING, 1200);
             }
         }
 
@@ -340,7 +340,7 @@ public class SkillListener implements Listener {
         //Farming tree planting grow hand thing
         if (!e.isCancelled() && e.hasBlock() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(Material.SAPLING) && level > 74) {
             if (FarmingInteractBlockExperience.makeTree(e.getClickedBlock())) {
-                mp.addExp(Skill.FARMING, 48);
+                mp.addExp(Skill.FARMING, 70);
             }
         }
     }
@@ -527,7 +527,7 @@ public class SkillListener implements Listener {
         if (e.getPotion().getShooter() != null && e.getPotion().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
 
-            TempData.getMPlayer(p).addExp(Skill.BREWING, 25);
+            TempData.getMPlayer(p).addExp(Skill.BREWING, 30);
 
             DetailedMPlayer mp = TempData.getMPlayer(p);
             int level = mp.getLevel(Skill.BREWING);

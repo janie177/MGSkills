@@ -175,7 +175,7 @@ public class HuntingExperience {
                 break;
         }
 
-        return exp;
+        return exp * 3;
     }
 
     //Apply

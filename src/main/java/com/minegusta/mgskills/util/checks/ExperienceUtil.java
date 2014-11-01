@@ -14,33 +14,33 @@ public class ExperienceUtil {
         switch (m) {
             case DIAMOND_ORE: {
                 if (silkTouch) exp = 2;
-                else exp = 160;
+                else exp = 350;
             }
             break;
             case LAPIS_ORE: {
                 if (silkTouch) exp = 2;
-                else exp = 120;
+                else exp = 230;
             }
             break;
             case IRON_ORE: {
-                exp = 3;
+                exp = 8;
             }
             break;
             case EMERALD_ORE: {
                 if (silkTouch) exp = 2;
-                else exp = 200;
+                else exp = 400;
             }
             break;
             case QUARTZ_ORE: {
                 if (silkTouch) exp = 2;
-                else exp = 25;
+                else exp = 40;
             }
             break;
             case GOLD_ORE:
-                exp = 3;
+                exp = 9;
                 break;
             case STONE:
-                exp = 2;
+                exp = 3;
                 break;
             case NETHERRACK:
                 exp = 1;
@@ -50,12 +50,12 @@ public class ExperienceUtil {
                 break;
             case REDSTONE_ORE: {
                 if (silkTouch) exp = 2;
-                else exp = 40;
+                else exp = 90;
             }
             break;
             case COAL_ORE: {
                 if (silkTouch) exp = 2;
-                else exp = 6;
+                else exp = 50;
             }
             break;
             default:
@@ -108,35 +108,35 @@ public class ExperienceUtil {
         switch (b.getType()) {
             case MELON_BLOCK: {
                 if (silkTouch) exp = 1;
-                else exp = 20;
+                else exp = 60;
             }
             break;
             case PUMPKIN_STEM: {
-                if (b.getData() == 7) exp = 40;
+                if (b.getData() == 7) exp = 150;
                 else exp = 1;
             }
             break;
             case CROPS: {
-                if (b.getData() == 7) exp = 10;
+                if (b.getData() == 7) exp = 30;
                 else {
                     exp = 1;
                 }
             }
             break;
             case MELON_STEM: {
-                if (b.getData() == 7) exp = 40;
+                if (b.getData() == 7) exp = 150;
                 else exp = 1;
             }
             break;
             case CARROT: {
-                if (b.getData() == 7) exp = 10;
+                if (b.getData() == 7) exp = 25;
                 else {
                     exp = 1;
                 }
             }
             break;
             case POTATO: {
-                if (b.getData() == 7) exp = 10;
+                if (b.getData() == 7) exp = 25;
                 else {
                     exp = 1;
                 }
@@ -146,14 +146,14 @@ public class ExperienceUtil {
                 exp = 2;
                 break;
             case NETHER_STALK: {
-                if (b.getData() == 3) exp = 10;
+                if (b.getData() == 3) exp = 25;
                 else {
                     exp = 0;
                 }
             }
             break;
             case NETHER_WARTS: {
-                if (b.getData() == 3) exp = 10;
+                if (b.getData() == 3) exp = 25;
                 else {
                     exp = 0;
                 }

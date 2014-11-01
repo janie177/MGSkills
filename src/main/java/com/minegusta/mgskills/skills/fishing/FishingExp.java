@@ -8,23 +8,23 @@ public class FishingExp {
         int exp = 0;
         switch (is.getDurability()) {
             case 0: {
-                exp = 100;
+                exp = 250;
             }
             break;
             case 1: {
-                exp = 130;
+                exp = 280;
             }
             break;
             case 2: {
-                exp = 150;
+                exp = 340;
             }
             break;
             case 3: {
-                exp = 180;
+                exp = 400;
             }
             break;
             default: {
-                exp = 90;
+                exp = 250;
             }
             break;
         }
