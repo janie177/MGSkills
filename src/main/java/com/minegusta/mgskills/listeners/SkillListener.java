@@ -549,7 +549,7 @@ public class SkillListener implements Listener {
         int exp = 0;
 
         /**Farming**/
-        if (type.equals(EntityType.SHEEP) && hand.equals(Material.SHEARS)) {
+        if (type.equals(EntityType.SHEEP) && ((Sheep)clicked).isAdult() && hand.equals(Material.SHEARS)) {
             exp = FarmingInteractEntityExperience.woolBonus(e.getRightClicked());
         }
 
