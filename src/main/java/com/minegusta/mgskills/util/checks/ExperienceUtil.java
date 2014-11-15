@@ -53,6 +53,11 @@ public class ExperienceUtil {
                 else exp = 90;
             }
             break;
+            case GLOWING_REDSTONE_ORE: {
+                if (silkTouch) exp = 2;
+                else exp = 90;
+            }
+            break;
             case COAL_ORE: {
                 if (silkTouch) exp = 2;
                 else exp = 50;
