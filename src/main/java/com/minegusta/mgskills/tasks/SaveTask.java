@@ -5,10 +5,8 @@ import com.minegusta.mgskills.highscores.HighScoreFile;
 import com.minegusta.mgskills.highscores.UpdateHighScoreBoard;
 import com.minegusta.mgskills.util.TempData;
 import com.minegusta.mgskills.util.json.JsonFileUtil;
-import com.minegusta.mgskills.util.json.JsonSection;
 import org.bukkit.Bukkit;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class SaveTask {
@@ -16,15 +14,8 @@ public class SaveTask {
         @Override
         public void run() {
             for (String uuid : TempData.getKeySet()) {
-                JsonSection conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json");
-                Map<String, Object> map = TempData.getMPlayer(uuid).serialize();
 
-                for (String s : map.keySet()) {
-                    conf.set(s, map.get(s));
-                }
-
-                //Save
-                JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json", conf);
+                JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json", TempData.getMPlayer(uuid).getConf());
             }
             HighScoreFile.saveFile();
             UpdateHighScoreBoard.updateHighScoreBoard();
@@ -34,27 +25,12 @@ public class SaveTask {
 
     public static void save() {
         for (String uuid : TempData.getKeySet()) {
-            JsonSection conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json");
-            Map<String, Object> map = TempData.getMPlayer(uuid).serialize();
-
-            for (String s : map.keySet()) {
-                conf.set(s, map.get(s));
-            }
-
-            //Save
-            JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json", conf);
+            JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid + ".json", TempData.getMPlayer(uuid).getConf());
         }
         HighScoreFile.saveFile();
     }
 
     public static void savePlayer(UUID uuid) {
-        JsonSection conf = JsonFileUtil.getSection(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".json");
-        Map<String, Object> map = TempData.getMPlayer(uuid.toString()).serialize();
-
-        for (String s : map.keySet()) {
-            conf.set(s, map.get(s));
-        }
-        //Save
-        JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".json", conf);
+        JsonFileUtil.saveFile(Main.PLUGIN.getDataFolder().getPath() + "/players/", uuid.toString() + ".json", TempData.getMPlayer(uuid.toString()).getConf());
     }
 }

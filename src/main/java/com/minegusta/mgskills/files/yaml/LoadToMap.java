@@ -44,6 +44,7 @@ public class LoadToMap {
         //Just a small check in case of..
         // if (uuid == null) p.kickPlayer("Your UUID is null! This causes plugins to malfunction. Please re-log.");
 
+        /**
         map.put("fishing", conf.getInt("fishing", 0));
         map.put("mining", conf.getInt("mining", 0));
         map.put("cooking", conf.getInt("cooking", 0));
@@ -69,6 +70,8 @@ public class LoadToMap {
         map.put("explorationLevel", conf.getInt("explorationLevel", 1));
 
         this.mPlayer = new DetailedMPlayer(map, uuid);
+        loadToMap();
+         **/
         loadToMap();
     }
 

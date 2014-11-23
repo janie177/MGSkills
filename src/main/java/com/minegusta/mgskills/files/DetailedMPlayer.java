@@ -1,17 +1,16 @@
 package com.minegusta.mgskills.files;
 
-import com.google.common.collect.Maps;
 import com.minegusta.mgskills.util.ExpMultiplier;
 import com.minegusta.mgskills.util.LevelUpListener;
 import com.minegusta.mgskills.util.SendMessage;
 import com.minegusta.mgskills.util.Skill;
+import com.minegusta.mgskills.util.json.JsonSection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
 
 public class DetailedMPlayer {
     private String uuid;
@@ -20,19 +19,19 @@ public class DetailedMPlayer {
 
     private boolean showExp = false;
 
-    private ConcurrentMap<String, Integer> map = Maps.newConcurrentMap();
+    private JsonSection conf;
 
     public DetailedMPlayer() {
     }
 
-    public DetailedMPlayer(ConcurrentMap<String, Integer> map, Player p) {
+    public DetailedMPlayer(JsonSection conf, Player p) {
         this.uuid = p.getUniqueId().toString();
-        this.map = map;
+        this.conf = conf;
     }
 
-    public DetailedMPlayer(ConcurrentMap<String, Integer> map, UUID id) {
+    public DetailedMPlayer(JsonSection conf, UUID id) {
         this.uuid = id.toString();
-        this.map = map;
+        this.conf = conf;
     }
 
     public void setShowExp(boolean show) {
@@ -43,26 +42,32 @@ public class DetailedMPlayer {
         return showExp;
     }
 
-    public int getAll() {
-        int i = 0;
-        for (String s : map.keySet()) {
-            if (s.contains("Level")) i = i + map.get(s);
+    public int getAll()
+    {
+        int total = 0;
+        for(String s : conf.getKeys())
+        {
+            if(s.contains("Level"))
+            {
+                total = total + conf.getInt(s);
+            }
         }
-        return i;
+        return total;
     }
 
-    public int getLevel(Skill skill) {
-        return map.get(skill.getSkillName().toLowerCase() + "Level");
+    public int getLevel(Skill skill)
+    {
+        return conf.getInt(skill.getSkillName().toLowerCase() + "Level", 1);
     }
 
     public int getExp(Skill skill) {
-        return map.get(skill.getSkillName().toLowerCase());
+        return conf.getInt(skill.getSkillName().toLowerCase(), 0);
     }
 
     public void addExp(Skill skill, int experience) {
         if (!getPlayer().getGameMode().equals(GameMode.SURVIVAL)) return;
         int added = experience * expMultiplier;
-        if(getLevel(skill) < 100)map.put(skill.getSkillName().toLowerCase(), getExp(skill) + added);
+        if(getLevel(skill) < 100)conf.set(skill.getSkillName().toLowerCase(), getExp(skill) + added);
         LevelUpListener.isLevelUp(getPlayer(), getExp(skill), skill.getSkillName(), getLevel(skill));
         if (showExp)
         {
@@ -72,7 +77,7 @@ public class DetailedMPlayer {
     }
 
     public void addLevel(Skill skill) {
-        map.put(skill.getSkillName().toLowerCase() + "Level", getLevel(skill) + 1);
+        conf.set(skill.getSkillName().toLowerCase() + "Level", getLevel(skill) + 1);
     }
 
     public Player getPlayer() {
@@ -83,12 +88,8 @@ public class DetailedMPlayer {
         return UUID.fromString(uuid);
     }
 
-    public ConcurrentMap<String, Object> serialize() {
-        ConcurrentMap<String, Object> map2 = Maps.newConcurrentMap();
-
-        for (String s : map.keySet()) {
-            map2.put(s, map.get(s));
-        }
-        return map2;
+    public JsonSection getConf()
+    {
+        return conf;
     }
 }
