@@ -23,7 +23,6 @@ public class HuntingExperience {
     private EntityType entityType;
     private int level;
     private ItemStack hand;
-    private boolean player = false;
     private boolean animal = false;
     private boolean player = false;
 
