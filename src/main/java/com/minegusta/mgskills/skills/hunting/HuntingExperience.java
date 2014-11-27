@@ -23,6 +23,7 @@ public class HuntingExperience {
     private EntityType entityType;
     private int level;
     private ItemStack hand;
+    private boolean player = false;
     private boolean animal = false;
 
     public HuntingExperience(EntityDeathEvent e) {
@@ -46,7 +47,7 @@ public class HuntingExperience {
     //Checks
 
     private boolean isLootingSword() {
-        return !hand.getType().equals(Material.AIR) && hand.containsEnchantment(Enchantment.SILK_TOUCH);
+        return !hand.getType().equals(Material.AIR) && hand.containsEnchantment(Enchantment.LOOT_BONUS_MOBS);
     }
 
     private boolean isKilledByWolf() {
@@ -83,19 +84,24 @@ public class HuntingExperience {
                 exp = 20;
                 break;
             case BAT:
+                animal = true;
                 exp = 30;
                 break;
             case PIG:
+                animal = true;
                 exp = 10;
                 break;
             case SHEEP:
+                animal = true;
                 exp = 22;
                 animal = true;
                 break;
             case COW:
+                animal = true;
                 exp = 22;
                 break;
             case CHICKEN:
+                animal = true;
                 exp = 22;
                 break;
             case SQUID:
@@ -115,6 +121,7 @@ public class HuntingExperience {
                 break;
             case PLAYER:
                 exp = 80;
+                player = true;
                 break;
             case HORSE:
                 exp = 50;
@@ -185,6 +192,7 @@ public class HuntingExperience {
     }
 
     private void applyBoost() {
+        if(player)return;
         if (animal && level > 37) {
             int amount = RandomNumber.get(2) - 1;
             if (amount > 1) {
