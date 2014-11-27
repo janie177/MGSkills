@@ -25,6 +25,7 @@ public class HuntingExperience {
     private ItemStack hand;
     private boolean player = false;
     private boolean animal = false;
+    private boolean player = false;
 
     public HuntingExperience(EntityDeathEvent e) {
         this.entityType = e.getEntity().getType();

@@ -22,7 +22,6 @@ public class LoadToMap {
         this.uuid = e.getPlayer().getUniqueId();
         this.conf = YamlUtil.getConfiguration("/players/", uuid.toString() + ".yml");
         create();
-
         new UpdateHighscores(e);
     }
 

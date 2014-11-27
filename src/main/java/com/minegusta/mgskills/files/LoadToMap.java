@@ -34,11 +34,12 @@ public class LoadToMap {
 
     private void create() {
         //Create the MPlayer object
+        this.mPlayer = new DetailedMPlayer(conf, p);
 
         //Just a small check in case of..
         if (uuid == null) p.kickPlayer("Your UUID is null! This causes plugins to malfunction. Please re-log.");
 
-        this.mPlayer = new DetailedMPlayer(conf, p);
+        loadToMap();
     }
 
     private void loadToMap() {
