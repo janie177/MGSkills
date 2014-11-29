@@ -1,5 +1,6 @@
 package com.minegusta.mgskills.skills.hunting;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.Skill;
@@ -214,9 +215,15 @@ public class HuntingExperience {
         }
     }
 
+    private static final List<Material> allowedDrops = Lists.newArrayList(Material.WOOL, Material.RAW_BEEF, Material.PORK, Material.ROTTEN_FLESH, Material.BONE, Material.SKULL, Material.FEATHER, Material.SULPHUR, Material.GHAST_TEAR, Material.GOLD_NUGGET, Material.BLAZE_ROD, Material.SLIME_BALL, Material.ENDER_PEARL, Material.INK_SACK, Material.LEATHER, Material.MAGMA_CREAM, Material.SPIDER_EYE, Material.STRING);
+
     private void dropDrops() {
-        for (ItemStack s : drops) {
-            killed.getWorld().dropItemNaturally(killed.getLocation(), s);
+        for (ItemStack s : drops)
+        {
+            if(allowedDrops.contains(s.getType()))
+            {
+                killed.getWorld().dropItemNaturally(killed.getLocation(), new ItemStack(s.getType(), 1));
+            }
         }
     }
 
