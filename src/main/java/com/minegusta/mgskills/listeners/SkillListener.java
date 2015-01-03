@@ -46,6 +46,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -391,7 +392,13 @@ public class SkillListener implements Listener {
             DetailedMPlayer mp = TempData.getMPlayer((Player) e.getWhoClicked());
             int level = mp.getLevel(Skill.BREWING);
 
-            if (level > 71) {
+            if (level > 71)
+            {
+                PotionMeta meta1 = (PotionMeta) e.getCurrentItem().getItemMeta();
+                PotionMeta meta2 = (PotionMeta) e.getCursor().getItemMeta();
+
+                if(!(meta1.getCustomEffects().equals(meta2.getCustomEffects())))return;
+
                 int amount = e.getCurrentItem().getAmount();
                 int newAmount = amount + e.getCursor().getAmount();
                 if (newAmount > 64) {
