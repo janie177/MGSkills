@@ -133,8 +133,8 @@ public class PotionOfLuck implements PotionRecipe
 
         //Here I set the potion meta.
         //Type duration amp ambient
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.getById(RandomNumber.get(23)), RandomNumber.get(35) * 20, RandomNumber.get(3) - 1, false), true);
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.getById(RandomNumber.get(23)), RandomNumber.get(35) * 20, RandomNumber.get(3) - 1, false), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.getById(RandomNumber.get(23)), RandomNumber.get(15) * 20, RandomNumber.get(3) - 1, false), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.getById(RandomNumber.get(23)), RandomNumber.get(15) * 20, RandomNumber.get(3) - 1, false), true);
         meta.setDisplayName(name);
         potion.setItemMeta(meta);
 
