@@ -9,30 +9,29 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class PowerPotionI extends PotionRecipe
+public class BeserkPotionI extends PotionRecipe
 {
-    private static String name = ChatColor.GOLD + "Power Potion I";
+
+    private static String name = ChatColor.RED + "Beserk Potion I";
     private static PotionType appearance = PotionType.STRENGTH;
-    private static PotionEffect[] effects = {new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 120, 0, false), new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * 120, 0, false)};
-    private static int level = 24;
-    private static int experience = 130;
-    private static String[] ingredientNames = {"1 Apple", "2 Golden Nuggets", "1 Wooden Sword"};
-    public static int[][] ingredients = {{260, 1, 0}, {371, 2, 0}, {268,1,0}};
-    private static String requirement = "Light level > 8";
-    private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
+    private static PotionEffect[] effects = {new PotionEffect(PotionEffectType.REGENERATION, 45 * 20 , 0, false),     new PotionEffect(PotionEffectType.SPEED, 45 * 20 , 0, false), new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 45 * 20, 0, false)};
+    private static int level = 35;
+    private static int experience = 165;
+    private static String[] ingredientNames = {"1 Blaze Powder", "1 Ghast tear", " 1 Sugar"};
+    public static int[][] ingredients = {{377, 1, 0}, {370, 1, 0}, {353,1,0}};
+    private static String requirement = "None!";
+    private static Effect brewEeffect = Effect.MOBSPAWNER_FLAMES;
     private static Effect finishEffect = Effect.CLOUD;
     private static boolean splash = false;
     private static int duration = 10;
 
-    public PowerPotionI()
-    {
+    public BeserkPotionI() {
         super(name, appearance, level, experience, ingredientNames, ingredients, requirement, effects, brewEeffect, finishEffect, splash, duration);
     }
 
     //This method has to be coded in by hand for each potion. It depends on the requirement set.
     @Override
-    public boolean hasConditions(Block lab)
-    {
-        return lab.getLightLevel() > 8;
+    public boolean hasConditions(Block lab) {
+        return true;
     }
 }

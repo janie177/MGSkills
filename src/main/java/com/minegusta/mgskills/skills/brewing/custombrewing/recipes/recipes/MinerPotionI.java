@@ -1,162 +1,42 @@
 package com.minegusta.mgskills.skills.brewing.custombrewing.recipes.recipes;
 
+
 import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.PotionRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-
-public class MinerPotionI implements PotionRecipe
+public class MinerpotionI extends PotionRecipe
 {
-    /**
-     * The name of this potion in color!
-     */
-    private static String name = ChatColor.YELLOW + "Miner Potion I";
-
-    /**
-     * The looks of this potion.
-     */
-    private static PotionType appearance = PotionType.INVISIBILITY;
-
-    /**
-     * The level needed to brew this.
-     */
+    private static String name = ChatColor.BLUE + "Miner Potion I";
+    private static PotionType appearance = PotionType.FIRE_RESISTANCE;
+    private static PotionEffect[] effects = {new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 300, 1, false), new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 300, 0, false)};
     private static int level = 38;
-
-    /**
-     * Experience earned for brewing this potion.
-     */
     private static int experience = 150;
-
-    /**
-     * Ingredients needed + amounts.
-     */
-    private static String ingredient1 = "1 Iron Pickaxe";
-    private static String ingredient2 = "2 Coal";
-    private static String ingredient3 = "2 Red Stone";
-
+    private static String[] ingredientNames = {"1 Iron Pickaxe", "2 Coal", "2 Redstone"};
     public static int[][] ingredients = {{257, 1, 0}, {263, 2, 0}, {331,2,0}};
-
-    /**
-     * The special requirement needed to brew this potion. This has to coded by hand still!
-     */
-    private static String requirement = "Lava beneath the coal block.";
-
-    /**
-     * Effect#1 of the potion + duration (Seconds) and amplifier (starts at 0).
-     */
-    private static PotionEffectType effect1 = PotionEffectType.FAST_DIGGING;
-    private static int effect1Ampliefier = 1;
-    private static int effect1Duration = 140;
-
-    /**
-     * The brewEeffect to play while brewing.
-     */
+    private static String requirement = "Lava beneath Coal Block";
     private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
-
-    /**
-     * The brewEeffect to play when finished.
-     */
     private static Effect finishEffect = Effect.CLOUD;
-
-    /**
-     * Is this a splash.
-     */
     private static boolean splash = false;
-
-    /**
-     * How long does it take to brew this potion?
-     */
-    private static int duration = 15;
-
-    @Override
-    public boolean hasConditions(Block lab) {
-        Material mat = lab.getRelative(BlockFace.DOWN, 2).getType();
-        return mat.equals(Material.STATIONARY_LAVA) || mat.equals(Material.LAVA);
-    }
-
-
-    //----------------------------------------------------------------------------------------------------//
+    private static int duration = 10;
 
 
 
-    @Override
-    public String getInfo() {
-        return "&0&l" + ChatColor.stripColor(name) +
-                "/n&0Level: &4" + Integer.toString(level) +
-                "/n&0Ingredients:" +
-                "/n&4 - " + ingredient1 +
-                "/n&4 - " + ingredient2 +
-                "/n&4 - " + ingredient3 +
-                "/n&0Requirements:" +
-                "/n&4 - " + requirement +
-                "/n&0Splash: &4" + splash +
-                "/n&0Experience: &4" + experience +
-                "/n&0Result:" +
-                "/n&4 - " + effect1.getName() + " " + Integer.toString(effect1Ampliefier + 1);
-    }
-
-    @Override
-    public String getPotionName() {
-        return name;
-    }
-
-    @Override
-    public int getTime() {
-        return duration;
-    }
-
-    @Override
-    public ItemStack getPotion()
+    public MinerpotionI()
     {
-
-        //Making the potion
-
-        Potion pot = new Potion(appearance); //The base potion type. Only defines what the potion looks like!!!
-        pot.setSplash(splash);
-        pot.setLevel(1); //Always keep this 1. Otherwise it will throw errors at you ;-;
-
-        //Convert to itemStack
-        ItemStack potion = pot.toItemStack(1);
-
-        PotionMeta meta = (PotionMeta) potion.getItemMeta();
-
-        //Here I set the potion meta.
-        //Type duration amp ambient
-        meta.addCustomEffect(new PotionEffect(effect1, effect1Duration * 20, effect1Ampliefier, false), true);
-        meta.setDisplayName(name);
-        potion.setItemMeta(meta);
-
-
-
-        return potion;
+        super(name, appearance, level, experience, ingredientNames, ingredients, requirement, effects, brewEeffect, finishEffect, splash, duration);
     }
 
+    //This method has to be coded in by hand for each potion. It depends on the requirement set.
     @Override
-    public int getExperience() {
-        return experience;
-    }
-
-    @Override
-    public Effect getFinishEffect() {
-        return finishEffect;
-    }
-
-    @Override
-    public Effect getBrewEffect() {
-        return brewEeffect;
-    }
-
-    @Override
-    public int getLevelRequiredment() {
-        return level;
+    public boolean hasConditions(Block lab)
+    {
+        return lab.getRelative(BlockFace.DOWN, 2).getType() == Material.STATIONARY_LAVA;
     }
 }
