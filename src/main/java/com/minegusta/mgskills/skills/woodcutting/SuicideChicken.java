@@ -1,5 +1,6 @@
 package com.minegusta.mgskills.skills.woodcutting;
 
+import com.google.common.collect.Sets;
 import com.minegusta.mgskills.Main;
 import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.util.CoolDown;
@@ -16,8 +17,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import java.util.HashSet;
 
 public class SuicideChicken {
     private DetailedMPlayer mp;
@@ -55,7 +54,7 @@ public class SuicideChicken {
 
     private boolean setL() {
         try {
-            this.l = p.getTargetBlock(new HashSet<Byte>(), 30).getLocation();
+            this.l = p.getTargetBlock(Sets.newHashSet(Material.AIR), 30).getLocation();
         } catch (Exception ignored) {
         }
         return l != null;
@@ -73,14 +72,14 @@ public class SuicideChicken {
         return CoolDown.cooledDown(p.getUniqueId().toString(), TempData.chickenMap, 20);
     }
 
-    private void spawnChicken() {
+    private void spawnChicken()
+    {
         Entity ent = p.getWorld().spawnEntity(l.add(0, 1, 0), EntityType.CHICKEN);
         final Chicken c = (Chicken) ent;
         CoolDown.newCooldown(p.getUniqueId().toString(), TempData.chickenMap);
         c.setCustomNameVisible(true);
         mp.addExp(Skill.WOODCUTTING, 30);
         boomTask(c);
-
     }
 
     private void boomTask(final Chicken chicken) {

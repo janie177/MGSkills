@@ -1,5 +1,6 @@
 package com.minegusta.mgskills.commands;
 
+import com.google.common.collect.Sets;
 import com.minegusta.mgskills.highscores.HighScoreManager;
 import com.minegusta.mgskills.highscores.UpdateHighScoreBoard;
 import org.bukkit.ChatColor;
@@ -8,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.HashSet;
 
 public class ScoreBoardCommand implements CommandExecutor {
 
@@ -30,7 +29,7 @@ public class ScoreBoardCommand implements CommandExecutor {
             p.sendMessage(ChatColor.RED + "Index not recognized. Use 1-6.");
         }
         if (index > 6 || index < 0) index = 1;
-        if (p.getWorld().getBlockAt(p.getTargetBlock(new HashSet<Byte>(), 8).getLocation()) == null || !p.getTargetBlock(new HashSet<Byte>(), 8).getType().equals(Material.WALL_SIGN)) {
+        if (p.getWorld().getBlockAt(p.getTargetBlock(Sets.newHashSet(Material.AIR), 8).getLocation()) == null || !p.getTargetBlock(Sets.newHashSet(Material.AIR), 8).getType().equals(Material.WALL_SIGN)) {
             p.sendMessage(ChatColor.RED + "You might want to have your eyes checked.");
             p.sendMessage(ChatColor.RED + "That is clearly not a sign.");
             p.sendMessage(ChatColor.RED + "Make sure you are looking at the sign.");
