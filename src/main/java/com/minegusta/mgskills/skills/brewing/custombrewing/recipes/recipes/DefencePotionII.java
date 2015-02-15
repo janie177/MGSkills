@@ -20,7 +20,7 @@ public class DefencePotionII extends PotionRecipe
     private static int level = 90;
     private static int experience = 310;
     private static String[] ingredientNames = {"1 Sugar", "1 Cookie", "1 Diamond"};
-    public static int[][] ingredients = {{338, 1, 0}, {357, 1, 0}, {264,1,0}};
+    public static int[][] ingredients = {{353, 1, 0}, {357, 1, 0}, {264,1,0}};
     private static String requirement = "Anvil Near Lab";
     private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
     private static Effect finishEffect = Effect.CLOUD;
