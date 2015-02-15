@@ -20,7 +20,7 @@ public class MinerpotionII extends PotionRecipe
     private static int experience = 300;
     private static String[] ingredientNames = {"1 Diamond Pickaxe", "5 Coal", "5 Redstone"};
     public static int[][] ingredients = {{278, 5, 0}, {263, 5, 0}, {331,5,0}};
-    private static String requirement = "Lava beneath Coal Block";
+    private static String requirement = "Lava beneath CoalBlock";
     private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
     private static Effect finishEffect = Effect.CLOUD;
     private static boolean splash = false;
@@ -35,6 +35,8 @@ public class MinerpotionII extends PotionRecipe
     @Override
     public boolean hasConditions(Block lab)
     {
-        return lab.getRelative(BlockFace.DOWN, 2).getType() == Material.STATIONARY_LAVA;
+        Material mat = lab.getRelative(BlockFace.DOWN, 2).getType();
+
+        return mat == Material.LAVA || mat == Material.STATIONARY_LAVA;
     }
 }
