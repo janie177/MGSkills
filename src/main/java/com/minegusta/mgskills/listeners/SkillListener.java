@@ -506,7 +506,10 @@ public class SkillListener implements Listener {
                 {
                     Player p = (Player) ent;
                     int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
-                    if (level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64) {
+                    Potion potion = Potion.fromItemStack(pot);
+                    //Potion cloning
+                    if (level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64 && !potion.hasExtendedDuration() && potion.getLevel() < 2)
+                    {
                         pot.setAmount(pot.getAmount() + 1);
                         exp = exp * 2;
                     }

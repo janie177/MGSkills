@@ -5,11 +5,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.util.Vector;
 
-public class PotionBounce {
-    public static void bounce(int level, ThrownPotion p) {
+public class PotionBounce
+{
+    public static void bounce(int level, ThrownPotion p)
+    {
         int amount = (level * 3);
         for (int i = 0; i < 3; i++) {
-            if (RandomNumber.get(100) < amount) {
+            if (RandomNumber.get(100) < amount)
+            {
                 throwPotion(p);
             }
             amount = amount - 100;
@@ -17,7 +20,8 @@ public class PotionBounce {
         }
     }
 
-    private static void throwPotion(ThrownPotion p) {
+    private static void throwPotion(ThrownPotion p)
+    {
         ThrownPotion potion = (ThrownPotion) p.getWorld().spawnEntity(p.getLocation(), EntityType.SPLASH_POTION);
 
         potion.setItem(p.getItem());
