@@ -91,7 +91,7 @@ public class SkillListener implements Listener {
                     }
 
                     //Treasure map
-                    if (level > 67 && RandomNumber.get(510) == 1) {
+                    if (level > 67 && RandomNumber.get(120) == 1) {
                         exp = exp + 2000;
                         FishingLoot.giveTreasureMap(p);
                     }
