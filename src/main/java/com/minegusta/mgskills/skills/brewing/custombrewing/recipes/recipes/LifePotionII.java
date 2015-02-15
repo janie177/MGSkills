@@ -26,6 +26,7 @@ public class LifePotionII extends PotionRecipe
     private static int duration = 10;
 
 
+
     public LifePotionII()
     {
         super(name, appearance, level, experience, ingredientNames, ingredients, requirement, effects, brewEeffect, finishEffect, splash, duration);

@@ -19,7 +19,12 @@ public enum Recipes
     R13(new MinerpotionII()),
     R14(new PowerPotionI()),
     R15(new PowerPotionII()),
-    R16(new SicknessPotionI());
+    R16(new SicknessPotionI()),
+    R17(new CannonFodderII()),
+    R18(new DistortionPotionII()),
+    R19(new LifePotionII()),
+    R20(new PotionOfLuck());
+
 
 
     private PotionRecipe r;
