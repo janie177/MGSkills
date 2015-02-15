@@ -36,7 +36,7 @@ public class DistortionPotionII extends PotionRecipe
     @Override
     public boolean hasConditions(Block lab)
     {
-        Cauldron cauldron = (Cauldron) lab.getState();
+        Cauldron cauldron = new Cauldron(lab.getData());
         return cauldron.isFull();
     }
 }
