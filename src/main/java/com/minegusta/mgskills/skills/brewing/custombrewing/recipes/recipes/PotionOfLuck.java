@@ -68,14 +68,9 @@ public class PotionOfLuck extends PotionRecipe
     public String getInfo()
     {
         String ingredientsList = "";
-        String results = "";
         for(String s : ingredientNames)
         {
             ingredientsList = ingredientsList + "/n&4 - " + s;
-        }
-        for(PotionEffect e : effects)
-        {
-            results = results + "/n&4 - " + e.getType().getName() + " " + Integer.toString(e.getAmplifier() + 1);
         }
         return "&0&l" + ChatColor.stripColor(name) +
                 "/n&0Level: &4" + Integer.toString(level) +
