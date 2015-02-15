@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class MinerpotionII extends PotionRecipe
+public class MinerPotionII extends PotionRecipe
 {
     private static String name = ChatColor.BLUE + "Miner Potion II";
     private static PotionType appearance = PotionType.FIRE_RESISTANCE;
@@ -26,7 +26,7 @@ public class MinerpotionII extends PotionRecipe
     private static boolean splash = false;
     private static int duration = 10;
 
-    public MinerpotionII()
+    public MinerPotionII()
     {
         super(name, appearance, level, experience, ingredientNames, ingredients, requirement, effects, brewEeffect, finishEffect, splash, duration);
     }

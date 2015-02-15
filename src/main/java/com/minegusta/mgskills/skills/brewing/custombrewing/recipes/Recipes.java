@@ -16,7 +16,7 @@ public enum Recipes
     R10(new FleeingPotionI()),
     R11(new LifePotionI()),
     R12(new MinerpotionI()),
-    R13(new MinerpotionII()),
+    R13(new MinerPotionII()),
     R14(new PowerPotionI()),
     R15(new PowerPotionII()),
     R16(new SicknessPotionI()),
