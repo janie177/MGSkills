@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class HighScoreManager {
@@ -34,7 +35,7 @@ public class HighScoreManager {
     }
 
     public void setLoc(int index, Player p) {
-        Location loc = p.getTargetBlock(null, 8).getLocation();
+        Location loc = p.getTargetBlock(new HashSet<Byte>(), 8).getLocation();
         getConf().set("loc" + Integer.toString(index), Lists.newArrayList(loc.getX(), loc.getY(), loc.getZ()));
         getConf().set("world", p.getWorld().getName());
     }

@@ -17,6 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.HashSet;
+
 public class SuicideChicken {
     private DetailedMPlayer mp;
     private Player p;
@@ -53,7 +55,7 @@ public class SuicideChicken {
 
     private boolean setL() {
         try {
-            this.l = p.getTargetBlock(null, 30).getLocation();
+            this.l = p.getTargetBlock(new HashSet<Byte>(), 30).getLocation();
         } catch (Exception ignored) {
         }
         return l != null;
