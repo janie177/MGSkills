@@ -35,6 +35,6 @@ public class CannonFodderI extends PotionRecipe
     //This method has to be coded in by hand for each potion. It depends on the requirement set.
     @Override
     public boolean hasConditions(Block lab) {
-        return lab.getRelative(BlockFace.DOWN).getType() == Material.IRON_BLOCK;
+        return lab.getRelative(BlockFace.DOWN, 2).getType() == Material.IRON_BLOCK;
     }
 }
