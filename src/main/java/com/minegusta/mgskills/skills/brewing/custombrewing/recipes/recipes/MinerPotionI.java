@@ -26,8 +26,6 @@ public class MinerpotionI extends PotionRecipe
     private static boolean splash = false;
     private static int duration = 10;
 
-
-
     public MinerpotionI()
     {
         super(name, appearance, level, experience, ingredientNames, ingredients, requirement, effects, brewEeffect, finishEffect, splash, duration);
