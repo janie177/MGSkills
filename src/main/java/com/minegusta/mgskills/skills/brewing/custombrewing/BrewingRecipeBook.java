@@ -28,6 +28,10 @@ public class BrewingRecipeBook {
 
         for (Recipes r : Recipes.values()) {
             String recipe = r.getRecipe().getInfo();
+            if(recipe.length() > 255)
+            {
+                recipe = recipe.substring(0,255);
+            }
             pages[page] = (ChatColor.translateAlternateColorCodes('&', recipe.replace("/n", seperator)));
             page++;
             if (page > 50) break;
