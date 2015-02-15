@@ -10,16 +10,16 @@ public class PotionExperience {
 
         switch (id) {
             case (short) 16:
-                exp = 100;
+                exp = 150;
                 break;
             case (short) 32:
-                exp = 100;
+                exp = 150;
                 break;
             case (short) 64:
-                exp = 100;
+                exp = 150;
                 break;
             default:
-                exp = 160;
+                exp = 190;
         }
 
         try

@@ -160,7 +160,7 @@ public class SkillListener implements Listener {
         level = mp.getLevel(Skill.WOODCUTTING);
         if (BlockUtil.isLog(b)) {
             //base exp
-            mp.addExp(Skill.WOODCUTTING, 75);
+            mp.addExp(Skill.WOODCUTTING, 90);
 
             //Woodcutting speed boost
             if (level > 19 && isAxe) {
