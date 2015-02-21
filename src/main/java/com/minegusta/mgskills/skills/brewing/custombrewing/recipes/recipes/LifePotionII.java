@@ -19,7 +19,7 @@ public class LifePotionII extends PotionRecipe
     private static int experience = 400;
     private static String[] ingredientNames = {"8 Apples", "1 Golden Apple", "1 Golden Ingot"};
     public static int[][] ingredients = {{260, 8, 0}, {322, 1, 0}, {266,1,0}};
-    private static String requirement = "Light level > 8";
+    private static String requirement = "Has to be full moon";
     private static Effect brewEeffect = Effect.PARTICLE_SMOKE;
     private static Effect finishEffect = Effect.CLOUD;
     private static boolean splash = false;
@@ -36,6 +36,6 @@ public class LifePotionII extends PotionRecipe
     @Override
     public boolean hasConditions(Block lab)
     {
-        return lab.getLightLevel() > 8;
+        return (lab.getWorld().getFullTime()/24000) % 8 == 0;
     }
 }
