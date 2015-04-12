@@ -7,12 +7,14 @@ import com.minegusta.mgskills.files.LoadToMap;
 import com.minegusta.mgskills.files.RemoveFromMap;
 import com.minegusta.mgskills.skills.SkillInfo;
 import com.minegusta.mgskills.struct.ISkill;
+import com.minegusta.mgskills.treasuremaps.TreasureMapItem;
 import com.minegusta.mgskills.util.ExpTable;
 import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import com.minegusta.mgskills.util.json.JsonFileUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -64,6 +66,28 @@ public class SkillCommand implements CommandExecutor {
                     }
                     return true;
 
+                }
+
+                if(args[0].equalsIgnoreCase("map"))
+                {
+                    if(!p.isOp())
+                    {
+                        p.sendMessage(ChatColor.RED + "This is not a command. Shoo. You saw nothing");
+                        return true;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Player p2 = Bukkit.getPlayer(args[1]);
+
+                            p2.getWorld().dropItemNaturally(p2.getLocation(), TreasureMapItem.getNewTreasureMap(p2.getWorld(), p2));
+                            p2.getWorld().playSound(p2.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+                            p2.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
+
+                        } catch (Exception ignored)
+                        {p.sendMessage(ChatColor.RED + "That is not a valid player.");}
+                    }
                 }
 
                 if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("i")) {
