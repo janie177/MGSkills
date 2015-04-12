@@ -4,6 +4,7 @@ import com.minegusta.mgskills.files.DetailedMPlayer;
 import com.minegusta.mgskills.util.RandomNumber;
 import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -23,9 +24,17 @@ public class CookingCraftExperience {
         this.cooked = e.getRecipe().getResult().getType();
         this.amount = e.getCurrentItem().getAmount();
         this.level = mp.getLevel(Skill.COOKING);
+
         if (e.isCancelled()) return;
 
-        if (isFood()) {
+        if (isFood())
+        {
+            if(!(e.getCursor() == null || e.getCursor().getType() == Material.AIR))
+            {
+                e.getWhoClicked().sendMessage(ChatColor.RED + "You can only craft food with an empty hand!");
+                e.setCancelled(true);
+                return;
+            }
             applyBoost();
             if (amount > 1)
                 mp.getPlayer().getInventory().addItem(new ItemStack(e.getRecipe().getResult().getType(), bonusLoot));
