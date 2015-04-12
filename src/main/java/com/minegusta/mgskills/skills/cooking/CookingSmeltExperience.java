@@ -53,6 +53,16 @@ public class CookingSmeltExperience {
                 end = true;
             }
             break;
+            case COOKED_MUTTON: {
+                experience = 30;
+                end = true;
+            }
+            break;
+            case COOKED_RABBIT: {
+                experience = 30;
+                end = true;
+            }
+            break;
             case COOKED_CHICKEN: {
                 experience = 30;
                 end = true;
