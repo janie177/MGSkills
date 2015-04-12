@@ -58,6 +58,22 @@ public class PotionOfLuck extends PotionRecipe
         meta.setDisplayName(name);
         potion.setItemMeta(meta);
 
+        //Making sure strength and regen wont be too high.
+        for(PotionEffect effect : meta.getCustomEffects())
+        {
+            PotionEffectType type = effect.getType();
+            if(type == PotionEffectType.REGENERATION || type == PotionEffectType.HEALTH_BOOST)
+            {
+                meta.removeCustomEffect(type);
+                meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, RandomNumber.get(10), RandomNumber.get(2) - 1, false), true);
+            }
+            else if(type == PotionEffectType.INCREASE_DAMAGE)
+            {
+                meta.removeCustomEffect(type);
+                meta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, RandomNumber.get(10), RandomNumber.get(2) - 1, false), true);
+            }
+        }
+
 
 
         return potion;
