@@ -84,10 +84,12 @@ public class SkillCommand implements CommandExecutor {
                             p2.getWorld().dropItemNaturally(p2.getLocation(), TreasureMapItem.getNewTreasureMap(p2.getWorld(), p2));
                             p2.getWorld().playSound(p2.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
                             p2.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
+                            p.sendMessage(ChatColor.YELLOW + "You gave " + p2.getName() + " a treasure map. Yarrrr harrrr.");
 
                         } catch (Exception ignored)
                         {p.sendMessage(ChatColor.RED + "That is not a valid player.");}
                     }
+                    return true;
                 }
 
                 if (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("i")) {
