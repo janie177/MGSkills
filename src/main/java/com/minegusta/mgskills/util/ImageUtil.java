@@ -25,12 +25,11 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
 import javax.imageio.ImageIO;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class ImageUtil {
+public class ImageUtil
+{
     public static BufferedImage getImageResource(String path) {
         try {
             return ImageIO.read(Main.PLUGIN.getResource(path));
@@ -52,27 +51,6 @@ public class ImageUtil {
         map = ImageRenderer.applyToMap(map, image);
         player.sendMap(map);
         return map;
-    }
-
-    /**
-     * Scale an image.
-     *
-     * @param image  The image to manipulate.
-     * @param width  The desired width.
-     * @param height The desired height.
-     * @return The new image.
-     * @throws java.io.IOException
-     */
-    public static BufferedImage scaleImage(BufferedImage image, int width, int height) throws IOException {
-        int imageWidth = image.getWidth();
-        int imageHeight = image.getHeight();
-
-        double scaleX = (double) width / imageWidth;
-        double scaleY = (double) height / imageHeight;
-        AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
-        AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
-
-        return bilinearScaleOp.filter(image, new BufferedImage(width, height, image.getType()));
     }
 
     static class ImageRenderer extends MapRenderer {

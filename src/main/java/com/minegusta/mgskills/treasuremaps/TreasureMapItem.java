@@ -13,7 +13,8 @@ import org.bukkit.map.MapView;
 
 import java.util.List;
 
-public class TreasureMapItem {
+public class TreasureMapItem
+{
     public static ItemStack getNewTreasureMap(World w, Player p) {
         MapView mv = ImageUtil.sendMapImage(p, ImageUtil.getImageResource("TreasureMap.png"));
 
