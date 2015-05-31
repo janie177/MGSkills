@@ -9,7 +9,7 @@ commands:
     aliases: [s, sk, skill, levels, level]
   highscore:
     usage: /HighScore
-    aliases: [hs, hisghscores, score, hiscore]
+    aliases: [hs, highscores, score, hiscore]
   brewing:
     usage: /Brewing
     description: Show specific information about this skill.
