@@ -6,8 +6,6 @@ import com.minegusta.mgskills.util.Skill;
 import com.minegusta.mgskills.util.TempData;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
 
@@ -32,16 +30,9 @@ public class CookingSmeltExperience {
 
     //Private checks
     private boolean hasPlayerNear(Block b) {
-        boolean end = false;
-        Entity ent = b.getWorld().spawnEntity(b.getLocation(), EntityType.EXPERIENCE_ORB);
-        for (Entity entity : ent.getNearbyEntities(15, 15, 15)) {
-            if (entity instanceof Player) {
-                players.add((Player) entity);
-                end = true;
-            }
-        }
-        ent.remove();
-        return end;
+        b.getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(b.getLocation()) < 16).forEach(players::add);
+
+        return !players.isEmpty();
     }
 
     private boolean isFood() {

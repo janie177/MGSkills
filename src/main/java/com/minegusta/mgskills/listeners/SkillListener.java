@@ -497,35 +497,30 @@ public class SkillListener implements Listener {
         }
         if (exp > 0)
         {
-            Entity temp = e.getBlock().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.EXPERIENCE_ORB);
-
             boolean itemReturned = false;
 
-            for (Entity ent : temp.getNearbyEntities(15, 15, 15)) {
-                if (ent instanceof Player)
+            for (Object o : e.getBlock().getWorld().getPlayers().stream().filter(pl -> e.getBlock().getLocation().distance(pl.getLocation()) < 16).toArray()) {
+
+                Player p = (Player) o;
+                int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
+                Potion potion = Potion.fromItemStack(pot);
+                //Potion cloning
+                if (level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64 && !potion.hasExtendedDuration() && potion.getLevel() < 2)
                 {
-                    Player p = (Player) ent;
-                    int level = TempData.getMPlayer(p).getLevel(Skill.BREWING);
-                    Potion potion = Potion.fromItemStack(pot);
-                    //Potion cloning
-                    if (level > 81 && RandomNumber.get(2) == 1 && pot.getAmount() < 64 && !potion.hasExtendedDuration() && potion.getLevel() < 2)
-                    {
-                        pot.setAmount(pot.getAmount() + 1);
-                        exp = exp * 2;
-                    }
-                    TempData.getMPlayer(p).addExp(Skill.BREWING, exp * amount);
+                    pot.setAmount(pot.getAmount() + 1);
+                    exp = exp * 2;
+                }
+                TempData.getMPlayer(p).addExp(Skill.BREWING, exp * amount);
 
-                    /** Ingredient returnal **/
+                /** Ingredient returnal **/
 
-                    if (!itemReturned && RandomNumber.get(5) == 1 && TempData.getMPlayer((Player) ent).getLevel(Skill.BREWING) > 37) {
-                        itemReturned = true;
-                        ItemStack stack = e.getContents().getIngredient();
-                        stack.setAmount(1);
-                        e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0, 1, 0), stack);
-                    }
+                if (!itemReturned && RandomNumber.get(5) == 1 && TempData.getMPlayer(p).getLevel(Skill.BREWING) > 37) {
+                    itemReturned = true;
+                    ItemStack stack = e.getContents().getIngredient();
+                    stack.setAmount(1);
+                    e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0, 1, 0), stack);
                 }
             }
-            temp.remove();
         }
     }
 

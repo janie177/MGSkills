@@ -12,9 +12,6 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -125,19 +122,16 @@ public class BrewingProcess {
     }
 
     private int playEffect() {
-        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable() {
-            @Override
-            public void run() {
+        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, ()-> {
+
                 lab.getWorld().spigot().playEffect(lab.getLocation(), brewEffect, 0, 0, 1, 1, 1, 1, 10, 14);
                 lab.getWorld().playSound(lab.getLocation(), Sound.LAVA_POP, 1, 1);
-            }
         }, 0, 20);
     }
 
     private int brewTask() {
-        return Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
-            @Override
-            public void run() {
+        return Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, ()-> {
+
                 //Cancel the effects
                 Bukkit.getScheduler().cancelTask(PARTICLES);
 
@@ -145,18 +139,15 @@ public class BrewingProcess {
                 lab.getWorld().dropItemNaturally(lab.getLocation().add(0, 1, 0), potion);
                 lab.getWorld().spigot().playEffect(lab.getLocation(), finishEffect, 0, 0, 1, 1, 1, 1, 5, 20);
 
-                //Apply exp to the people around the potion.
-                Entity temp = lab.getWorld().spawnEntity(lab.getLocation(), EntityType.EXPERIENCE_ORB);
-                for (Entity ent : temp.getNearbyEntities(15, 15, 15)) {
-                    if (ent instanceof Player) {
-                        SendMessage.send((Player) ent, "You successfully made a " + potionName + ".");
-                        TempData.getMPlayer((Player) ent).addExp(Skill.BREWING, experience);
-                    }
-                }
-                temp.remove();
+                //Apply exp to the people around the potion lab.
+
+                lab.getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(lab.getLocation()) < 15).forEach(p ->
+                {
+                    SendMessage.send(p, "You successfully made a " + potionName + ".");
+                    TempData.getMPlayer(p).addExp(Skill.BREWING, experience);
+                });
                 BrewingData.removeFromMap(lab.getLocation());
 
-            }
         }, time * 20);
     }
 }

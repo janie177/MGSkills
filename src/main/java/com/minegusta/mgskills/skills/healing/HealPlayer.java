@@ -13,17 +13,16 @@ public class HealPlayer {
 
     public static int healEntities(Player p, double amount, int radius, boolean protection, boolean speed, boolean healSelf)
     {
-        int exp = 20;
+        final int[] exp = {20};
         SendMessage.send(p, ChatColor.DARK_RED + "You start healing the entities around you.");
         if (healSelf) {
             healEntity(p, amount, speed, protection, p);
         }
-        for (Entity e : p.getNearbyEntities(radius, radius, radius)) {
-            exp = healEntity(e, amount, speed, protection, p);
-        }
 
-        if(exp > 10000) exp = 10000;
-        return exp;
+        p.getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(p.getLocation()) <= radius).forEach(ent -> exp[0]= exp[0] + healEntity(ent, amount, speed, protection, p));
+
+        if(exp[0] > 10000) exp[0] = 10000;
+        return exp[0];
     }
 
     private static void playHearts(Entity e, String name) {
