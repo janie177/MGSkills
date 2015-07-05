@@ -211,7 +211,7 @@ public class SkillListener implements Listener {
                 }
 
                 if (level * 2 > 100) {
-                    if (RandomNumber.get(100) <= (mp.getLevel(Skill.FARMING) * 2) - 100) {
+                    if (RandomNumber.get(100) <= ((level * 2) - 100)) {
                         for (ItemStack is : b.getDrops()) {
                             b.getWorld().dropItemNaturally(b.getLocation(), is);
                         }
