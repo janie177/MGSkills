@@ -401,9 +401,9 @@ public class SkillListener implements Listener {
 
                 int amount = e.getCurrentItem().getAmount();
                 int newAmount = amount + e.getCursor().getAmount();
-                if (newAmount > 64) {
-                    e.getCurrentItem().setAmount(newAmount - 64);
-                    e.getCursor().setAmount(64);
+                if (newAmount > 4) {
+                    e.getCurrentItem().setAmount(4);
+                    e.getCursor().setAmount(newAmount - 4);
                 } else {
                     e.getCursor().setAmount(newAmount);
                     e.setCurrentItem(new ItemStack(Material.AIR));
