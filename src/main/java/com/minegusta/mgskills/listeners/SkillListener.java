@@ -248,9 +248,9 @@ public class SkillListener implements Listener {
         Block b = e.getBlock();
 
         //Infinite torch placement
-        if (b.getType().equals(Material.TORCH) && mp.getLevel(Skill.MINING) > 99) {
-            if (!e.getPlayer().getInventory().contains(Material.TORCH))
-                e.getPlayer().getInventory().addItem(new ItemStack(Material.TORCH, 1));
+        if (b.getType().equals(Material.TORCH) && mp.getLevel(Skill.MINING) > 99)
+        {
+            if (!e.getPlayer().getInventory().containsAtLeast(new ItemStack(Material.TORCH), 2)) e.getPlayer().getInventory().addItem(new ItemStack(Material.TORCH, 1));
         }
     }
 

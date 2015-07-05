@@ -101,7 +101,7 @@ public class DiggingBoost {
     //Treasuremap boost ------------------------------------------------------------------------------
 
     private static boolean isMap() {
-        return level > 59 && RandomNumber.get(1200) < 3;
+        return level > 59 && RandomNumber.get(1200) < 2;
     }
 
     private static void giveMap() {
