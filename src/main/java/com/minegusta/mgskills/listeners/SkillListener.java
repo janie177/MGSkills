@@ -310,7 +310,7 @@ public class SkillListener implements Listener {
                                 player.getWorld().spigot().playEffect(player.getLocation().add(0, 9, 0), Effect.HEART, 0, 0, 2, 1, 2, 1, 65, 15);
                                 ThrownPotion potion = (ThrownPotion) player.getWorld().spawnEntity(player.getLocation().add(RandomNumber.get(3) - 2, 9, RandomNumber.get(3) - 2), EntityType.SPLASH_POTION);
                                 potion.setItem(new ItemStack(Material.POTION, 1, (short) 16389));
-                                potion.setShooter(player);
+                                potion.setShooter(new DummyPotionShooter());
                             }
                         }, i);
                     }
