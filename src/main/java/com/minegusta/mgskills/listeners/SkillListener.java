@@ -400,13 +400,22 @@ public class SkillListener implements Listener {
                 if(!(meta1.getCustomEffects().equals(meta2.getCustomEffects())))return;
 
                 int amount = e.getCurrentItem().getAmount();
-                int newAmount = amount + e.getCursor().getAmount();
+                int stackAmount = e.getCursor().getAmount();
+                int newAmount = amount + stackAmount;
                 if (newAmount > 4) {
-                    e.getCurrentItem().setAmount(4);
-                    e.getCursor().setAmount(newAmount - 4);
+                    e.getCurrentItem().setAmount(newAmount - 4);
+                    e.getCursor().setAmount(4);
                 } else {
                     e.getCursor().setAmount(newAmount);
                     e.setCurrentItem(new ItemStack(Material.AIR));
+                }
+                if(e.getCurrentItem().getAmount() > 4)
+                {
+                    e.getCurrentItem().setAmount(4);
+                }
+                if(e.getCursor().getAmount() > 4)
+                {
+                    e.getCursor().setAmount(4);
                 }
                 ((Player) e.getWhoClicked()).updateInventory();
             }
