@@ -236,7 +236,7 @@ public class SkillListener implements Listener {
         if (BrewingData.hasBrewingLab(b.getLocation())) {
             SendMessage.send(p, "You cancelled brewing a potion by breaking the cauldron.", "Some gasses escape and cause an explosion!");
             BrewingData.getBrew(b.getLocation()).cancelBrew();
-            b.getWorld().createExplosion(b.getLocation(), 4, false);
+            b.getWorld().createExplosion(b.getX(), b.getY(), b.getZ(), 4, false, false);
         }
     }
 
@@ -432,7 +432,7 @@ public class SkillListener implements Listener {
 
         if (b.getType().equals(Material.CAULDRON_ITEM) && BrewingData.hasBrewingLab(b.getLocation())) {
             BrewingData.getBrew(b.getLocation()).cancelBrew();
-            b.getWorld().createExplosion(b.getLocation(), 4, false);
+            b.getWorld().createExplosion(b.getX(), b.getY(), b.getZ(), 4, false, false);
 
         }
 
