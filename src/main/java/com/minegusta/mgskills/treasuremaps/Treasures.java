@@ -20,7 +20,7 @@ public enum Treasures {
             setItemMeta(meta);
 
             addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
-            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
             addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         }
     }),
@@ -32,7 +32,7 @@ public enum Treasures {
             meta.setLore(lore);
             setItemMeta(meta);
 
-            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
             addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         }
     }),
@@ -44,7 +44,7 @@ public enum Treasures {
             meta.setLore(lore);
             setItemMeta(meta);
 
-            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
             addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         }
     }),
@@ -56,7 +56,7 @@ public enum Treasures {
             meta.setLore(lore);
             setItemMeta(meta);
 
-            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+            addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
             addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         }
     }),
@@ -123,9 +123,9 @@ public enum Treasures {
             meta.setLore(lore);
             setItemMeta(meta);
 
-            addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+            addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
             addUnsafeEnchantment(Enchantment.DURABILITY, 4);
-            addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 4);
+            addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
             addUnsafeEnchantment(Enchantment.DAMAGE_ARTHROPODS, 5);
             addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 5);
             addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
