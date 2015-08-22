@@ -30,7 +30,7 @@ public class CookingSmeltExperience {
 
     //Private checks
     private boolean hasPlayerNear(Block b) {
-        b.getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(b.getLocation()) < 16).forEach(players::add);
+        b.getWorld().getPlayers().stream().filter(p -> p.getWorld().getName().equals(b.getWorld().getName()) && p.getLocation().distance(b.getLocation()) < 16).forEach(players::add);
 
         return !players.isEmpty();
     }
