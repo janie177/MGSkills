@@ -42,7 +42,7 @@ public class LevelUp {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                 @Override
                 public void run() {
-                    if (k % 5 == 0) {
+                    if (k % 20 == 0) {
                         Entity e = pl.getWorld().spawnEntity(pl.getLocation(), EntityType.FIREWORK);
                         Firework fw = (Firework) e;
                         FireworkMeta meta = fw.getFireworkMeta();
