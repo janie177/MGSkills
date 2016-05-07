@@ -35,6 +35,6 @@ public class SicknessPotionI extends PotionRecipe
     @Override
     public boolean hasConditions(Block lab)
     {
-        return lab.getBiome() == Biome.SWAMPLAND || lab.getBiome() == Biome.SWAMPLAND_MOUNTAINS;
+        return lab.getBiome() == Biome.SWAMPLAND || lab.getBiome() == Biome.MUTATED_SWAMPLAND;
     }
 }

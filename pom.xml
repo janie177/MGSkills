@@ -24,7 +24,7 @@
 
     <properties> <!-- It is important to keep up to date manually. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot.version>1.8.7-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.9.2-R0.1-SNAPSHOT</spigot.version>
     </properties>
 
     <repositories>
@@ -54,7 +54,7 @@
     </dependencies>
 
     <build>
-        <finalName>MgSkills</finalName>
+        <finalName>MGSkills</finalName>
         <defaultGoal>clean install</defaultGoal>
         <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
         <resources>
@@ -64,33 +64,10 @@
                 <directory>${basedir}/src/main/resources/</directory>
                 <includes>
                     <include>*.yml</include>
-                    <include>*.png</include>
                 </includes>
             </resource>
-
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>org.spigotmc:*</exclude>
-                                    <exclude>com.google.code.gson:*</exclude>
-                                </excludes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>

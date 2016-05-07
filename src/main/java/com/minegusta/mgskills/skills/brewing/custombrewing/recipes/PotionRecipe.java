@@ -2,10 +2,11 @@ package com.minegusta.mgskills.skills.brewing.custombrewing.recipes;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 
@@ -139,15 +140,12 @@ public abstract class PotionRecipe {
     public ItemStack getPotion()
     {
         //Making the potion
+        ItemStack potion = new ItemStack(splash ? Material.SPLASH_POTION : Material.POTION);
+        PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
-        Potion pot = new Potion(appearance); //The base potion type. Only defines what the potion looks like!!!
-        pot.setSplash(splash);
-        pot.setLevel(1); //Always keep this 1. Otherwise it will throw errors at you ;-;
+        PotionData data = new PotionData(appearance);
 
         //Convert to itemStack
-        ItemStack potion = pot.toItemStack(1);
-
-        PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
         for(PotionEffect e : effects)
         {
@@ -155,6 +153,8 @@ public abstract class PotionRecipe {
         }
 
         meta.setDisplayName(name);
+
+        meta.setBasePotionData(data);
         potion.setItemMeta(meta);
 
 

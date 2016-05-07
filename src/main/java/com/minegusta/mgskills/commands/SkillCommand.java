@@ -82,7 +82,7 @@ public class SkillCommand implements CommandExecutor {
                             Player p2 = Bukkit.getPlayer(args[1]);
 
                             p2.getWorld().dropItemNaturally(p2.getLocation(), TreasureMapItem.getNewTreasureMap(p2.getWorld(), p2));
-                            p2.getWorld().playSound(p2.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+                            p2.getWorld().playSound(p2.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
                             p2.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
                             p.sendMessage(ChatColor.YELLOW + "You gave " + p2.getName() + " a treasure map. Yarrrr harrrr.");
 

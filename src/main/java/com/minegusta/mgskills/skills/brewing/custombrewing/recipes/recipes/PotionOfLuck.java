@@ -5,10 +5,11 @@ import com.minegusta.mgskills.skills.brewing.custombrewing.recipes.PotionRecipe;
 import com.minegusta.mgskills.util.RandomNumber;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -43,20 +44,17 @@ public class PotionOfLuck extends PotionRecipe
     {
         //Making the potion
 
-        Potion pot = new Potion(appearance); //The base potion type. Only defines what the potion looks like!!!
-        pot.setSplash(splash);
-        pot.setLevel(1); //Always keep this 1. Otherwise it will throw errors at you ;-;
-
-        //Convert to itemStack
-        ItemStack potion = pot.toItemStack(1);
-
+        ItemStack potion = new ItemStack(splash ? Material.SPLASH_POTION : Material.POTION);
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
+
+        PotionData data = new PotionData(appearance);
 
         meta.addCustomEffect(new PotionEffect(PotionEffectType.getById(RandomNumber.get(23)), RandomNumber.get(15) * 20, RandomNumber.get(3) - 1, false), true);
         meta.addCustomEffect(new PotionEffect(PotionEffectType.getById(RandomNumber.get(23)), RandomNumber.get(15) * 20, RandomNumber.get(3) - 1, false), true);
 
         meta.setDisplayName(name);
-        potion.setItemMeta(meta);
+
+        meta.setBasePotionData(data);
 
         //Making sure strength and regen wont be too high.
         for(PotionEffect effect : meta.getCustomEffects())
@@ -74,7 +72,7 @@ public class PotionOfLuck extends PotionRecipe
             }
         }
 
-
+        potion.setItemMeta(meta);
 
         return potion;
 

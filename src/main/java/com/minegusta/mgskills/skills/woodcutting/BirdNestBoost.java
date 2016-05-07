@@ -62,7 +62,7 @@ public class BirdNestBoost {
                 public void run() {
                     if (k % 5 == 0) {
                         p.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 0, 0, 0, 1, 20, 15);
-                        if (k % 10 == 0) p.getWorld().playSound(l, Sound.CHICKEN_HURT, 1, 1);
+                        if (k % 10 == 0) p.getWorld().playSound(l, Sound.ENTITY_CHICKEN_HURT, 1, 1);
                     }
                 }
             }, i);

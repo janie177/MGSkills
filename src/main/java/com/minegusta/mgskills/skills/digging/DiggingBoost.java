@@ -106,7 +106,7 @@ public class DiggingBoost {
 
     private static void giveMap() {
         b.getWorld().dropItemNaturally(b.getLocation(), TreasureMapItem.getNewTreasureMap(b.getWorld(), p));
-        b.getWorld().playSound(b.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+        b.getWorld().playSound(b.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
         p.sendMessage(ChatColor.YELLOW + "[MG]" + ChatColor.LIGHT_PURPLE + " You found a treasure map!");
     }
 
@@ -117,7 +117,7 @@ public class DiggingBoost {
     }
 
     private static void repairShovel() {
-        p.getItemInHand().setDurability(new ItemStack(p.getItemInHand().getType(), 1).getDurability());
+        p.getInventory().getItemInMainHand().setDurability(new ItemStack(p.getInventory().getItemInMainHand().getType(), 1).getDurability());
     }
 
 }

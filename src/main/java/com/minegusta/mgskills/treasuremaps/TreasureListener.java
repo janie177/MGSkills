@@ -18,7 +18,7 @@ public class TreasureListener {
 
     public TreasureListener(PlayerInteractEvent e) {
         this.p = e.getPlayer();
-        this.is = p.getItemInHand();
+        this.is = p.getInventory().getItemInMainHand();
         this.click = e.getAction();
 
         if (isRightClick() && isLocation()) {

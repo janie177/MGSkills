@@ -125,7 +125,7 @@ public class BrewingProcess {
         return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, ()-> {
 
                 lab.getWorld().spigot().playEffect(lab.getLocation(), brewEffect, 0, 0, 1, 1, 1, 1, 10, 14);
-                lab.getWorld().playSound(lab.getLocation(), Sound.LAVA_POP, 1, 1);
+                lab.getWorld().playSound(lab.getLocation(), Sound.BLOCK_LAVA_POP, 1, 1);
         }, 0, 20);
     }
 

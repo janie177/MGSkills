@@ -44,6 +44,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -140,7 +141,7 @@ public class SkillListener implements Listener {
         Block b = e.getBlock();
 
         /**Mining**/
-        exp = ExperienceUtil.getMiningExp(e.getBlock().getType(), ItemUtil.hasSilkTouch(p.getItemInHand()));
+        exp = ExperienceUtil.getMiningExp(e.getBlock().getType(), ItemUtil.hasSilkTouch(e.getPlayer().getInventory().getItemInMainHand()));
         //Applying experience and random ore boost
         if (exp != 0) {
             if (b.getType().equals(Material.STONE) && RandomNumber.get(10000) < (50 + (level * 5))) {
@@ -156,7 +157,7 @@ public class SkillListener implements Listener {
 
         /**Woodcutting**/
 
-        boolean isAxe = ItemUtil.isAxe(p.getItemInHand());
+        boolean isAxe = ItemUtil.isAxe(p.getInventory().getItemInMainHand());
         level = mp.getLevel(Skill.WOODCUTTING);
         if (BlockUtil.isLog(b)) {
             //base exp
@@ -194,12 +195,12 @@ public class SkillListener implements Listener {
 
         /**Farming**/
         level = mp.getLevel(Skill.FARMING);
-        exp = ExperienceUtil.getFarmingExp(b, ItemUtil.hasSilkTouch(p.getItemInHand()));
+        exp = ExperienceUtil.getFarmingExp(b, ItemUtil.hasSilkTouch(p.getInventory().getItemInMainHand()));
 
         //Applying exp and replant boost
         if (exp != 0) {
             //Try replanting
-            boolean fullGrown = BlockUtil.tryReplant(level, ItemUtil.isHoe(p.getItemInHand()), b);
+            boolean fullGrown = BlockUtil.tryReplant(level, ItemUtil.isHoe(p.getInventory().getItemInMainHand()), b);
 
             //Boost the exp
             if (fullGrown) {
@@ -260,10 +261,12 @@ public class SkillListener implements Listener {
         //Automatically cancelled for right click air. Make sure to check this seperately for the boosts.
         if (!worldCheck(e.getPlayer().getWorld())) return;
 
+        if(e.getHand() != EquipmentSlot.HAND) return;
+
         //Data
         Player p = e.getPlayer();
         DetailedMPlayer mp = TempData.getMPlayer(p);
-        ItemStack is = e.getPlayer().getItemInHand();
+        ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
         Material m = null;
         if (e.hasBlock()) {
             m = e.getClickedBlock().getType();
@@ -553,6 +556,7 @@ public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(PlayerInteractEntityEvent e) {
         if (!worldCheck(e.getPlayer().getWorld()) || e.isCancelled()) return;
+        if(e.getHand() != EquipmentSlot.HAND) return;
 
         Entity clicked = e.getRightClicked();
         EntityType type = clicked.getType();

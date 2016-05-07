@@ -14,7 +14,7 @@ public class RandomOreBoost {
 
     public static boolean drop(Player p, DetailedMPlayer mp) {
         p.getWorld().dropItemNaturally(p.getLocation(), getOre(mp));
-        p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
+        p.playSound(p.getLocation(), Sound.ENTITY_CHICKEN_EGG, 5, 5);
         return true;
     }
 

@@ -37,7 +37,7 @@ public class HuntingExperience {
 
         this.mp = TempData.getMPlayer(killer);
         this.level = mp.getLevel(Skill.HUNTING);
-        this.hand = killer.getItemInHand();
+        this.hand = killer.getInventory().getItemInMainHand();
 
 
         giveExperience();

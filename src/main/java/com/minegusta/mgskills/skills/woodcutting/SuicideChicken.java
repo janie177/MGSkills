@@ -29,7 +29,7 @@ public class SuicideChicken {
         if (e.isCancelled()) return;
         this.p = e.getPlayer();
         this.mp = TempData.getMPlayer(p);
-        this.hand = p.getItemInHand().getType();
+        this.hand = p.getInventory().getItemInMainHand().getType();
         this.action = e.getAction();
         if (!isRightClick()) return;
         if (!setL()) return;
