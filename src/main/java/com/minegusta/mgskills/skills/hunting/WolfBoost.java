@@ -55,7 +55,7 @@ public class WolfBoost implements CommandExecutor {
             mp.addExp(Skill.HUNTING, 100);
             return true;
         }
-        SendMessage.send(p, "You need hunting level 70 to summon a wolf companion.");
+        SendMessage.send(p, "You need hunting level 72 to summon a wolf companion.");
         return true;
     }
 }

@@ -78,6 +78,10 @@ public class CookingCraftExperience {
                 }
             }
             break;
+            case BEETROOT_SOUP:
+                experience = 100;
+                end = true;
+                break;
             case GOLDEN_CARROT: {
                 experience = 100;
                 end = true;

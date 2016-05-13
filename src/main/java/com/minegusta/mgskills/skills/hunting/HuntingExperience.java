@@ -147,6 +147,21 @@ public class HuntingExperience {
             case WITCH:
                 exp = 50;
                 break;
+            case SHULKER:
+                exp = 100;
+                break;
+            case GUARDIAN:
+                exp = 150;
+                break;
+            case ENDER_DRAGON:
+                exp = 6000;
+                break;
+            case ENDERMITE:
+                exp = 50;
+                break;
+            case RABBIT:
+                exp = 30;
+                break;
             case SPIDER:
                 exp = 14;
                 break;

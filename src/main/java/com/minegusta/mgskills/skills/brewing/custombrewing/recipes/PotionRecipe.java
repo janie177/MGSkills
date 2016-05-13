@@ -143,7 +143,10 @@ public abstract class PotionRecipe {
         ItemStack potion = new ItemStack(splash ? Material.SPLASH_POTION : Material.POTION);
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
-        PotionData data = new PotionData(appearance);
+        //Add appearance.
+        PotionData data = new PotionData(PotionType.WATER);
+
+        meta.setMainEffect(appearance.getEffectType());
 
         //Convert to itemStack
 

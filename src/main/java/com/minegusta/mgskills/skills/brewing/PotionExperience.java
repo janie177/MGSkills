@@ -1,22 +1,27 @@
 package com.minegusta.mgskills.skills.brewing;
 
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.Potion;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionType;
 
 public class PotionExperience {
     public static int getExperience(ItemStack potion) {
-        short id = potion.getDurability();
+        PotionMeta meta = (PotionMeta) potion.getItemMeta();
+        PotionType type = meta.getBasePotionData().getType();
         int exp;
 
-        switch (id) {
-            case (short) 16:
+        switch (type) {
+            case  AWKWARD:
                 exp = 150;
                 break;
-            case (short) 32:
+            case MUNDANE:
                 exp = 150;
                 break;
-            case (short) 64:
-                exp = 150;
+            case WATER:
+                exp = 5;
+                break;
+            case THICK:
+                exp =150;
                 break;
             default:
                 exp = 190;
@@ -24,9 +29,7 @@ public class PotionExperience {
 
         try
         {
-            Potion pot = Potion.fromItemStack(potion);
-
-            if(pot.hasExtendedDuration() || pot.getLevel() > 1)
+            if(meta.getBasePotionData().isExtended() || meta.getBasePotionData().isUpgraded())
             {
                 exp = exp/2;
             }

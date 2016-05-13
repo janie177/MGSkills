@@ -15,7 +15,7 @@ public class FarmingInteractEntityExperience {
     }
 
     public static int soupBonus(Player p) {
-        p.setItemInHand(new ItemStack(Material.MUSHROOM_SOUP, 2));
+        p.getInventory().setItemInMainHand(new ItemStack(Material.MUSHROOM_SOUP, 2));
         return 10;
     }
 

@@ -493,7 +493,6 @@ public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEvent(BrewEvent e) {
         if (!worldCheck(e.getBlock().getWorld()) || e.isCancelled()) return;
-
         /** Brewing skill experience normal potions **/
 
         ItemStack pot = null;
@@ -501,7 +500,7 @@ public class SkillListener implements Listener {
         int amount = 0;
 
         for (ItemStack i : e.getContents().getContents()) {
-            if (i != null && !i.getType().equals(Material.AIR) && i.getType().equals(Material.POTION)) {
+            if (i != null && !i.getType().equals(Material.AIR) && (i.getType().equals(Material.POTION) || i.getType().equals(Material.SPLASH_POTION) || i.getType().equals(Material.LINGERING_POTION))) {
                 exp = PotionExperience.getExperience(i);
                 pot = i;
                 amount++;
