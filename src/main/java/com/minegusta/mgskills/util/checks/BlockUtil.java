@@ -25,6 +25,7 @@ public class BlockUtil {
      */
     public static boolean tryReplant(int level, boolean hasHoe, final Block b) {
         boolean replant = false;
+        final Material type = b.getType();
         switch (b.getType()) {
             case CARROT:
             case POTATO:
@@ -47,7 +48,7 @@ public class BlockUtil {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                 @Override
                 public void run() {
-                    b.setType(b.getType());
+                    b.setType(type);
                 }
             }, 10);
 
