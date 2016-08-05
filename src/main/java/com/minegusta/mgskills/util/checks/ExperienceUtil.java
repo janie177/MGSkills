@@ -124,7 +124,7 @@ public class ExperienceUtil {
             }
             break;
             case CROPS: {
-                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 30;
+                if (((Crops)b.getState().getData()).getState() == CropState.RIPE) exp = 30;
                 else {
                     exp = 1;
                 }
@@ -136,14 +136,14 @@ public class ExperienceUtil {
             }
             break;
             case CARROT: {
-                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
+                if (((Crops)b.getState().getData()).getState() == CropState.RIPE) exp = 25;
                 else {
                     exp = 1;
                 }
             }
             break;
             case POTATO: {
-                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
+                if (((Crops)b.getState().getData()).getState() == CropState.RIPE) exp = 25;
                 else {
                     exp = 1;
                 }
@@ -160,14 +160,14 @@ public class ExperienceUtil {
             }
             break;
             case NETHER_WARTS: {
-                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
+                if (((Crops)b.getState().getData()).getState() == CropState.RIPE) exp = 25;
                 else {
                     exp = 0;
                 }
             }
             break;
             case BEETROOT_BLOCK: {
-                if(((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
+                if(((Crops)b.getState().getData()).getState() == CropState.RIPE) exp = 25;
                 else exp = 0;
             }
             break;

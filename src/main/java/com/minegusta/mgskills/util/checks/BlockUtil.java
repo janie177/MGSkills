@@ -33,7 +33,7 @@ public class BlockUtil {
             case NETHER_WARTS:
             case NETHER_STALK:
             {
-                if (((Crops)b.getState()).getState() == CropState.RIPE) {
+                if (((Crops)b.getState().getData()).getState() == CropState.RIPE) {
                     replant = true;
                 }
             }
