@@ -1,7 +1,9 @@
 package com.minegusta.mgskills.util.checks;
 
+import org.bukkit.CropState;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.material.Crops;
 
 public class ExperienceUtil {
     /**
@@ -122,7 +124,7 @@ public class ExperienceUtil {
             }
             break;
             case CROPS: {
-                if (b.getData() == 7) exp = 30;
+                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 30;
                 else {
                     exp = 1;
                 }
@@ -134,14 +136,14 @@ public class ExperienceUtil {
             }
             break;
             case CARROT: {
-                if (b.getData() == 7) exp = 25;
+                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
                 else {
                     exp = 1;
                 }
             }
             break;
             case POTATO: {
-                if (b.getData() == 7) exp = 25;
+                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
                 else {
                     exp = 1;
                 }
@@ -158,10 +160,15 @@ public class ExperienceUtil {
             }
             break;
             case NETHER_WARTS: {
-                if (b.getData() == 3) exp = 25;
+                if (((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
                 else {
                     exp = 0;
                 }
+            }
+            break;
+            case BEETROOT_BLOCK: {
+                if(((Crops)b.getState()).getState() == CropState.RIPE) exp = 25;
+                else exp = 0;
             }
             break;
             default:

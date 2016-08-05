@@ -3,8 +3,10 @@ package com.minegusta.mgskills.util.checks;
 
 import com.minegusta.mgskills.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.CropState;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.material.Crops;
 
 public class BlockUtil {
     /**
@@ -24,37 +26,14 @@ public class BlockUtil {
     public static boolean tryReplant(int level, boolean hasHoe, final Block b) {
         boolean replant = false;
         switch (b.getType()) {
-            case CARROT: {
-                if (b.getData() == 7) {
-
-                    replant = true;
-                }
-            }
-            break;
-            case POTATO: {
-                if (b.getData() == 7) {
-
-                    replant = true;
-                }
-            }
-            break;
-            case CROPS: {
-                if (b.getData() == 7) {
-
-                    replant = true;
-                }
-            }
-            break;
-            case NETHER_WARTS: {
-                if (b.getData() == 3) {
-
-                    replant = true;
-                }
-            }
-            break;
-            case NETHER_STALK: {
-                if (b.getData() == 3) {
-
+            case CARROT:
+            case POTATO:
+            case CROPS:
+            case BEETROOT_BLOCK:
+            case NETHER_WARTS:
+            case NETHER_STALK:
+            {
+                if (((Crops)b.getState()).getState() == CropState.RIPE) {
                     replant = true;
                 }
             }
