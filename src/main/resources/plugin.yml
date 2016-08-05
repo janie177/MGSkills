@@ -37,8 +37,8 @@ commands:
   mining:
     usage: /Mining
     description: Show specific information about this skill.
-  summoning:
-    usage: /Summoning
+  magic:
+    usage: /Magic
     description: Show specific information about this skill.
   woodcutting:
     usage: /Woodcutting

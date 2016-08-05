@@ -6,30 +6,30 @@ import com.minegusta.mgskills.util.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Summoning implements ISkill {
+public class Magic implements ISkill {
     private DetailedMPlayer mp;
 
-    public Summoning() {
+    public Magic() {
     }
 
-    public Summoning(DetailedMPlayer mp) {
+    public Magic(DetailedMPlayer mp) {
         this.mp = mp;
     }
 
 
     @Override
     public String getName() {
-        return "Summoning";
+        return "Magic";
     }
 
     @Override
     public int getLevel() {
-        return mp.getLevel(Skill.SUMMONING);
+        return mp.getLevel(Skill.MAGIC);
     }
 
     @Override
     public int getExp() {
-        return mp.getExp(Skill.SUMMONING);
+        return mp.getExp(Skill.MAGIC);
     }
 
     @Override
@@ -39,12 +39,12 @@ public class Summoning implements ISkill {
 
     @Override
     public String getSpecialBoost() {
-        return "Who knows: " + ChatColor.GREEN + mp.getLevel(Skill.SUMMONING) / 2 + "%" + ChatColor.LIGHT_PURPLE + ".";
+        return ChatColor.DARK_PURPLE + "Mana: " + ChatColor.DARK_AQUA + (mp.getLevel(Skill.MAGIC) + 15) + "%" + ChatColor.LIGHT_PURPLE + ".";
     }
 
     @Override
     public void levelUp() {
-        mp.addLevel(Skill.SUMMONING);
+        mp.addLevel(Skill.MAGIC);
     }
 
     @Override

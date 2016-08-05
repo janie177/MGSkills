@@ -47,7 +47,7 @@ public class LoadToMap {
         map.put("fishing", conf.getInt("fishing", 0));
         map.put("mining", conf.getInt("mining", 0));
         map.put("cooking", conf.getInt("cooking", 0));
-        map.put("summoning", conf.getInt("summoning", 0));
+        map.put("magic", conf.getInt("magic", 0));
         map.put("farming", conf.getInt("farming", 0));
         map.put("hunting", conf.getInt("hunting", 0));
         map.put("woodcutting", conf.getInt("woodcutting", 0));
@@ -59,7 +59,7 @@ public class LoadToMap {
         map.put("fishingLevel", conf.getInt("fishingLevel", 1));
         map.put("miningLevel", conf.getInt("miningLevel", 1));
         map.put("cookingLevel", conf.getInt("cookingLevel", 1));
-        map.put("summoningLevel", conf.getInt("summoningLevel", 1));
+        map.put("magicLevel", conf.getInt("magicLevel", 1));
         map.put("farmingLevel", conf.getInt("farmingLevel", 1));
         map.put("huntingLevel", conf.getInt("huntingLevel", 1));
         map.put("woodcuttingLevel", conf.getInt("woodcuttingLevel", 1));

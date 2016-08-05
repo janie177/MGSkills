@@ -7,7 +7,7 @@ public enum Skill {
     FISHING(new Fishing(), "Fishing"),
     MINING(new Mining(), "Mining"),
     COOKING(new Cooking(), "Cooking"),
-    SUMMONING(new Summoning(), "Summoning"),
+    MAGIC(new Magic(), "Magic"),
     FARMING(new Farming(), "Farming"),
     HUNTING(new Hunting(), "Hunting"),
     WOODCUTTING(new Woodcutting(), "Woodcutting"),

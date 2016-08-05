@@ -30,7 +30,7 @@ public class Main extends JavaPlugin {
         getCommand("hsb").setExecutor(new ScoreBoardCommand());
         getCommand("alchemy").setExecutor(new AlchemyCommand());
 
-        String[] skillCommands = {"brewing", "cooking", "digging", "exploration", "farming", "fishing", "healing", "hunting", "mining", "summoning", "woodcutting"};
+        String[] skillCommands = {"brewing", "cooking", "digging", "exploration", "farming", "fishing", "healing", "hunting", "mining", "magic", "woodcutting"};
         for (String s : skillCommands) {
             getCommand(s).setExecutor(new SkillInfoCommand());
         }

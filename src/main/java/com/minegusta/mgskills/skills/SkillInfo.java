@@ -7,7 +7,7 @@ public enum SkillInfo {
             "Currently added skills:",
             ChatColor.GRAY + "Brewing, Cooking, Digging, Exploration",
             ChatColor.GRAY + "Farming, Fishing, Healing, Hunting",
-            ChatColor.GRAY + "Mining, Summoning, WoodCutting"
+            ChatColor.GRAY + "Mining, Magic, WoodCutting"
     }),
     HELP(new String[]{" - /Skills" + ChatColor.GRAY + " - Show this help menu.", " - /Skills Show" + ChatColor.GRAY + " - Show your own skills.", " - /Skills Show <Name>" + ChatColor.GRAY + " - Show the given players' skills.", " - /Skills info <Skill>" + ChatColor.GRAY + " - Show information for the given skill.", " - /HighScores" + ChatColor.GRAY + " - Show the top 10 players.", " - /<SkillName>" + ChatColor.GRAY + " - Display specific skill information.", " - /Skill Toggle" + ChatColor.GRAY + " - Show when you earn experience in the chat."}),
     FISHING(new String[]{
@@ -123,7 +123,15 @@ public enum SkillInfo {
             " - " + ChatColor.GRAY + "You gain " + ChatColor.RED + "+ 1" + ChatColor.GRAY + " bonus experience for every 5 levels.",
             " - " + ChatColor.GRAY + "The chance to find treasure maps increases each level."
     }),
-    SUMMONING(new String[]{ChatColor.YELLOW + "This skill will be released in update 2!", ChatColor.YELLOW + "Send suggestions towards Jan!"}),
+    MAGIC(new String[]{
+            ChatColor.GRAY + "The arcane arts offer many advantages in pvp and pve.",
+            ChatColor.GRAY + "Cast spells to gain experience and unlock more spells.",
+            ChatColor.GRAY + "Spells cost mana to cast. Some spells require extra items.",
+            ChatColor.GOLD + "Bonuses Per Level:",
+            " - " + ChatColor.GREEN + "Use the /spells command to see a list of available spells.",
+            ChatColor.GOLD + "Bonuses That Increase Per Level:",
+            " - " + ChatColor.DARK_PURPLE + "You gain " + ChatColor.DARK_AQUA + "+ 1" + ChatColor.DARK_PURPLE + " mana per level."
+    }),
     BREWING(new String[]{
             ChatColor.GRAY + "The art of potion making.",
             ChatColor.GRAY + "Brewing is an unique skill that allows you to experiment.",
